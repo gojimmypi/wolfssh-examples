@@ -98,20 +98,16 @@ else()
 endif()
 
 ## register_component()
-idf_component_register(SRCS main.c
-                            ssh_server.c
-                            uart_helper.c
-                            wifi_connect.c
-                            ssh_server_config.c
-                            int_to_string.c
-                            tx_rx_buffer.c
+idf_component_register(SRCS "main.c"
+                            "ssh_server.c"
+                            "uart_helper.c"
+                            "wifi_connect.c"
+                            "ssh_server_config.c"
+                            "int_to_string.c"
+                            "tx_rx_buffer.c"
                        INCLUDE_DIRS
-                            "."
                             "./include"
                       )
-
-#set(srcs main.c ssh_server.c uart_helper.c uart_helper.c wifi.c ssh_server_config.c enc28j60_helper.c int_to_string.c tx_rx_buffer.c)
-
 
 #
 # LIBWOLFSSL_SAVE_INFO(VAR_OUPUT THIS_VAR VAR_RESULT)
