@@ -1,6 +1,6 @@
-/* ssh_server.h
+/* main.c
  *
- * Copyright (C) 2014-2022 wolfSSL Inc.
+ * Copyright (C) 2006-2023 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -100,7 +100,7 @@
 #ifdef USE_ENC28J60
     /* no WiFi when using external ethernet */
 #else
-    #include "wifi.h"
+    #include "wifi_connect.h"
 #endif
 
 #include "ssh_server.h"
@@ -242,8 +242,10 @@ bool NoEthernet()
 #if defined(WOLFSSH_SERVER_IS_AP) || defined(WOLFSSH_SERVER_IS_STA)
 void init_nvsflash()
 {
+    esp_err_t ret = ESP_OK;
     ESP_LOGI(TAG, "Setting up nvs flash for WiFi.");
-    esp_err_t ret = nvs_flash_init();
+/* TODO
+    ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES
           ||
         ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -251,6 +253,7 @@ void init_nvsflash()
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
+*/
     ESP_ERROR_CHECK(ret);
 }
 #endif

@@ -55,7 +55,7 @@
 
 #include <pthread.h>
 #ifdef SINGLE_THREADED
-    typedef unsigned int  THREAD_RETURN;
+    typedef void* THREAD_RETURN;
     typedef void* THREAD_TYPE;
     #define WOLFSSH_THREAD
 #else
