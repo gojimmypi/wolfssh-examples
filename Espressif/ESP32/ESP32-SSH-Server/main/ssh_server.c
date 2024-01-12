@@ -233,7 +233,11 @@ static int NonBlockSSH_accept(WOLFSSH* ssh)
 
         /* RTOS yield */
         vTaskDelay(100 / portTICK_PERIOD_MS);
-        esp_task_wdt_reset();
+        #ifdef SSH_SERVER_WDT_RESET
+        {
+            esp_task_wdt_reset();
+        }
+        #endif
     }
     ESP_LOGI(TAG,"Exit NonBlockSSH_accept");
 
@@ -320,6 +324,12 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
                         stop = 1;
                     }
 
+                    /* when polling, debugging can be verbose, turn it off */
+                    #ifdef DEBUG_WOLFSSH
+                        ESP_LOGV(TAG, "wolfSSH debugging off.");
+                        wolfSSH_Debugging_OFF();
+                    #endif
+
                     /* this is a blocking call, awaiting an SSH keypress
                      * unless nonBlock = 1 (normally we are NOT blocking) */
                     rxSz = wolfSSH_stream_read(threadCtx->ssh,
@@ -337,12 +347,25 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
                         {
                             /*  any other negative value is an error */
                             has_err = 1;
-                            ESP_LOGE(TAG,"wolfSSH_stream_read error!");
+                            ESP_LOGE(TAG, "wolfSSH_stream_read error!");
                         }
                     }
+                    else {
+                        ESP_LOGI(TAG,"Received %d bytes from client.", rxSz);
+                    }
+
+                    /* turn debugging back on */
+                    #ifdef DEBUG_WOLFSSH
+                        ESP_LOGV(TAG, "wolfSSH debugging on.");
+                        wolfSSH_Debugging_ON();
+                    #endif
 
                     taskYIELD();
-                    esp_task_wdt_reset();
+                    #ifdef SSH_SERVER_WDT_RESET
+                    {
+                        esp_task_wdt_reset();
+                    }
+                    #endif
 
                 } while ((WOLFSSL_NONBLOCK == 0) /* we'll wait only when not using non-blocking socket */
                          &&
@@ -460,7 +483,11 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
                         }
 
                         taskYIELD();
-                        esp_task_wdt_reset();
+                        #ifdef SSH_SERVER_WDT_RESET
+                        {
+                            esp_task_wdt_reset();
+                        }
+                        #endif
                     } /* while */
 
                     if (txSum < backlogSz) {
@@ -478,12 +505,12 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
                 }
             }
 
-#ifdef DEBUG_WDT
+        #ifdef DEBUG_WDT
             /* if we get panic faults, perhaps the watchdog needs attention? */
             taskYIELD();
             vTaskDelay(pdMS_TO_TICKS(10));
             esp_task_wdt_reset();
-#endif
+        #endif
         } while (!stop);
     } /* if (ret == WS_SUCCESS) */
 
