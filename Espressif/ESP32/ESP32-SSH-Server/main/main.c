@@ -129,7 +129,7 @@
 static const char *TAG = "SSH Server main";
 
 /* 10 seconds, used for heartbeat message in thread */
-static TickType_t DelayTicks = (10000 / portTICK_PERIOD_MS);
+static TickType_t DelayTicks = (60000 / portTICK_PERIOD_MS);
 
 
 int set_time()
