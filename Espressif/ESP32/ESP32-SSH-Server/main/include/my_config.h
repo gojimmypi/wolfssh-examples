@@ -68,7 +68,9 @@ endif()
 #define XSTR(x) STR(x)
 #define STR(x) #x
 
-#define EXAMPLE_ESP_WIFI_AP_SSID      "TheBucketHill"
+#ifndef EXAMPLE_ESP_WIFI_AP_SSID
+    #define EXAMPLE_ESP_WIFI_AP_SSID      "TheBucketHill"
+#endif
 #define EXAMPLE_ESP_WIFI_AP_PASS      "jackorjill"
 
 /* clang intellisense gives a pragma-messages warning
@@ -97,8 +99,8 @@ endif()
     #include SYSPROGS_MY_PRIVATE_CONFIG
 
 #elif defined(WINDOWS_MY_PRIVATE_CONFIG)
-    #pragma message ( "Found WINDOWS_MY_PRIVATE_CONFIG !" )
-    #pragma message ( XSTR(WINDOWS_MY_PRIVATE_CONFIG) )
+    // #pragma message ( "Found WINDOWS_MY_PRIVATE_CONFIG !" )
+    // #pragma message ( XSTR(WINDOWS_MY_PRIVATE_CONFIG) )
     #include WINDOWS_MY_PRIVATE_CONFIG
 
 #elif defined(WSL_MY_PRIVATE_CONFIG)

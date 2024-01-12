@@ -47,6 +47,12 @@
 #include <esp_event.h>
 #include <driver/gpio.h>
 
+
+/* ESP specific */
+#include <nvs_flash.h>
+#include <esp_log.h>
+#include <esp_event.h>
+
 /* see ssh_server_config.h for optional use of physical ethernet: USE_ENC28J60 */
 #ifdef USE_ENC28J60
     #include <enc28j60_helper.h>
@@ -244,7 +250,7 @@ void init_nvsflash()
 {
     esp_err_t ret = ESP_OK;
     ESP_LOGI(TAG, "Setting up nvs flash for WiFi.");
-/* TODO
+
     ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES
           ||
@@ -253,7 +259,7 @@ void init_nvsflash()
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
-*/
+
     ESP_ERROR_CHECK(ret);
 }
 #endif
@@ -362,7 +368,7 @@ void app_main(void)
     xTaskCreate(uart_tx_task, "uart_tx_task", 1024 * 2, NULL,
                 tskIDLE_PRIORITY, NULL);
 
-    xTaskCreate(server_session, "server_session", 6024 * 2, NULL,
+    xTaskCreate(server_session, "server_session", 26024 * 2, NULL,
                 tskIDLE_PRIORITY, NULL);
 
 

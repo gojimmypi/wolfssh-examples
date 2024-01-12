@@ -29,6 +29,8 @@
 
 #define WOLFSSL_ESPIDF
 
+#define DEBUG_WOLFSSH
+
 /* The Espressif sdkconfig will have chipset info.
 **
 ** Possible values:
@@ -39,7 +41,7 @@
 **   CONFIG_IDF_TARGET_ESP32C3
 **   CONFIG_IDF_TARGET_ESP32C6
 */
-
+#define ESP_ENABLE_WOLFSSH
 /* Optionally enable some wolfSSH settings */
 #ifdef ESP_ENABLE_WOLFSSH
     /* The default SSH Windows size is massive for an embedded target. Limit it: */
@@ -91,13 +93,16 @@
 #define USE_CERT_BUFFERS_2048
 
 #define NO_OLD_TLS
-/* TLS 1.3
- #define WOLFSSL_TLS13
- #define HAVE_TLS_EXTENSIONS
- #define WC_RSA_PSS
- #define HAVE_SUPPORTED_CURVES
-*/
 
+/* TLS 1.3 */
+// #define MY_USE_TLS13
+#ifdef MY_USE_TLS13
+    #define WOLFSSL_TLS13
+    #define HAVE_TLS_EXTENSIONS
+    #define WC_RSA_PSS
+    #define HAVE_SUPPORTED_CURVES
+    #define HAVE_FFDHE_2048
+#endif
 #define HAVE_HKDF
 #define HAVE_AEAD
 

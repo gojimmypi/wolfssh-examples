@@ -1017,8 +1017,8 @@ void server_test(void *arg)
 
 
 #ifndef WOLFSSL_TLS13
-    ret = WOLFSSL_FAILURE;
-   ESP_LOGE(TAG,"\r\nERROR: Example requires TLS v1.3.\n");
+ //   ret = WOLFSSL_FAILURE;
+ //  ESP_LOGE(TAG,"\r\nERROR: Example requires TLS v1.3.\n");
 #endif /* WOLFSSL_TLS13 */
 
     /* Initialize the server address struct with zeros */

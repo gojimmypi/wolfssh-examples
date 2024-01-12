@@ -72,7 +72,6 @@ endif()
 
 # end of search for my_private_config.h
 
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 
 # copy enc28j60 component. This section can be removed if never using the enc28j60
@@ -89,18 +88,17 @@ if(EXISTS "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/enc28j60.h")
 
 elseif(EXISTS "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/")
       message(STATUS  "Copying files  ${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60")
-      file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/" FILES_MATCHING PATTERN  "*")
+      # file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/" FILES_MATCHING PATTERN  "*")
 
 elseif (EXISTS "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/")
     # some versions of the ESP-IDF (typically prior to 4.4) don't have the eth_enc28j60 in a component directory,rather just an example
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/enc28j60.h"             DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_enc28j60.h"     DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_mac_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_phy_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/enc28j60.h"             DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_enc28j60.h"     DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_mac_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_phy_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
 endif()
 # END OF enc28j60
 
-project(ESP32-SSH-Server)
 
 
 # check to see if there's both a local copy and EDP-IDF copy of the wolfssl and/or wolfssh components
@@ -181,3 +179,7 @@ endif()
 
 
 # END
+
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+project(ESP32-SSH-Server)

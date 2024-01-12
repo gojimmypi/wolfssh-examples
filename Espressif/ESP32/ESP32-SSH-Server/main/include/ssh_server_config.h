@@ -61,8 +61,8 @@
  *  #define WOLFSSH_SERVER_IS_STA
  **/
 
-#define WOLFSSH_SERVER_IS_AP
-
+// #define WOLFSSH_SERVER_IS_AP
+#define WOLFSSH_SERVER_IS_STA
 
 /* set GPIO pins for UART_NUM_1 */
 

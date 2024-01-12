@@ -28,12 +28,15 @@
 #include "string.h"
 #include "ssh_server.h"
 
+//#ifndef portTICK_PERIOD_MS
+//    #define portTICK_PERIOD_MS ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
+//#endif
 
 /* portTICK_PERIOD_MS is ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
  * configTICK_RATE_HZ is CONFIG_FREERTOS_HZ
  * CONFIG_FREERTOS_HZ is 100
  **/
-#define UART_TICKS_TO_WAIT (20 / portTICK_RATE_MS)
+#define UART_TICKS_TO_WAIT (20 / portTICK_PERIOD_MS)
 
 /*
  * see examples: https://github.com/espressif/esp-idf/blob/master/examples/peripherals/uart/uart_echo/main/uart_echo_example_main.c

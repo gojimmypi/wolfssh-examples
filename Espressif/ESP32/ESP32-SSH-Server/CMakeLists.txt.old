@@ -1,20 +1,22 @@
+#  [wolfSSH Project]/CMakeLists.txt
 #
-#  Copyright (C) 2014-2022 wolfSSL Inc.
+#  Copyright (C) 2006-2023 WOLFSSL Inc.
 #
-# This file is part of wolfSSH.
+#  This file is part of WOLFSSH.
 #
-# wolfSSH is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+#  WOLFSSH is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
 #
-# wolfSSH is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+#  WOLFSSH is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
 #
 
 # The following lines of boilerplate have to be in your project's CMakeLists
@@ -43,6 +45,16 @@ if(EXISTS "/c/workspace/my_private_config.h")
    add_definitions( -DSYSPROGS_MY_PRIVATE_CONFIG="/c/workspace/my_private_config.h" )
 endif()
 
+# This example uses an extra component for common functions such as Wi-Fi and Ethernet connection.
+set (PROTOCOL_EXAMPLES_DIR $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
+
+if (EXISTS "${PROTOCOL_EXAMPLES_DIR}")
+    message("Found PROTOCOL_EXAMPLES_DIR=${PROTOCOL_EXAMPLES_DIR}")
+    set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DFOUND_PROTOCOL_EXAMPLES_DIR")
+else()
+    message("NOT FOUND: PROTOCOL_EXAMPLES_DIR=${PROTOCOL_EXAMPLES_DIR}")
+endif()
 if(EXISTS "/workspace/my_private_config.h")
    message(STATUS "found WINDOWS_MY_PRIVATE_CONFIG")
    add_definitions( -DWINDOWS_MY_PRIVATE_CONFIG="/workspace/my_private_config.h" )
@@ -60,7 +72,6 @@ endif()
 
 # end of search for my_private_config.h
 
-include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 
 
 # copy enc28j60 component. This section can be removed if never using the enc28j60
@@ -77,18 +88,17 @@ if(EXISTS "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/enc28j60.h")
 
 elseif(EXISTS "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/")
       message(STATUS  "Copying files  ${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60")
-      file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/" FILES_MATCHING PATTERN  "*")
+      # file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/components/eth_enc28j60/" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/" FILES_MATCHING PATTERN  "*")
 
 elseif (EXISTS "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/")
     # some versions of the ESP-IDF (typically prior to 4.4) don't have the eth_enc28j60 in a component directory,rather just an example
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/enc28j60.h"             DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_enc28j60.h"     DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_mac_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
-    file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_phy_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/enc28j60.h"             DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_enc28j60.h"     DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_mac_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
+  #  file(COPY "$ENV{IDF_PATH}/examples/ethernet/enc28j60/main/esp_eth_phy_enc28j60.c" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/eth_enc28j60/")
 endif()
 # END OF enc28j60
 
-project(ESP32-SSH-Server)
 
 
 # check to see if there's both a local copy and EDP-IDF copy of the wolfssl and/or wolfssh components
@@ -133,6 +143,13 @@ if( EXISTS "${CMAKE_HOME_DIRECTORY}/components/wolfssl/include/user_settings.h" 
     endif()
 
 endif()
+if (EXISTS "${PROTOCOL_EXAMPLES_DIR}")
+    message("Found PROTOCOL_EXAMPLES_DIR=${PROTOCOL_EXAMPLES_DIR}")
+    set(EXTRA_COMPONENT_DIRS $ENV{IDF_PATH}/examples/common_components/protocol_examples_common)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DFOUND_PROTOCOL_EXAMPLES_DIR")
+else()
+    message("NOT FOUND: PROTOCOL_EXAMPLES_DIR=${PROTOCOL_EXAMPLES_DIR}")
+endif()
 
 if( EXISTS "$ENV{IDF_PATH}/components/wolfssl/include/user_settings.h" )
     message("user_settings.h found in $ENV{IDF_PATH}/components/wolfssl/ ")
@@ -162,3 +179,7 @@ endif()
 
 
 # END
+
+include($ENV{IDF_PATH}/tools/cmake/project.cmake)
+
+project(ESP32-SSH-Server)

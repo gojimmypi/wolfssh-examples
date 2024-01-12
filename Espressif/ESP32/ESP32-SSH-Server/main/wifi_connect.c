@@ -300,6 +300,11 @@ int wifi_show_ip(void)
  * See https://github.com/espressif/esp-idf/blob/master/examples/wifi/getting_started/softAP/main/softap_example_main.c
  *
  */
+#ifndef MACSTR
+    #define MACSTR "00:04:a3:12:34:56"
+#endif
+
+#if defined(USE_AP)
 static void wifi_ap_event_handler(void* arg,
                                   esp_event_base_t event_base,
                                   int32_t event_id,
@@ -375,6 +380,7 @@ void wifi_init_softap(void)
         EXAMPLE_ESP_WIFI_AP_PASS,
         EXAMPLE_ESP_WIFI_CHANNEL);
 }
+#endif
 
 /*
  * return true when above events determined that WiFi is actually ready.
