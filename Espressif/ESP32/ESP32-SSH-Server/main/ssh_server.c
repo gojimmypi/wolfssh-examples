@@ -663,8 +663,10 @@ static int LoadPasswordBuffer(byte* buf, word32 bufSz, PwMapList* list)
     if (list == NULL)
         return -1;
 
-    if (buf == NULL || bufSz == 0)
+    if (buf == NULL || bufSz == 0) {
+        ESP_LOGW(TAG, "Warning: LoadPasswordBuffer size is zero!");
         return 0;
+    }
 
     while (*str != 0) {
         delimiter = strchr(str, ':');
@@ -712,8 +714,10 @@ static int LoadPublicKeyBuffer(byte* buf, word32 bufSz, PwMapList* list)
     if (list == NULL)
         return -1;
 
-    if (buf == NULL || bufSz == 0)
+    if (buf == NULL || bufSz == 0) {
+        ESP_LOGW(TAG, "Warning: LoadPublicKeyBuffer buffer size is zero!");
         return 0;
+    }
 
     while (*str != 0) {
         /* Skip the public key type. This example will always be ssh-rsa. */
@@ -1361,6 +1365,7 @@ void server_test(void *arg)
         const char* bufName;
         byte buf[SCRATCH_BUFFER_SZ];
         word32 bufSz;
+        int ret = 0;
 
         bufSz = load_key(useEcc, buf, SCRATCH_BUFFER_SZ);
         if (bufSz == 0) {
@@ -1378,7 +1383,11 @@ void server_test(void *arg)
         bufSz = (word32)strlen(samplePasswordBuffer);
         memcpy(buf, samplePasswordBuffer, bufSz);
         buf[bufSz] = 0;
-        LoadPasswordBuffer(buf, bufSz, &pwMapList);
+        ret = LoadPasswordBuffer(buf, bufSz, &pwMapList);
+        if (ret != 0) {
+            ESP_LOGE(TAG, "Error: failed LoadPasswordBuffer %d", ret);
+            exit(EXIT_FAILURE);
+        }
 
         bufName = useEcc ? samplePublicKeyEccBuffer :
                            samplePublicKeyRsaBuffer;
@@ -1386,6 +1395,10 @@ void server_test(void *arg)
         memcpy(buf, bufName, bufSz);
         buf[bufSz] = 0;
         LoadPublicKeyBuffer(buf, bufSz, &pwMapList);
+        if (ret != 0) {
+            ESP_LOGE(TAG, "Error: failed LoadPasswordBuffer %d", ret);
+            exit(EXIT_FAILURE);
+        }
     }
 
     listen(sockfd, 5);
