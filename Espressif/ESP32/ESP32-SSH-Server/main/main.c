@@ -30,11 +30,6 @@
  *
  */
 
-/* WOLFSSL_USER_SETTINGS is defined here only for the syntax highlighter
- * see CMakeLists.txt
-#define WOLFSSL_USER_SETTINGS
- */
-
 #include "sdkconfig.h"
 /* include ssh_server_config.h first  */
 #include "my_config.h"
@@ -45,29 +40,27 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#include <esp_netif.h>
-#include <esp_event.h>
-#include <driver/gpio.h>
-
 /* wolfSSL */
+#ifndef WOLFSSL_USER_SETTINGS
+    #error "WOLFSSL_USER_SETTINGS should have been defined in project cmake"
+#endif
 /* Important: make sure settings.h appears before any other wolfSSL headers */
 #include <wolfssl/wolfcrypt/settings.h>
 #include <wolfssl/wolfcrypt/port/Espressif/esp32-crypt.h>
 #include <wolfssl/wolfcrypt/logging.h>
 #ifndef WOLFSSL_ESPIDF
-    #warning "Problem with wolfSSL user_settings."
-    #warning "Check [project]/components/wolfssl/include"
+    #error "Problem with wolfSSL user_settings."
+    #error "Check [project]/components/wolfssl/include"
 #endif
+#ifdef WOLFSSL_STALE_EXAMPLE
+    #warning "This project is configured using local, stale wolfSSL code. See Makefile."
+#endif
+
 
 /* see ssh_server_config.h for optional use of physical ethernet: USE_ENC28J60 */
 #ifdef USE_ENC28J60
     #include <enc28j60_helper.h>
 #endif
-
-#ifdef WOLFSSL_STALE_EXAMPLE
-    #warning "This project is configured using local, stale wolfSSL code. See Makefile."
-#endif
-
 
 #ifdef USE_ENC28J60
     /* no WiFi when using external ethernet */
@@ -87,19 +80,12 @@
     #undef LOG_LOCAL_LEVEL
 #endif
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
-#include "esp_log.h"
-
-/* time */
-#include  <lwip/apps/sntp.h>
+#include <esp_log.h>
 
 static const char *TAG = "SSH Server main";
 
 /* 10 seconds, used for heartbeat message in thread */
 static TickType_t DelayTicks = (60000 / portTICK_PERIOD_MS);
-
-
-
-#include "driver/uart.h"
 
 
 void server_session(void* args)
