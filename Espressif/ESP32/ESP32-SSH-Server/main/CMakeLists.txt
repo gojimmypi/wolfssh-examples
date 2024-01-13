@@ -105,6 +105,7 @@ idf_component_register(SRCS "main.c"
                             "ssh_server_config.c"
                             "int_to_string.c"
                             "tx_rx_buffer.c"
+                            "time_helper.c"
                        INCLUDE_DIRS
                             "./include"
                       )
