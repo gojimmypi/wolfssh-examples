@@ -49,4 +49,4 @@
 /* 20K is known to work for demo; 15K observed to fail with default settings */
 #define SERVER_SESSION_STACK_SIZE (20 * 1024)
 
-#endif
+#endif /* _MAIN_H_ */

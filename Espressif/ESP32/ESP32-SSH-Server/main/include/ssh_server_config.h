@@ -17,7 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#ifndef _SSH_SERVER_CONFIG_H_
+#define _SSH_SERVER_CONFIG_H_
 
 /* WOLFSSL_USER_SETTINGS is defined here only for the syntax highlighter
  * see CMakeLists.txt
@@ -38,7 +39,7 @@
 
 
 /* EdgeRouter-X is 57600, others are typically 115200
- *
+ * This is the UART baud rate to use in SSH server, NOT the monitor baud rate!
  **/
 #define BAUD_RATE (57600)
 
@@ -166,3 +167,5 @@ void ssh_server_config_init();
 #ifdef WOLFSSL_ESP8266
     #error "WOLFSSL_ESP8266 defined for ESP32 project. See user_settings.h"
 #endif
+
+#endif /* _SSH_SERVER_CONFIG_H_ */

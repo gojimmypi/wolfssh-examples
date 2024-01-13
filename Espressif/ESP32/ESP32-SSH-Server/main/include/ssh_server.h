@@ -17,8 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef _WOLFSSH_EXAMPLES_SSH_SERVER_H_
-#define _WOLFSSH_EXAMPLES_SSH_SERVER_H_
+#ifndef _SSH_SERVER_H_
+#define _SSH_SERVER_H_
 
 #include <freertos/FreeRTOS.h>
 
@@ -95,4 +95,4 @@ int ExternalReceiveBufferSz(void);
 int Set_ExternalTransmitBufferSz(int n);
 int Set_ExternalReceiveBufferSz(int n);
 
-#endif /* _WOLFSSH_EXAMPLES_SERVER_H_ */
+#endif /* _SSH_SERVER_H_ */

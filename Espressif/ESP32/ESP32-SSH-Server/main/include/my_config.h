@@ -1,4 +1,3 @@
-#pragma once
 /* my_config.h
  *
  * Copyright (C) 2014-2022 wolfSSL Inc.
@@ -19,6 +18,10 @@
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+
+#ifndef _MY_CONFIG_H_
+#define _MY_CONFIG_H_
+
 #define  USE_MY_PRIVATE_CONFIG
 
 /*
@@ -142,3 +145,5 @@ endif()
 /*
 #pragma GCC diagnostic pop
 */
+
+#endif /* _MY_CONFIG_H_ */

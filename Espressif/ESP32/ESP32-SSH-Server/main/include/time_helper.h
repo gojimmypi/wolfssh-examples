@@ -21,8 +21,8 @@
 
 /* common Espressif time_helper v5.6.3.001 */
 
-#ifndef _TIME_HELPER_H
-#define _TIME_HELPER_H
+#ifndef _TIME_HELPER_H_
+#define _TIME_HELPER_H_
 
 /* ESP-IDF uses a 64-bit signed integer to represent time_t starting from release v5.0
  * See: https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/system_time.html#year-2036-and-2038-overflow-issues
@@ -52,4 +52,4 @@ int set_time_wait_for_ntp(void);
 } /* extern "C" */
 #endif
 
-#endif /* #ifndef _TIME_HELPER_H */
+#endif /* #ifndef _TIME_HELPER_H_ */

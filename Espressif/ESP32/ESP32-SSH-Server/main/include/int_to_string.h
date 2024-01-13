@@ -17,7 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
-#pragma once
+#ifndef _INT_TO_STRING_H_
+#define _INT_TO_STRING_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,4 +33,6 @@ extern "C" {
 
 #ifdef __cplusplus
 }
-#endif
+#endif /* __cplusplus */
+
+#endif /* _INT_TO_STRING_H_ */

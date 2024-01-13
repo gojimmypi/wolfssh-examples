@@ -1,5 +1,4 @@
-#pragma once
-/* my_config.h
+/* tx_rx_buffer.h
  *
  * Copyright (C) 2014-2022 wolfSSL Inc.
  *
@@ -18,6 +17,8 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef _TX_RX_BUFFER_H_
+#define _TX_RX_BUFFER_H_
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
@@ -41,3 +42,5 @@ int Set_ExternalTransmitBuffer(byte *FromData, int sz);
 int Set_ExternalReceiveBuffer(byte *FromData, int sz);
 
 bool ExternalReceiveBuffer_IsChar(char charValue);
+
+#endif /* _TX_RX_BUFFER_H_ */
