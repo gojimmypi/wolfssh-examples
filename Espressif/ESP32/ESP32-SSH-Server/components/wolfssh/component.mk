@@ -49,8 +49,22 @@
 CFLAGS +=-DWOLFSSL_USER_SETTINGS
 
 # In the wolfSSL GitHub examples for Espressif,
-# the root is 7 directories up from here:
-WOLFSSL_ROOT := ../../../../../../../
+#                                                     7      6      5        4       3       2        1
+# the root is 7 directories up from the [workspace]\wolfssl\IDE\Espressif\ESP-IDF\examples\ESP8266\components\wolfssl :
+#
+# WOLFSSL_ROOT := ../../../../../../../
+#
+# But we are in the wolfssh-examples repo
+#      6             5             4       3        2               1
+# [workspace]\wolfssh-examples\Espressif\ESP32\ESP32-SSH-Server\components\wolfssl
+#
+#                6  5  4  3  2  1
+WOLFSSL_ROOT := ../../../../../../wolfssl-gojimmypi/
+
+WOLFSSH_ROOT := ../../../../../../wolfssh-gojimmypi/
+# WOLFSSH_ROOT := /C/workspace/wolfssh-gojimmypi/
+
+# TODO we don't actually want these hardcoded for gojimmypi
 
 # NOTE: The wolfSSL include diretory (e.g. user_settings.h) is
 # located HERE in THIS project, and *not* in the wolfSSL root.
@@ -236,6 +250,47 @@ COMPONENT_OBJS += $(WOLFSSL_ROOT)wolfcrypt/test/test.o
 ##
 COMPONENT_SRCDIRS += $(WOLFSSL_ROOT)wolfcrypt/src
 
+##
+## wolfSSH
+##
+# COMPONENT_ADD_INCLUDEDIRS := .
+# COMPONENT_ADD_INCLUDEDIRS += include
+
+# DO NOT RESET COMPONENT_ADD_INCLUDEDIRS for wolfSSH (i.e. use `+=` not `:=`)
+COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSH_ROOT).
+COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSH_ROOT)wolfssh
+
+COMPONENT_SRCDIRS += $(WOLFSSH_ROOT)src
+# COMPONENT_SRCDIRS += include
+
+# COMPONENT_OBJEXCLUDE := $(WOLFSSH_ROOT)/src/exclude_example.o
+
+$(info WOLFSSH_ROOT/src/agent is $(WOLFSSH_ROOT)src/agent.c )
+
+WOLFSSH_ROOT_ABS := $(CURDIR)/$(WOLFSSH_ROOT_RELATIVE)
+$(info WOLFSSH_ROOT_ABS is $(WOLFSSH_ROOT_ABS))
+
+COMPONENT_OBJEXCLUDE += $(WOLFSSH_ROOT)src/misc.o
+
+# AGENT_SRC := $(WOLFSSH_ROOT)src/agent.c
+# ifeq ($(wildcard $(AGENT_SRC)),)
+#     $(info Source file $(AGENT_SRC) does not exist.)
+# else
+#     $(info Source file $(AGENT_SRC) exists.)
+# endif
+
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/ssh.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/agent.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/certman.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/internal.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/io.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/keygen.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/log.o
+# COMPONENT_OBJS += $(WOLFSSH_ROOT)src/misc.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/port.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/wolfscp.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/wolfsftp.o
+COMPONENT_OBJS += $(WOLFSSH_ROOT)src/wolfterm.o
 
 # SRC_FILES := $(filter-out src/bar.cpp, $(SRC_FILES))
 # @echo "hello world! $(COMPONENT_OBJS)"
