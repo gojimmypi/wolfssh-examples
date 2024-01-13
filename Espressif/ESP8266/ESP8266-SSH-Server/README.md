@@ -5,7 +5,7 @@ Connect to Tx/Rx pins on ESP8266 UART via remote SSH.
 ![Adafruit_Huzzah_ESP8266_SSH_Server.png](./images/Adafruit_Huzzah_ESP8266_SSH_Server.png)
 
 There's an [ESP-IDF wolfSSH component install](../../../../wolfssh/ide/Espressif/ESP-IDF/setup_win.bat) for Windows, 
-but to get started quickly there's a stale copy of the the components included.
+but to get started quickly there's a stale copy of the components included.
 
 See also the related [ESP-IDF wolfSSL component install](https://github.com/wolfSSL/wolfssl/tree/master/IDE/Espressif/ESP-IDF) for both Windows and bash scripts.
 

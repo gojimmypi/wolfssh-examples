@@ -20,6 +20,9 @@
 #ifndef _SSH_SERVER_CONFIG_H_
 #define _SSH_SERVER_CONFIG_H_
 
+/* sdkconfig needed for target chipset identification */
+#include "sdkconfig.h"
+
 /* WOLFSSL_USER_SETTINGS is defined here only for the syntax highlighter
  * see CMakeLists.txt
 #define WOLFSSL_USER_SETTINGS
@@ -76,7 +79,7 @@
  *   Tx (transmit) is orange wire
  *   Rx (receive)  is yellow wire
  */
-#ifdef M5STICKC
+#if defined(M5STICKC)
     /* reminder GPIO 34 to 39 are input only */
     #define TXD_PIN (GPIO_NUM_26)
     #define RXD_PIN (GPIO_NUM_36)
@@ -84,6 +87,15 @@
     /* reminder GPIO 34 to 39 are input only */
     #define TXD_PIN (GPIO_NUM_32)
     #define RXD_PIN (GPIO_NUM_33)
+#elif defined (SSH_HUZZAH_ESP8266)
+    #define EX_UART_NUM UART_NUM_0
+#elif defined(CONFIG_IDF_TARGET_ESP8266)
+    #define EX_UART_NUM UART_NUM_0
+    /* `TXD2` = `GPIO 15` = `D8` (Yellow) */
+    /* `RXD2` = `GPIO 13` = `D7` (Orange) */
+
+    #define TXD_PIN (GPIO_Pin_15)
+    #define RXD_PIN (GPIO_Pin_13) /* TODO assign valid GPIO */
 #else
     #define TXD_PIN (GPIO_NUM_17)
     #define RXD_PIN (GPIO_NUM_16)
@@ -152,20 +164,26 @@
     #endif
 #endif
 
-void ssh_server_config_init();
+int ssh_server_config_init(void);
 
 /* sanity checks */
 
-#if defined USE_ENC28J60 && defined WOLFSSH_SERVER_IS_AP
+#if defined(USE_ENC28J60) && defined(WOLFSSH_SERVER_IS_AP)
     #error "Server cannot be WiFi AP when using ENC28J60 at this time."
 #endif
 
-#if defined USE_ENC28J60 && defined WOLFSSH_SERVER_IS_AP
+#if defined(USE_ENC28J60) && defined(WOLFSSH_SERVER_IS_AP)
     #error "Server cannot be WiFi STA when using ENC28J60 at this time."
 #endif
 
 #ifdef WOLFSSL_ESP8266
     #error "WOLFSSL_ESP8266 defined for ESP32 project. See user_settings.h"
+#endif
+
+#if defined(TXD_PIN) && defined(RXD_PIN)
+    #if TXD_PIN == RXD_PIN
+        #error "TXD_PIN cannot be the same as RXD_PIN"
+    #endif
 #endif
 
 #endif /* _SSH_SERVER_CONFIG_H_ */

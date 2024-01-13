@@ -20,16 +20,23 @@
  */
 
 /* This is a specialized UART helper for the SSH to UART example*/
-#include <esp_task_wdt.h>
+/* See "sdkconfig-debug.h for ESP8266 " */
+
+#include "sdkconfig.h"
+
+#if defined(CONFIG_IDF_TARGET_ESP8266)
+    /* TODO  */
+#endif
 
 #include "uart_helper.h"
 #include "tx_rx_buffer.h"
-
-#include "driver/uart.h"
-#include "esp_log.h"
-// #include "string.h"
-#include "ssh_server.h"
 #include "ssh_server_config.h"
+#include "ssh_server.h"
+
+#include <esp_task_wdt.h>
+#include <driver/uart.h>
+#include <driver/gpio.h>
+#include <esp_log.h>
 
 /* portTICK_PERIOD_MS is ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
  * configTICK_RATE_HZ is CONFIG_FREERTOS_HZ
@@ -58,6 +65,11 @@ static char startupMessage[] =
 
 void init_UART(void)
 {
+#if defined(CONFIG_IDF_TARGET_ESP8266)
+    /* TODO */
+    ESP_LOGE(TAG, "Error: init_UART not implemented for ESP8266.");
+#else
+    /* not ESP8266 */
     ESP_LOGI(TAG, "Begin init_UART.");
     int intr_alloc_flags = 0;
     const uart_config_t uart_config = {
@@ -66,17 +78,19 @@ void init_UART(void)
         .parity = UART_PARITY_DISABLE,
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+    #if !defined(CONFIG_IDF_TARGET_ESP8266)
         .source_clk = UART_SCLK_APB,
+    #endif
     };
 
-#if CONFIG_UART_ISR_IN_IRAM
-    intr_alloc_flags = ESP_INTR_FLAG_IRAM;
-#endif
+    #if CONFIG_UART_ISR_IN_IRAM
+        intr_alloc_flags = ESP_INTR_FLAG_IRAM;
+    #endif
     /* We won't use a buffer for sending UART_NUM_1 data. */
     ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, 2048, 0, 0, NULL, intr_alloc_flags));
     ESP_ERROR_CHECK(uart_param_config(UART_NUM_1, &uart_config));
     ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
-
+#endif /* CONFIG_IDF_TARGET_ESP8266 */
     ESP_LOGI(TAG, "End init_UART.");
 }
 

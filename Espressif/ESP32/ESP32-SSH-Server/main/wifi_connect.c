@@ -50,6 +50,8 @@
 #if ESP_IDF_VERSION_MAJOR >= 5
 #elif ESP_IDF_VERSION_MAJOR >= 4
     #include "protocol_examples_common.h"
+#elif defined(CONFIG_IDF_TARGET_ESP8266)
+    /* TODO */
 #else
     const static int CONNECTED_BIT = BIT0;
     static EventGroupHandle_t wifi_event_group;
@@ -58,6 +60,8 @@
 #if defined(ESP_IDF_VERSION_MAJOR) && defined(ESP_IDF_VERSION_MINOR)
     #if ESP_IDF_VERSION_MAJOR >= 4
         /* likely using examples, see wifi_connect.h */
+    #elif defined(CONFIG_IDF_TARGET_ESP8266)
+        /* TODO */
     #else
         /* TODO - still supporting pre V4 ? */
         const static int CONNECTED_BIT = BIT0;
@@ -82,34 +86,39 @@ const static char *TAG = "wifi_connect";
 static volatile bool WiFiEthernetReady = 0;
 
 #if ESP_IDF_VERSION_MAJOR < 4
-/* event handler for wifi events */
-static esp_err_t wifi_event_handler(void *ctx, system_event_t *event)
-{
-    switch (event->event_id)
-    {
-    case SYSTEM_EVENT_STA_START:
-        esp_wifi_connect();
-        break;
-    case SYSTEM_EVENT_STA_GOT_IP:
-    #if ESP_IDF_VERSION_MAJOR >= 4
-        ESP_LOGI(TAG, "got ip:" IPSTR "\n",
-                 IP2STR(&event->event_info.got_ip.ip_info.ip));
+    #if defined(CONFIG_IDF_TARGET_ESP8266)
+        /* TODO */
     #else
-        ESP_LOGI(TAG, "got ip:%s",
-                 ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
-    #endif
-        /* see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos_idf.html */
-        xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
-        break;
-    case SYSTEM_EVENT_STA_DISCONNECTED:
-        esp_wifi_connect();
-        xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
-        break;
-    default:
-        break;
+    /* event handler for wifi events */
+    static esp_err_t wifi_event_handler(void *ctx, system_event_t *event)
+    {
+        switch (event->event_id)
+        {
+        case SYSTEM_EVENT_STA_START:
+            esp_wifi_connect();
+            break;
+        case SYSTEM_EVENT_STA_GOT_IP:
+        #if ESP_IDF_VERSION_MAJOR >= 4
+            ESP_LOGI(TAG, "got ip:" IPSTR "\n",
+                     IP2STR(&event->event_info.got_ip.ip_info.ip));
+        #else
+            ESP_LOGI(TAG, "got ip:%s",
+                     ip4addr_ntoa(&event->event_info.got_ip.ip_info.ip));
+        #endif
+            /* see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos_idf.html */
+            xEventGroupSetBits(wifi_event_group, CONNECTED_BIT);
+            break;
+        case SYSTEM_EVENT_STA_DISCONNECTED:
+            esp_wifi_connect();
+            xEventGroupClearBits(wifi_event_group, CONNECTED_BIT);
+            break;
+        default:
+            break;
+        }
+        return ESP_OK;
     }
-    return ESP_OK;
-}
+    /* not ESP8266 */
+    #endif
 #else
 
 #ifdef CONFIG_ESP_MAXIMUM_RETRY
@@ -388,5 +397,7 @@ void wifi_init_softap(void)
  */
 bool wifi_ready()
 {
+    ESP_LOGV(TAG, "wifi_ready check");
+
     return WiFiEthernetReady;
 }

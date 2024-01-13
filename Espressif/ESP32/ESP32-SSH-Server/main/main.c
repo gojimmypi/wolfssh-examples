@@ -132,13 +132,22 @@ void init_nvsflash()
     ESP_LOGI(TAG, "Setting up nvs flash for WiFi.");
 
     ret = nvs_flash_init();
+
+#if defined(CONFIG_IDF_TARGET_ESP8266)
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES) {
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+#else
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES
           ||
-        ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
+        ret == ESP_ERR_NVS_NEW_VERSION_FOUND
+       ) {
 
         ESP_ERROR_CHECK(nvs_flash_erase());
         ret = nvs_flash_init();
     }
+#endif
 
     ESP_ERROR_CHECK(ret);
 }
@@ -209,7 +218,7 @@ int init(void)
         init_nvsflash();
 
         ESP_LOGI(TAG, "Begin setup WiFi STA.");
-        wifi_init_sta();
+      // wifi_init_sta();
         ESP_LOGI(TAG, "End setup WiFi STA.");
     }
     #else

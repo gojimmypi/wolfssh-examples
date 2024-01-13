@@ -29,7 +29,11 @@
 
 #define USE_WIFI_EXAMPLE
 #ifdef USE_WIFI_EXAMPLE
-    #include <protocol_examples_common.h> /* see project CMakeLists.txt */
+    #if defined(CONFIG_IDF_TARGET_ESP8266)
+        /* TODO ESP8266 WiFi */
+    #else
+        #include <protocol_examples_common.h> /* see project CMakeLists.txt */
+    #endif
 #endif
 
 /**

@@ -22,6 +22,7 @@
 #include "int_to_string.h"
 
 #include <esp_log.h>
+#include <task.h>
 
 #define SSH_WELCOME_MESSAGE "\r\n"                                      \
                             "Welcome to wolfSSL ESP32 SSH UART Server!" \
@@ -68,7 +69,10 @@ int InitReceiveSemaphore(void)
     #ifdef configUSE_RECURSIVE_MUTEXES
         /* see semphr.h */
         ESP_LOGV(TAG,"_xExternalReceiveBuffer_Semaphore complete");
-        ESP_LOGV(TAG, "1 rx Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
+        #ifdef INCLUDE_uxTaskGetStackHighWaterMark
+            ESP_LOGV(TAG, "1 rx Stack HWM: %d\n",
+            uxTaskGetStackHighWaterMark(NULL));
+        #endif
     #endif
     }
     else {
@@ -89,10 +93,14 @@ int InitTransmitSemaphore(void)
     #ifdef configUSE_RECURSIVE_MUTEXES
         /* see semphr.h */
         ESP_LOGI(TAG, "InitSemaphore Tx configUSE_RECURSIVE_MUTEXES enabled");
+    #endif
+    #ifdef INCLUDE_uxTaskGetStackHighWaterMark
         ESP_LOGV(TAG, "Tx Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
     #endif
+
         _xExternalTransmitBuffer_Semaphore =  xSemaphoreCreateMutex();
-    #ifdef configUSE_RECURSIVE_MUTEXES
+
+#ifdef configUSE_RECURSIVE_MUTEXES
         /* see semphr.h */
         ESP_LOGV(TAG, "_xExternalReceiveBuffer_Semaphore complete");
     #endif
@@ -500,13 +508,15 @@ int  init_tx_rx_buffer(byte TxPin, byte RxPin)
         ESP_LOGE(TAG,"ERROR: bad value for RxPin");
         ret = 1;
     }
+#ifdef INCLUDE_uxTaskGetStackHighWaterMark
     ESP_LOGI(TAG, "8 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
-
+#endif
     /* typically "Press [Enter] to start. Ctrl-C to exit" */
     Set_ExternalTransmitBuffer((byte*)SSH_READY_MESSAGE,
                                sizeof(SSH_READY_MESSAGE)
                               );
+#ifdef INCLUDE_uxTaskGetStackHighWaterMark
     ESP_LOGI(TAG, "9 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
-
+#endif
     return ret;
 }
