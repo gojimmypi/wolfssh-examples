@@ -27,8 +27,8 @@
 
 
 /* note our actual buffer is used by RTOS threads, and eventually interrupts */
-static volatile byte sshStreamTransmitBufferArray[ExternalTransmitBufferMaxLength];
-static volatile byte sshStreamReceiveBufferArray[ExternalReceiveBufferMaxLength];
+static volatile byte sshStreamTransmitBufferArray[EXT_TX_BUF_MAX_SZ];
+static volatile byte sshStreamReceiveBufferArray[EXT_RX_BUF_MAX_SZ];
 
 char * TAG = "ssh_server";
 
@@ -62,6 +62,13 @@ static const char samplePublicKeyRsaBuffer[] =
     "uNZl/30Mczs73N3MBzi6J1oPo7sFlqzB6ecBjK2Kpjus4Y1rYFphJnUxtKvB0s+hoaadru"
     "biE57dK6BrH5iZwVLTQKux31uCJLPhiktI3iLbdlGZEctJkTasfVSsUizwVIyRjhVKmbdI"
     "RGwkU38D043AR1h0mUoGCPIKuqcFMf gretel\n";
+
+/* #define SSH_SERVER_PROFILE */
+
+#ifdef SSH_SERVER_PROFILE
+    static int MaxSeenRxSize = 0;
+    static int MaxSeenTxSize = 0;
+#endif
 
 
 /* Map user names to passwords */
@@ -244,17 +251,10 @@ static int NonBlockSSH_accept(WOLFSSH* ssh)
     return ret;
 }
 
-/* #define SSH_SERVER_PROFILE */
-
-#ifdef SSH_SERVER_PROFILE
-    static int MaxSeenRxSize = 0;
-    static int MaxSeenTxSize = 0;
-#endif
-
 
 /*
  * server_worker is the main thread for a given SSH connection
- **/
+ */
 static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
 {
     int ret;

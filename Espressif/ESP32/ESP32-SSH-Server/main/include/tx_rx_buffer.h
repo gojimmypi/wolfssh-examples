@@ -23,13 +23,17 @@
 #include <freertos/semphr.h>
 
 #include <string.h>
+
 /* TODO do these really need to be so big? probably not */
-#define ExternalReceiveBufferMaxLength 2048
-#define ExternalTransmitBufferMaxLength 2048
+/* Sizes for shared transmit and receive buffers, for
+ * both external (typically UART) and SSH data streams */
+#define EXT_RX_BUF_MAX_SZ 2048
+#define EXT_TX_BUF_MAX_SZ 2048
 
 typedef uint8_t byte;
 
-int  init_tx_rx_buffer(byte TxPin, byte RxPin);
+int init_tx_rx_buffer(byte TxPin, byte RxPin);
+
 int Get_ExternalTransmitBuffer(byte **ToData);
 
 int Set_ExternalTransmitBuffer(byte *FromData, int sz);
@@ -37,4 +41,3 @@ int Set_ExternalTransmitBuffer(byte *FromData, int sz);
 int Set_ExternalReceiveBuffer(byte *FromData, int sz);
 
 bool ExternalReceiveBuffer_IsChar(char charValue);
-

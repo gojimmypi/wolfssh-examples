@@ -147,7 +147,7 @@ void uart_rx_task(void *arg) {
     /* TODO do we really want malloc? probably not.
      * but in this thread, it only gets allocated once.
      **/
-    uint8_t* data = (uint8_t*) malloc(ExternalReceiveBufferMaxLength + 1);
+    uint8_t* data = (uint8_t*) malloc(EXT_RX_BUF_MAX_SZ + 1);
 
     /*
      * when we receive chars from UART, we'll send them out SSH
@@ -164,7 +164,7 @@ void uart_rx_task(void *arg) {
         vTaskDelay(10);
         const int rxBytes = uart_read_bytes(UART_NUM_1,
                                             data,
-                                            ExternalReceiveBufferMaxLength,
+                                            EXT_RX_BUF_MAX_SZ,
                                             UART_TICKS_TO_WAIT);
 
         if (rxBytes > 0) {
