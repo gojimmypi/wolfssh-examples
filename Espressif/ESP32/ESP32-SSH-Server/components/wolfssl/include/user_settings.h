@@ -63,6 +63,12 @@
     #define WOLFSSH_TEST_SERVER
     #define WOLFSSH_TEST_THREADING
 
+    #undef  NO_FILESYSTEM
+    #define NO_FILESYSTEM
+
+    #undef  WOLFSSH_NO_FILESYSTEM
+    #define WOLFSSH_NO_FILESYSTEM
+
 #endif /* ESP_ENABLE_WOLFSSH */
 
 /* when you want to use SINGLE THREAD */
@@ -102,10 +108,18 @@
     #define WC_RSA_PSS
     #define HAVE_SUPPORTED_CURVES
     #define HAVE_FFDHE_2048
+
+    /* or one of the other supported FFDHE sizes [2048, 3072, 4096, 6144, 8192] */
+    /* #define HAVE_FFDHE_8192 */
+
 #endif
 #define HAVE_HKDF
 #define HAVE_AEAD
 
+/*  note "file system": "load keys and certificate from files" vs NO_FILESYSTEM
+ *  and "access an actual file system via SFTP/SCP" vs WOLFSSH_NO_FILESYSTEM
+ *  we'll typically have neither on an embedded device:
+ */
 #define NO_FILESYSTEM
 
 #define HAVE_AESGCM
@@ -150,6 +164,8 @@
 
         /* DH disabled by default, needed if ECDSA/ECC also turned off */
         #define HAVE_DH
+
+        /* WC_RSA_PSS */
     #else
         #undef  WOLFSSH_NO_RSA
         #define WOLFSSH_NO_RSA

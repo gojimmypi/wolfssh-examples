@@ -27,8 +27,12 @@
 #include <esp_log.h>
 
 /* wolfSSL  */
-#include "user_settings.h" /* always include wolfSSL user_settings.h first */
-#include <wolfssl/wolfcrypt/port/Espressif/esp32-crypt.h>
+#include <wolfssl/wolfcrypt/settings.h>
+/* Reminder: settings.h includes wolfssl/user_settings.h */
+#ifndef WOLFSSL_ESPIDF
+    #warning "Problem with wolfSSL user_settings."
+    #warning "Check components/wolfssl/include"
+#endif
 #include <wolfssl/version.h>
 
 /* wolfSSH  */
