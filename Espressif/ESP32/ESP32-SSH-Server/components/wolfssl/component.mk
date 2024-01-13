@@ -49,8 +49,18 @@
 CFLAGS +=-DWOLFSSL_USER_SETTINGS
 
 # In the wolfSSL GitHub examples for Espressif,
-# the root is 7 directories up from here:
-WOLFSSL_ROOT := ../../../../../../../
+#                                                     7      6      5        4       3       2        1
+# the root is 7 directories up from the [workspace]\wolfssl\IDE\Espressif\ESP-IDF\examples\ESP8266\components\wolfssl :
+#
+# WOLFSSL_ROOT := ../../../../../../../
+#
+# But we are in the wolfssh-examples repo
+#      6             5             4       3        2               1
+# [workspace]\wolfssh-examples\Espressif\ESP32\ESP32-SSH-Server\components\wolfssl
+#
+#                6  5  4  3  2  1
+WOLFSSL_ROOT := ../../../../../../wolfssl-gojimmypi/
+
 
 # NOTE: The wolfSSL include diretory (e.g. user_settings.h) is
 # located HERE in THIS project, and *not* in the wolfSSL root.
