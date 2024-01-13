@@ -33,7 +33,7 @@ extern "C" {
 #endif
 
 /* a function to show the current data and time */
-int esp_show_current_datetime();
+int esp_show_current_datetime(void);
 
 /* worst case, if GitHub time not available, used fixed time */
 int set_fixed_default_time(void);

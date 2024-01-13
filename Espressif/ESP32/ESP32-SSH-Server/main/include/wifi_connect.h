@@ -27,13 +27,6 @@
 /* ESP lwip */
 #define EXAMPLE_ESP_MAXIMUM_RETRY       CONFIG_ESP_MAXIMUM_RETRY
 
-#define TLS_SMP_SERVER_TASK_NAME         "tls_sever_example"
-#define TLS_SMP_SERVER_TASK_WORDS        22240
-#define TLS_SMP_SERVER_TASK_PRIORITY     8
-
-#define TLS_SMP_WIFI_SSID                CONFIG_WIFI_SSID
-#define TLS_SMP_WIFI_PASS                CONFIG_WIFI_PASSWORD
-
 #define USE_WIFI_EXAMPLE
 #ifdef USE_WIFI_EXAMPLE
     #include <protocol_examples_common.h> /* see project CMakeLists.txt */
@@ -96,4 +89,5 @@ int wifi_init_sta(void);
 int wifi_show_ip(void);
 
 bool wifi_ready(void);
+
 #endif /* _WIFI_CONNECT_H_ */

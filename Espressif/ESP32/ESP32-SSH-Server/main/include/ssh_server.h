@@ -90,14 +90,16 @@
 #endif
 
 
-
+/* the main SSH Server demo*/
 void server_test(void *arg);
 
+/* External buffer functions used between RTOS tasks. (typically the UART)
+ * TODO: Implement interrupts rather than polling */
+volatile char* __attribute__((optimize("O0"))) ExternalTransmitBuffer(void);
+volatile char* __attribute__((optimize("O0"))) ExternalReceiveBuffer(void);
 
-volatile char* __attribute__((optimize("O0"))) ExternalTransmitBuffer();
-volatile char* __attribute__((optimize("O0"))) ExternalReceiveBuffer();
-int ExternalTransmitBufferSz();
-int ExternalReceiveBufferSz();
+int ExternalTransmitBufferSz(void);
+int ExternalReceiveBufferSz(void);
 
 int Set_ExternalTransmitBufferSz(int n);
 int Set_ExternalReceiveBufferSz(int n);
