@@ -24,8 +24,8 @@
 
 #include <string.h>
 /* TODO do these really need to be so big? probably not */
-#define ExternalReceiveBufferMaxLength 204
-#define ExternalTransmitBufferMaxLength 204
+#define ExternalReceiveBufferMaxLength 2048
+#define ExternalTransmitBufferMaxLength 2048
 
 typedef uint8_t byte;
 

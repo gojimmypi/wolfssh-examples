@@ -89,10 +89,13 @@ void uart_tx_task(void *arg) {
      * when we receive chars from ssh, we'll send them out the UART
     */
     static const char *TX_TASK_TAG = "TX_TASK";
+    vTaskDelay(1000000000); /* TODO */
     esp_log_level_set(TX_TASK_TAG, ESP_LOG_INFO);
 
     /* this RTOS task will never exit */
     while (1) {
+        vTaskDelay(10);
+
         if (ExternalReceiveBufferSz() > 0)
         {
             ESP_LOGI(TAG,"UART Send Data");
@@ -137,6 +140,8 @@ void InitSemaphore()
  * buffer to SEND (typically out to the SSH client)
  */
 void uart_rx_task(void *arg) {
+    vTaskDelay(1000000000); /* TODO */
+
     InitSemaphore();
 
     /* TODO do we really want malloc? probably not.
@@ -156,6 +161,7 @@ void uart_rx_task(void *arg) {
         /* note some examples have UART_TICKS_TO_WAIT = 1000,
          * which results in very sluggish response.
          * a known good value is (20 / portTICK_RATE_MS) */
+        vTaskDelay(10);
         const int rxBytes = uart_read_bytes(UART_NUM_1,
                                             data,
                                             ExternalReceiveBufferMaxLength,

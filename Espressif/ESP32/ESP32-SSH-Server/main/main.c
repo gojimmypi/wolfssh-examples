@@ -354,6 +354,7 @@ static bool is_our_netif(const char *prefix, esp_netif_t *netif) {
 
 void app_main(void)
 {
+    /* main stack size: 4048 */
     init();
     /* note that by the time we get here, the scheduler is already running!
      * see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html#esp-idf-freertos-applications
@@ -362,13 +363,13 @@ void app_main(void)
      * all of the tasks are at the same, highest idle priority, so they will all get equal attention
      * when priority was set to configMAX_PRIORITIES - [1,2,3] there was an odd WDT timeout warning.
      */
-    xTaskCreate(uart_rx_task, "uart_rx_task", 1024 * 2, NULL,
+    xTaskCreate(uart_rx_task, "uart_rx_task", 4048 * 2, NULL,
                 tskIDLE_PRIORITY, NULL);
 
-    xTaskCreate(uart_tx_task, "uart_tx_task", 1024 * 2, NULL,
+    xTaskCreate(uart_tx_task, "uart_tx_task", 4048 * 2, NULL,
                 tskIDLE_PRIORITY, NULL);
 
-    xTaskCreate(server_session, "server_session", 26024 * 2, NULL,
+    xTaskCreate(server_session, "server_session", 108024, NULL,
                 tskIDLE_PRIORITY, NULL);
 
 

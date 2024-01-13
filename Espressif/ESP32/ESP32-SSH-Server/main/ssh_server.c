@@ -305,6 +305,7 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
             /* int show_msg = 0; TODO optionally disable echo of text to USB port */
             int has_err = 0;
             this_rx_buf = (byte*)&sshStreamReceiveBufferArray;
+            vTaskDelay(10);
 
             if (!stop) {
                 do {
@@ -656,13 +657,18 @@ static PwMap* PwMapNew(PwMapList* list,
         ESP_LOGI(TAG, "SHA256 flatSz: 0x%02x%02x%02x%02x; size = %d",
                       flatSz[0], flatSz[1], flatSz[2], flatSz[3], fsz);
         ESP_LOGI(TAG, "SHA256 sample password: '%s': size = %d bytes", p, pSz);
+    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
         ESP_LOGW(TAG, "PwMapNew sha256 final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
-
         ESP_LOGW(TAG, "calling wc_Sha256Update(1) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+    #endif
         wc_Sha256Update((wc_Sha256*)&sha, flatSz, fsz);
+    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
         ESP_LOGW(TAG, "calling wc_Sha256Update(2) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+    #endif
         wc_Sha256Update((wc_Sha256*)&sha, p, pSz);
+    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
         ESP_LOGW(TAG, "calling wc_Sha256Final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+    #endif
         wc_Sha256Final((wc_Sha256*)&sha, (byte*)map->p);
 
         map->next = list->head;
@@ -1514,7 +1520,7 @@ void server_test(void *arg)
         server_worker(threadCtx);
 #endif /* SINGLE_THREADED */
         ESP_LOGI(TAG,"server_worker completed.");
-
+        vTaskDelay(10);
     } while (multipleConnections);
     ESP_LOGI(TAG,"all servers exited.");
 

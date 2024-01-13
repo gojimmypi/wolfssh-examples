@@ -46,36 +46,56 @@ static SemaphoreHandle_t _xExternalTransmitBuffer_Semaphore = NULL;
 /*
  * initialize the external buffer (typically a UART) Receive Semaphore.
  */
-void InitReceiveSemaphore()
+int InitReceiveSemaphore(void)
 {
+    int ret = ESP_OK;
     if (_xExternalReceiveBuffer_Semaphore == NULL) {
         ESP_LOGI(TAG, "InitReceiveSemaphore.");
 
         /* the case of recursive mutexes is interesting, so alert */
 #ifdef configUSE_RECURSIVE_MUTEXES
         /* see semphr.h */
-        ESP_LOGI(TAG,"InitSemaphore UART configUSE_RECURSIVE_MUTEXES enabled");
+        ESP_LOGI(TAG,"InitSemaphore UART Rx configUSE_RECURSIVE_MUTEXES enabled");
 #endif
 
         _xExternalReceiveBuffer_Semaphore =  xSemaphoreCreateMutex();
+#ifdef configUSE_RECURSIVE_MUTEXES
+        /* see semphr.h */
+        ESP_LOGI(TAG,"_xExternalReceiveBuffer_Semaphore complete");
+        ESP_LOGI(TAG, "1 rx Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
+#endif
     }
+    else {
+        ESP_LOGI(TAG, "Rx _xExternalTransmitBuffer_Semaphore already initialized");
+    }
+    return ret;
 }
 
 /*
  * initialize the external buffer (typically a UART) Transmit Semaphore.
  */
-void InitTransmitSemaphore()
+int InitTransmitSemaphore(void)
 {
+    int ret = ESP_OK;
     if (_xExternalTransmitBuffer_Semaphore == NULL) {
 
         /* the case of recursive mutexes is interesting, so alert */
 #ifdef configUSE_RECURSIVE_MUTEXES
         /* see semphr.h */
-        ESP_LOGI(TAG,"InitSemaphore UART configUSE_RECURSIVE_MUTEXES enabled");
+        ESP_LOGI(TAG, "InitSemaphore UART Tx configUSE_RECURSIVE_MUTEXES enabled");
+        ESP_LOGI(TAG, "1a Tx Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 #endif
         _xExternalTransmitBuffer_Semaphore =  xSemaphoreCreateMutex();
+#ifdef configUSE_RECURSIVE_MUTEXES
+        /* see semphr.h */
+        ESP_LOGI(TAG, "_xExternalReceiveBuffer_Semaphore complete");
+        ESP_LOGI(TAG, "1 Tx Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
+#endif
     }
-
+    else {
+        ESP_LOGI(TAG, "Tx _xExternalTransmitBuffer_Semaphore already initialized");
+    }
+    return ret;
 }
 
 /*
@@ -122,7 +142,7 @@ volatile char* __attribute__((optimize("O0"))) ExternalTransmitBuffer()
 /* RTOS-safe positional value of current receive buffer position.
  * care should be take when using the number as more chars may have arrived!
  */
-int ExternalReceiveBufferSz()
+int ExternalReceiveBufferSz(void)
 {
     int ret = 0;
 
@@ -404,33 +424,40 @@ int Set_ExternalTransmitBuffer(byte *FromData, int sz)
 int  init_tx_rx_buffer(byte TxPin, byte RxPin)
 {
     int ret = 0;
-    char numStr[2]; /* this will hold 2-digit GPIO numbers converted to a string */
+
+    char numStr[3]; /* this will hold 2-digit GPIO numbers converted to a string */
+    ESP_LOGI(TAG, "1 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* these inits need to be called only once,
      * but can be repeatedly called as needed */
     InitReceiveSemaphore();
     InitTransmitSemaphore();
+    ESP_LOGI(TAG, "2 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /*
      *  init and stuff startup message in buffer
      */
     Set_ExternalReceiveBufferSz(0);
     Set_ExternalTransmitBufferSz(0);
+    ESP_LOGI(TAG, "3 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* typically "Welcome to wolfSSL ESP32 SSH UART Server!" */
     Set_ExternalTransmitBuffer((byte*)SSH_WELCOME_MESSAGE,
                                sizeof(SSH_WELCOME_MESSAGE)
                               );
+    ESP_LOGI(TAG, "4 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* typically "You are now connected to UART " */
     Set_ExternalTransmitBuffer((byte*)SSH_GPIO_MESSAGE,
                                sizeof(SSH_GPIO_MESSAGE)
                               );
+    ESP_LOGI(TAG, "5 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* "Tx GPIO " */
     Set_ExternalTransmitBuffer((byte*)SSH_GPIO_MESSAGE_TX,
                                sizeof(SSH_GPIO_MESSAGE_TX)
                               );
+    ESP_LOGI(TAG, "6 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* the number of the Tx pin, converted to a string.
      *
@@ -438,34 +465,40 @@ int  init_tx_rx_buffer(byte TxPin, byte RxPin)
      * it is NOT a duplicate. This one compares TxPin,
      * the next one compares RxPin */
     if (TxPin <= 0x40) {
-        int_to_dec(numStr, TxPin);
+        int_to_dec((char*)&numStr, TxPin);
+        numStr[2] = 0;
         Set_ExternalTransmitBuffer((byte*)&numStr, sizeof(numStr));
     }
     else {
         ESP_LOGE(TAG,"ERROR: bad value for TxPin");
         ret = 1;
     }
-
     /* ", Rx GPIO " */
     Set_ExternalTransmitBuffer((byte*)SSH_GPIO_MESSAGE_RX,
                                sizeof(SSH_GPIO_MESSAGE_RX)
                               );
+    ESP_LOGI(TAG, "7 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
+//    return ret;
+
 
     /* the number of the Rx pin, converted to a string */
     if (RxPin <= 0x40)
     {
-        int_to_dec(numStr, RxPin);
+        int_to_dec((char*)&numStr, RxPin);
+        numStr[2] = 0;
         Set_ExternalTransmitBuffer((byte*)&numStr, sizeof(numStr));
     }
     else {
         ESP_LOGE(TAG,"ERROR: bad value for RxPin");
         ret = 1;
     }
+    ESP_LOGI(TAG, "8 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     /* typically "Press [Enter] to start. Ctrl-C to exit" */
     Set_ExternalTransmitBuffer((byte*)SSH_READY_MESSAGE,
                                sizeof(SSH_READY_MESSAGE)
                               );
+    ESP_LOGI(TAG, "9 Stack HWM: %d\n", uxTaskGetStackHighWaterMark(NULL));
 
     return ret;
 }
