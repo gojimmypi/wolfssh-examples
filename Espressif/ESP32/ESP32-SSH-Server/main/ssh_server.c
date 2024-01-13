@@ -632,12 +632,13 @@ static PwMap* PwMapNew(PwMapList* list,
                        word32 usernameSz,
                        const byte* p,
                        word32 pSz) {
-    PwMap* map;
+    PwMap* map = NULL;
 
     map = (PwMap*)malloc(sizeof(PwMap));
     if (map != NULL) {
         wc_Sha256 sha;
         byte flatSz[4];
+        int fsz = 0;
 
         map->type = type;
         if (usernameSz >= sizeof(map->username))
@@ -646,11 +647,23 @@ static PwMap* PwMapNew(PwMapList* list,
         map->username[usernameSz] = 0;
         map->usernameSz = usernameSz;
 
+        ESP_LOGI(TAG, "map->username = %s", map->username);
+
         wc_InitSha256(&sha);
         c32toa(pSz, flatSz);
-        wc_Sha256Update(&sha, flatSz, sizeof(flatSz));
-        wc_Sha256Update(&sha, p, pSz);
-        wc_Sha256Final(&sha, map->p);
+
+        fsz = sizeof(flatSz);
+        ESP_LOGI(TAG, "SHA256 flatSz: 0x%02x%02x%02x%02x; size = %d",
+                      flatSz[0], flatSz[1], flatSz[2], flatSz[3], fsz);
+        ESP_LOGI(TAG, "SHA256 sample password: '%s': size = %d bytes", p, pSz);
+        ESP_LOGW(TAG, "PwMapNew sha256 final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+
+        ESP_LOGW(TAG, "calling wc_Sha256Update(1) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+        wc_Sha256Update((wc_Sha256*)&sha, flatSz, fsz);
+        ESP_LOGW(TAG, "calling wc_Sha256Update(2) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+        wc_Sha256Update((wc_Sha256*)&sha, p, pSz);
+        ESP_LOGW(TAG, "calling wc_Sha256Final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+        wc_Sha256Final((wc_Sha256*)&sha, (byte*)map->p);
 
         map->next = list->head;
         list->head = map;
