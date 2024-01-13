@@ -70,7 +70,11 @@ static const char samplePublicKeyRsaBuffer[] =
     static int MaxSeenTxSize = 0;
 #endif
 
-
+/* Show HW lockdepth. Oddities here are often a symptom of stack overflow. */
+#if !defined(NO_WOLFSSL_ESP32_CRYPT_HASH) && \
+     defined(WOLFSSL_ESP32_HW_LOCK_DEBUG)
+    #define SSH_SERVER_DEBUG_LOCKDEPTH
+#endif
 /* Map user names to passwords */
 /* Use arrays for username and p. The password or public key can
  * be hashed and the hash stored here. Then I won't need the type. */
@@ -657,16 +661,18 @@ static PwMap* PwMapNew(PwMapList* list,
         ESP_LOGI(TAG, "SHA256 flatSz: 0x%02x%02x%02x%02x; size = %d",
                       flatSz[0], flatSz[1], flatSz[2], flatSz[3], fsz);
         ESP_LOGI(TAG, "SHA256 sample password: '%s': size = %d bytes", p, pSz);
-    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
-        ESP_LOGW(TAG, "PwMapNew sha256 final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
-        ESP_LOGW(TAG, "calling wc_Sha256Update(1) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
+        ESP_LOGW(TAG, "PwMapNew sha256 final ctx->lockDepth = %d",
+                       (&sha.ctx)->lockDepth);
+        ESP_LOGW(TAG, "calling wc_Sha256Update(1) ctx->lockDepth = %d",
+                       (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Update((wc_Sha256*)&sha, flatSz, fsz);
-    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
         ESP_LOGW(TAG, "calling wc_Sha256Update(2) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Update((wc_Sha256*)&sha, p, pSz);
-    #ifndef NO_WOLFSSL_ESP32_CRYPT_HASH
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
         ESP_LOGW(TAG, "calling wc_Sha256Final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Final((wc_Sha256*)&sha, (byte*)map->p);

@@ -61,11 +61,15 @@
     #define WOLFSSL_PTHREADS
 
     #define WOLFSSH_TEST_SERVER
-    #define WOLFSSH_TEST_THREADING
 
+    /* optional threading test code can be enabled: */
+    /* #define WOLFSSH_TEST_THREADING */
+
+    /* The "no file system" for wolfSSL */
     #undef  NO_FILESYSTEM
     #define NO_FILESYSTEM
 
+    /* The "no file system" for wolfSSH */
     #undef  WOLFSSH_NO_FILESYSTEM
     #define WOLFSSH_NO_FILESYSTEM
 

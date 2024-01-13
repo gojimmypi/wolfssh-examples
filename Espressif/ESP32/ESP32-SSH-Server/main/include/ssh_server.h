@@ -1,5 +1,3 @@
-#pragma once
-
 /* ssh_server.h
  *
  * Copyright (C) 2014-2022 wolfSSL Inc.
@@ -19,28 +17,20 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-
-#ifndef _WOLFSSH_EXAMPLES_SERVER_H_
-#define _WOLFSSH_EXAMPLES_SERVER_H_
+#ifndef _WOLFSSH_EXAMPLES_SSH_SERVER_H_
+#define _WOLFSSH_EXAMPLES_SSH_SERVER_H_
 
 #include <freertos/FreeRTOS.h>
 
-
 #ifdef HAVE_CONFIG_H
-#include <config.h>
+    #include <config.h>
 #endif
-
-
-#define NO_FILESYSTEM
-#define WOLFSSH_TEST_SERVER
-#define WOLFSSH_TEST_THREADING
 
 /* make sure this appears before any other wolfSSL headers */
 #ifdef WOLFSSL_USER_SETTINGS
-#include <wolfssl/wolfcrypt/settings.h>
+    #include <wolfssl/wolfcrypt/settings.h>
 #else
-#include <wolfssl/options.h>
+    #include <wolfssl/options.h>
 #endif
 
 /* wolfSSL */
@@ -49,6 +39,7 @@
 #include <wolfssl/wolfcrypt/sha256.h>
 #include <wolfssl/wolfcrypt/coding.h>
 
+/* wolfSSH */
 #include <wolfssh/ssh.h>
 #include <wolfssl/wolfcrypt/ecc.h>
 
