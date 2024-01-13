@@ -310,6 +310,9 @@ void app_main(void)
 #ifdef ESP_TASK_MAIN_STACK
     ESP_LOGI(TAG, "ESP_TASK_MAIN_STACK: %d", ESP_TASK_MAIN_STACK);
 #endif
+#ifdef ESP_TASK_MAIN_STACK
+    ESP_LOGI(TAG, "ESP_TASK_MAIN_STACK: %d", ESP_TASK_MAIN_STACK);
+#endif
 #ifdef TASK_EXTRA_STACK_SIZE
     ESP_LOGI(TAG, "TASK_EXTRA_STACK_SIZE: %d", TASK_EXTRA_STACK_SIZE);
 #endif
@@ -327,25 +330,42 @@ void app_main(void)
     stack_start = uxTaskGetStackHighWaterMark(NULL);
     ESP_LOGI(TAG, "Stack Start HWM: %d bytes", stack_start);
 #endif
+    ESP_LOGI(TAG, "UART_RX_TASK_STACK_SIZE:   %d bytes",
+                   UART_RX_TASK_STACK_SIZE);
+    ESP_LOGI(TAG, "UART_TX_TASK_STACK_SIZE:   %d bytes",
+                   UART_TX_TASK_STACK_SIZE);
+    ESP_LOGI(TAG, "SERVER_SESSION_STACK_SIZE: %d bytes",
+                   SERVER_SESSION_STACK_SIZE);
+#ifdef ESP_ENABLE_WOLFSSH
+    ESP_LOGI(TAG, "SSH DEFAULT_WINDOW_SZ:     %d bytes",
+                   DEFAULT_WINDOW_SZ);
+#else
+    #error "ESP_ENABLE_WOLFSSH ust be enabled for this project"
+#endif
 #if defined(HAVE_VERSION_EXTENDED_INFO)
     esp_ShowExtendedSystemInfo();
 #endif
 
     init();
-    /* note that by the time we get here, the scheduler is already running!
-     * see https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html#esp-idf-freertos-applications
+    /* Note that by the time we get here, the scheduler is already running!
+     * See https://docs.espressif.com/projects/esp-idf/en/latest/esp32/api-reference/system/freertos.html#esp-idf-freertos-applications
      * Unlike Vanilla FreeRTOS, users must not call vTaskStartScheduler();
      *
-     * all of the tasks are at the same, highest idle priority, so they will all get equal attention
-     * when priority was set to configMAX_PRIORITIES - [1,2,3] there was an odd WDT timeout warning.
+     * All of the tasks are at the same, highest idle priority, so they will
+     * all get equal attentiom when priority was set to
+     *   configMAX_PRIORITIES - [1,2,3]
+     * there was an odd WDT timeout warning.
      */
-    xTaskCreate(uart_rx_task, "uart_rx_task", 4048 * 2, NULL,
+    xTaskCreate(uart_rx_task, "uart_rx_task",
+                UART_RX_TASK_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
 
-    xTaskCreate(uart_tx_task, "uart_tx_task", 4048 * 2, NULL,
+    xTaskCreate(uart_tx_task, "uart_tx_task",
+                UART_TX_TASK_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
 
-    xTaskCreate(server_session, "server_session", 108024, NULL,
+    xTaskCreate(server_session, "server_session",
+                SERVER_SESSION_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
 
 

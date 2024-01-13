@@ -30,13 +30,23 @@
 #include <wolfssl/wolfcrypt/settings.h>
 /* Reminder: settings.h includes wolfssl/user_settings.h */
 #ifndef WOLFSSL_ESPIDF
-    #warning "Problem with wolfSSL user_settings."
-    #warning "Check components/wolfssl/include"
+    #error "Problem with wolfSSL user_settings."
+    #error "Check components/wolfssl/include"
 #endif
 #include <wolfssl/version.h>
 
 /* wolfSSH  */
 #include <wolfssh/ssh.h>
 #include <wolfssh/log.h>
+
+/* Project settings */
+
+/* See also user.settings.g, in particular DEFAULT_WINDOW_SZ
+ * that can drammatically affect required memory. */
+#define UART_RX_TASK_STACK_SIZE   ( 4 * 1024)
+#define UART_TX_TASK_STACK_SIZE   ( 4 * 1024)
+
+/* 20K is known to work for demo; 15K observed to fail with default settings */
+#define SERVER_SESSION_STACK_SIZE (20 * 1024)
 
 #endif
