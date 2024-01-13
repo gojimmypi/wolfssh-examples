@@ -289,7 +289,8 @@ int wifi_init_sta(void)
 
 int wifi_show_ip(void)
 {
-    // TODO Causes panic: ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+    /* TODO Causes panic:
+     * ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip)); */
     return ESP_OK;
 }
 #endif

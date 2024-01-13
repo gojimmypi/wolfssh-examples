@@ -61,7 +61,7 @@
  *  #define WOLFSSH_SERVER_IS_STA
  **/
 
-// #define WOLFSSH_SERVER_IS_AP
+/* #define WOLFSSH_SERVER_IS_AP */
 #define WOLFSSH_SERVER_IS_STA
 
 /* set GPIO pins for UART_NUM_1 */
@@ -69,19 +69,24 @@
 #undef ULX3S
 #undef M5STICKC
 
+
+/*
+ * Example documentation images:
+ *   Tx (transmit) is orange wire
+ *   Rx (receive)  is yellow wire
+ */
 #ifdef M5STICKC
     /* reminder GPIO 34 to 39 are input only */
-    #define TXD_PIN (GPIO_NUM_26) /* orange */
-    #define RXD_PIN (GPIO_NUM_36) /* yellow */
+    #define TXD_PIN (GPIO_NUM_26)
+    #define RXD_PIN (GPIO_NUM_36)
 #elif defined (ULX3S)
     /* reminder GPIO 34 to 39 are input only */
-    #define TXD_PIN (GPIO_NUM_32) /* orange */
-    #define RXD_PIN (GPIO_NUM_33) /* yellow */
+    #define TXD_PIN (GPIO_NUM_32)
+    #define RXD_PIN (GPIO_NUM_33)
 #else
-    #define TXD_PIN (GPIO_NUM_17) /* orange */
-    #define RXD_PIN (GPIO_NUM_16) /* yellow */
+    #define TXD_PIN (GPIO_NUM_17)
+    #define RXD_PIN (GPIO_NUM_16)
 #endif
-
 
 
 #define SSH_SERVER_BANNER "wolfSSH Example Server\n"
@@ -95,31 +100,13 @@
 
 /* set SSH_SERVER_ECHO to a value of 1 to echo UART
  * this is optional and typically not desired as the
- * UART target will typically echo its own characters.
+ * UART target will usually echo its own characters.
  * Valid values are 0 and 1.
  */
 #define SSH_SERVER_ECHO 0
 
 
-/*
- * Time server settings.
- *
- * Accurate time is often important in cryptographic key exchange.
- *
- * see https://tf.nist.gov/tf-cgi/servers.cgi
- */
-#define NTP_SERVER_LIST ( (char*[]) {        \
-                                     "pool.ntp.org",         \
-                                     "time.nist.gov",        \
-                                     "utcnist.colorado.edu"  \
-                                     }                       \
-                        )
-
-
-#define TIME_ZONE "PST-8"
-
-
-/* TODO will be ever need WOLFSSL_NUCLEUS here? probably not  */
+/* TODO will we ever need WOLFSSL_NUCLEUS here? probably not. */
 #ifdef WOLFSSL_NUCLEUS
     #define WFD_SET_TYPE FD_SET
     #define WFD_SET NU_FD_Set
@@ -154,18 +141,7 @@
 #define SCRATCH_BUFFER_SZ 1200
 
 
-/* NELEMS(x) number of elements
- * To determine the number of elements in the array, we can divide the total size of
- * the array by the size of the array element
- * See https://stackoverflow.com/questions/37538/how-do-i-determine-the-size-of-my-array-in-c
- **/
-#define NELEMS(x)  ( (int)(sizeof(x) / sizeof((x)[0])) )
 
-/* #define NTP_SERVER_COUNT  (int)(sizeof(NTP_SERVER_LIST) / sizeof(NTP_SERVER_LIST[0])) */
-#define NTP_SERVER_COUNT NELEMS(NTP_SERVER_LIST)
-
-/* our NTP server list is global info */
-extern char* ntpServerList[NTP_SERVER_COUNT];
 
 
 #ifdef  WOLFSSH_SERVER_IS_AP

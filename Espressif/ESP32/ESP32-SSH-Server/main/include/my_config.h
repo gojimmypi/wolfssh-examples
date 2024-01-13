@@ -99,8 +99,8 @@ endif()
     #include SYSPROGS_MY_PRIVATE_CONFIG
 
 #elif defined(WINDOWS_MY_PRIVATE_CONFIG)
-    // #pragma message ( "Found WINDOWS_MY_PRIVATE_CONFIG !" )
-    // #pragma message ( XSTR(WINDOWS_MY_PRIVATE_CONFIG) )
+    /* #pragma message ( "Found WINDOWS_MY_PRIVATE_CONFIG !" ) */
+    /* #pragma message ( XSTR(WINDOWS_MY_PRIVATE_CONFIG) )     */
     #include WINDOWS_MY_PRIVATE_CONFIG
 
 #elif defined(WSL_MY_PRIVATE_CONFIG)

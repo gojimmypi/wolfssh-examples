@@ -28,10 +28,6 @@
 #include "string.h"
 #include "ssh_server.h"
 
-//#ifndef portTICK_PERIOD_MS
-//    #define portTICK_PERIOD_MS ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
-//#endif
-
 /* portTICK_PERIOD_MS is ( ( TickType_t ) 1000 / configTICK_RATE_HZ )
  * configTICK_RATE_HZ is CONFIG_FREERTOS_HZ
  * CONFIG_FREERTOS_HZ is 100

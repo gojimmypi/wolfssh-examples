@@ -105,7 +105,7 @@
 #define NO_OLD_TLS
 
 /* TLS 1.3 */
-// #define MY_USE_TLS13
+/* #define MY_USE_TLS13 */
 #ifdef MY_USE_TLS13
     #define WOLFSSL_TLS13
     #define HAVE_TLS_EXTENSIONS
