@@ -185,8 +185,10 @@ int init(void)
      * Some lwIP APIs, including SNTP functions, are not thread safe. */
     ret = set_time(); /* need to setup NTP before WiFi */
 
+#ifndef DISABLE_SSH_UART
     /* Our "External" device will be the UART, connected to the SSH server */
     init_UART();
+#endif
 
     /*
      * here we have one of three options:
@@ -220,7 +222,7 @@ int init(void)
         init_nvsflash();
 
         ESP_LOGI(TAG, "Begin setup WiFi STA.");
-      // wifi_init_sta();
+        wifi_init_sta();
         ESP_LOGI(TAG, "End setup WiFi STA.");
     }
     #else
@@ -336,6 +338,7 @@ void app_main(void)
      *   configMAX_PRIORITIES - [1,2,3]
      * there was an odd WDT timeout warning.
      */
+#ifndef DISABLE_SSH_UART
     xTaskCreate(uart_rx_task, "uart_rx_task",
                 UART_RX_TASK_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
@@ -343,6 +346,7 @@ void app_main(void)
     xTaskCreate(uart_tx_task, "uart_tx_task",
                 UART_TX_TASK_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
+#endif
 
     xTaskCreate(server_session, "server_session",
                 SERVER_SESSION_STACK_SIZE, NULL,
