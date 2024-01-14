@@ -77,7 +77,7 @@
 #endif
 
 /* breadcrumb prefix for logging */
-const static char *TAG = "wifi_connect";
+static const char *TAG = "wifi_connect";
 
 /* we'll change WiFiEthernetReady in event handler
  *
@@ -197,7 +197,10 @@ static void event_handler(void* arg,
 int wifi_init_sta(void)
 {
     int ret = ESP_OK;
-
+#if defined(CONFIG_IDF_TARGET_ESP8266)
+    ESP_LOGE(TAG, "Error: wifi_init_sta not implemented for ESP8266");
+#else
+    /* ESP32, non-ESP8266 WiFi begin */
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
@@ -240,15 +243,15 @@ int wifi_init_sta(void)
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &wifi_config) );
 
-#ifdef CONFIG_EXAMPLE_WIFI_SSID
-    if (XSTRCMP(CONFIG_EXAMPLE_WIFI_SSID, "myssid") == 0) {
-        ESP_LOGW(TAG, "WARNING: CONFIG_EXAMPLE_WIFI_SSID is \"myssid\".");
-        ESP_LOGW(TAG, "  Do you have a WiFi AP called \"myssid\", ");
-        ESP_LOGW(TAG, "  or did you forget the ESP-IDF configuration?");
-    }
-#else
-    ESP_LOGW(TAG, "WARNING: CONFIG_EXAMPLE_WIFI_SSID not defined.");
-#endif
+    #ifdef CONFIG_EXAMPLE_WIFI_SSID
+        if (XSTRCMP(CONFIG_EXAMPLE_WIFI_SSID, "myssid") == 0) {
+            ESP_LOGW(TAG, "WARNING: CONFIG_EXAMPLE_WIFI_SSID is \"myssid\".");
+            ESP_LOGW(TAG, "  Do you have a WiFi AP called \"myssid\", ");
+            ESP_LOGW(TAG, "  or did you forget the ESP-IDF configuration?");
+        }
+    #else
+        ESP_LOGW(TAG, "WARNING: CONFIG_EXAMPLE_WIFI_SSID not defined.");
+    #endif
 
     ESP_ERROR_CHECK(esp_wifi_start() );
 
@@ -265,34 +268,36 @@ int wifi_init_sta(void)
 
     /* xEventGroupWaitBits() returns the bits before the call returned,
      * hence we can test which event actually happened. */
-#if defined(SHOW_SSID_AND_PASSWORD)
-    ESP_LOGW(TAG, "Undefine SHOW_SSID_AND_PASSWORD to not show SSID/password");
-    if (bits & WIFI_CONNECTED_BIT) {
-        ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
-                       EXAMPLE_ESP_WIFI_SSID,
-                       EXAMPLE_ESP_WIFI_PASS);
-    }
-    else if (bits & WIFI_FAIL_BIT) {
-        ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
-                       EXAMPLE_ESP_WIFI_SSID,
-                       EXAMPLE_ESP_WIFI_PASS);
-    }
-    else {
-        ESP_LOGE(TAG, "UNEXPECTED EVENT");
-    }
-#else
-    if (bits & WIFI_CONNECTED_BIT) {
-        ESP_LOGI(TAG, "Connected to AP");
-    }
-    else if (bits & WIFI_FAIL_BIT) {
-        ESP_LOGI(TAG, "Failed to connect to AP");
-        ret = -1;
-    }
-    else {
-        ESP_LOGE(TAG, "AP UNEXPECTED EVENT");
-        ret = -2;
-    }
-#endif
+    #if defined(SHOW_SSID_AND_PASSWORD)
+        ESP_LOGW(TAG, "Undefine SHOW_SSID_AND_PASSWORD to not show SSID/password");
+        if (bits & WIFI_CONNECTED_BIT) {
+            ESP_LOGI(TAG, "connected to ap SSID:%s password:%s",
+                           EXAMPLE_ESP_WIFI_SSID,
+                           EXAMPLE_ESP_WIFI_PASS);
+        }
+        else if (bits & WIFI_FAIL_BIT) {
+            ESP_LOGI(TAG, "Failed to connect to SSID:%s, password:%s",
+                           EXAMPLE_ESP_WIFI_SSID,
+                           EXAMPLE_ESP_WIFI_PASS);
+        }
+        else {
+            ESP_LOGE(TAG, "UNEXPECTED EVENT");
+        }
+    #else
+        if (bits & WIFI_CONNECTED_BIT) {
+            ESP_LOGI(TAG, "Connected to AP");
+        }
+        else if (bits & WIFI_FAIL_BIT) {
+            ESP_LOGI(TAG, "Failed to connect to AP");
+            ret = -1;
+        }
+        else {
+            ESP_LOGE(TAG, "AP UNEXPECTED EVENT");
+            ret = -2;
+        }
+    #endif /* SHOW_SSID_AND_PASSWORD */
+#endif /* ESP32 or ESP8266 implementation */
+
     return ret;
 }
 
