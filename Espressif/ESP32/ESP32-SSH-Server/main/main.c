@@ -82,6 +82,8 @@
 #define LOG_LOCAL_LEVEL ESP_LOG_INFO
 #include <esp_log.h>
 
+#define THIS_MAX_MAIN_STACK_SIZE 6000
+
 static const char *TAG = "SSH Server main";
 
 /* 10 seconds, used for heartbeat message in thread */
@@ -279,6 +281,12 @@ void app_main(void)
     ESP_LOGI(TAG, "---------------------- BEGIN MAIN ----------------------");
     ESP_LOGI(TAG, "--------------------------------------------------------");
     ESP_LOGI(TAG, "--------------------------------------------------------");
+#ifdef CONFIG_ESP_MAIN_TASK_STACK_SIZE
+    ESP_LOGI(TAG, "ESP_TASK_MAIN_STACK: %d", CONFIG_ESP_MAIN_TASK_STACK_SIZE);
+    if (CONFIG_ESP_MAIN_TASK_STACK_SIZE > THIS_MAX_MAIN_STACK_SIZE) {
+        ESP_LOGW(TAG, "Warning: excessively large main task size!");
+    }
+#endif
 #ifdef ESP_TASK_MAIN_STACK
     ESP_LOGI(TAG, "ESP_TASK_MAIN_STACK: %d", ESP_TASK_MAIN_STACK);
 #endif
