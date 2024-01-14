@@ -52,7 +52,7 @@
 /* we are going to use a real backspace instead of 0x7f observed */
 const char backspace[1] = { (char)0x08 };
 static SemaphoreHandle_t xUART_Semaphore = NULL;
-static char* TAG = "uart_helper";
+static const char* TAG = "uart_helper";
 
 /*
  * startupMessage is the message before actually connecting to UART in server task thread.
