@@ -29,6 +29,7 @@
  */
 
 #include <driver/gpio.h>
+#include <hal/gpio_types.h>
 
 /**
  ******************************************************************************
@@ -97,8 +98,14 @@
     #define TXD_PIN (GPIO_Pin_15)
     #define RXD_PIN (GPIO_Pin_13) /* TODO assign valid GPIO */
 #else
-    #define TXD_PIN (GPIO_NUM_17)
+    #ifndef GPIO_NUM_17
+        #define GPIO_NUM_17 17
+    #endif
+    #ifndef GPIO_NUM_16
+        #define GPIO_NUM_16 16
+    #endif
     #define RXD_PIN (GPIO_NUM_16)
+    #define TXD_PIN (GPIO_NUM_17)
 #endif
 
 
