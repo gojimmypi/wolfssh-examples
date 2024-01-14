@@ -75,8 +75,11 @@
 
 #endif /* ESP_ENABLE_WOLFSSH */
 
-/* when you want to use SINGLE THREAD */
+/* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
+/* TODO: depth mismatch when disabling SINGLE_THREADED ?
+ * (but putty cannot connect: server host key invalid when defined) */
 /* #define SINGLE_THREADED */
+#define WOLFSSH_TEST_THREADING
 
 /*
  * choose ONE of these Espressif chips to define:
@@ -91,9 +94,6 @@
 /* optionally turn off SHA512/224 SHA512/256 */
 /* #define WOLFSSL_NOSHA512_224 */
 /* #define WOLFSSL_NOSHA512_256 */
-
-/* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
-/* #define SINGLE_THREADED */
 
 /* When you don't want to use the old SHA */
 /* #define NO_SHA */
@@ -173,6 +173,9 @@
     #else
         #undef  WOLFSSH_NO_RSA
         #define WOLFSSH_NO_RSA
+
+        #undef  NO_RSA
+        #define NO_RSA
     #endif
 #else
     #error "Either RSA or ECC must be enabled"
