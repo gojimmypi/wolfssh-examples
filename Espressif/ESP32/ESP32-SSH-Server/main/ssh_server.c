@@ -30,7 +30,7 @@
 static volatile byte sshStreamTransmitBufferArray[EXT_TX_BUF_MAX_SZ];
 static volatile byte sshStreamReceiveBufferArray[EXT_RX_BUF_MAX_SZ];
 
-char * TAG = "ssh_server";
+static const char* TAG = "ssh_server";
 
 static const char samplePasswordBuffer[] =
     "jill:upthehill\n"
