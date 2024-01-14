@@ -89,11 +89,12 @@ DLL Release
 **/*.vgdbproj.*.user
 
 
-# Espressif sdk config default should be saved in sdkconfig.defaults
-# we won't track the actual working sdkconfig files
+# Espressif sdk config defaults should be saved in `sdkconfig.defaults`
+# we won't track the actual working `sdkconfig` files
 /Espressif/**/out/
 /Espressif/**/sdkconfig
 /Espressif/**/sdkconfig.old
+/Espressif/**/CMakeLists.txt.old
 
 # Espressif managed components to exclude:
 /Espressif/**/managed_components/**
