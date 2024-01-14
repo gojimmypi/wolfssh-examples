@@ -23,10 +23,10 @@
 /* sdkconfig needed for target chipset identification */
 #include "sdkconfig.h"
 
-/* WOLFSSL_USER_SETTINGS is defined here only for the syntax highlighter
- * see CMakeLists.txt
-#define WOLFSSL_USER_SETTINGS
- */
+/* Define wolfSSL settings in user_settings.h; NOT HERE! */
+
+/* wolfSSL  */
+#include <wolfssl/wolfcrypt/settings.h>
 
 #include <driver/gpio.h>
 #include <hal/gpio_types.h>
@@ -38,7 +38,6 @@
  ******************************************************************************
  ******************************************************************************
  **/
-#define SINGLE_THREADED
 
 
 

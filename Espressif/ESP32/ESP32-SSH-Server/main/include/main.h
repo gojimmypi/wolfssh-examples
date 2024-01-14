@@ -46,7 +46,21 @@
 #define UART_RX_TASK_STACK_SIZE   ( 4 * 1024)
 #define UART_TX_TASK_STACK_SIZE   ( 4 * 1024)
 
-/* 20K is known to work for demo; 15K observed to fail with default settings */
-#define SERVER_SESSION_STACK_SIZE (20 * 1024)
+#ifdef WOLFSSH_TEST_THREADING
+    #define SERVER_SESSION_STACK_SIZE (4 * 1024)
+    /* SSH Server will use pthreads task */
+    #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT
+        #if (CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT < 20096)
+            #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT too small"
+        #endif
+    #else
+        #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT needs to be defined " \
+               "when WOLFSSH_TEST_THREADING is enabled "
+    #endif
+#else
+    /* 20K is known to work for demo; TODO determine more exact minimum.
+     * 15K observed to fail with default settings */
+    #define SERVER_SESSION_STACK_SIZE (25 * 1024)
+#endif
 
 #endif /* _MAIN_H_ */

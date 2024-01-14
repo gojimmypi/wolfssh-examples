@@ -79,6 +79,9 @@
 /* TODO: depth mismatch when disabling SINGLE_THREADED ?
  * (but putty cannot connect: server host key invalid when defined) */
 /* #define SINGLE_THREADED */
+
+/* Need to increase pthread stack size when using WOLFSSH_TEST_THREADING */
+/* Minimum defined size should be 20096 */
 #define WOLFSSH_TEST_THREADING
 
 /*
@@ -297,6 +300,14 @@
     /* wolfSSL HW Acceleration supported on ESP32. Uncomment to disable: */
     /*  #define NO_ESP32_CRYPT                 */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH    */
+/*
+ * optionally turn off individual SHA
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
+*/
     /*  #define NO_WOLFSSL_ESP32_CRYPT_AES     */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */
