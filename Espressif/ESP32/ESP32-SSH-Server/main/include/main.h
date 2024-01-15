@@ -64,8 +64,11 @@
     #endif
 #else
     /* 20K is known to work for demo w/ ECC; TODO determine more exact minimum.
-     * 15K observed to fail with default settings */
-    #define SERVER_SESSION_STACK_SIZE (23 * 1024)
+     * 15K observed to fail with default settings
+     *
+     * Currently faling with SINGLE_THREADED,
+     *    even on S3 with SERVER_SESSION_STACK_SIZE = 153KB */
+    #define SERVER_SESSION_STACK_SIZE (153 * 1024)
 
     /* SSH Server will use NOT pthreads task without WOLFSSH_TEST_THREADING */
     #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT

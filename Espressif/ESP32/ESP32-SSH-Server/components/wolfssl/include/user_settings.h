@@ -86,7 +86,7 @@
 #define SINGLE_THREADED
 
 /* Need to increase pthread stack size when using WOLFSSH_TEST_THREADING */
-/* Minimum defined size should be 20096 */
+/* Minimum defined size should be 20096, but not in SINGLE_THREADED */
 // #define WOLFSSH_TEST_THREADING
 
 #if defined(WOLFSSH_TEST_THREADING) && defined(SINGLE_THREADED)
