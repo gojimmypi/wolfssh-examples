@@ -33,39 +33,18 @@
     #include <wolfssl/options.h>
 #endif
 
-/* wolfSSL */
-#include <wolfssl/ssl.h>
-#include <wolfssl/wolfcrypt/logging.h>
-#include <wolfssl/wolfcrypt/sha256.h>
-#include <wolfssl/wolfcrypt/coding.h>
+///* wolfSSL */
+//#include <wolfssl/ssl.h>
+//#include <wolfssl/wolfcrypt/logging.h>
+//#include <wolfssl/wolfcrypt/sha256.h>
+//#include <wolfssl/wolfcrypt/coding.h>
+//
+///* wolfSSH */
+//#include <wolfssh/ssh.h>
+//#include <wolfssl/wolfcrypt/ecc.h>
 
-/* wolfSSH */
-#include <wolfssh/ssh.h>
-#include <wolfssl/wolfcrypt/ecc.h>
 
-
-#include <pthread.h>
-#ifdef SINGLE_THREADED
-    typedef void* THREAD_RETURN;
-    typedef void* THREAD_TYPE;
-    #define WOLFSSH_THREAD
-#else
-    #if defined(_POSIX_THREADS) && !defined(__MINGW32__)
-        typedef void* THREAD_RETURN;
-        typedef pthread_t     THREAD_TYPE;
-        #define WOLFSSH_THREAD
-        #define INFINITE -1
-        #define WAIT_OBJECT_0 0L
-    #elif defined(WOLFSSL_NUCLEUS) || defined(FREESCALE_MQX)
-        typedef unsigned int  THREAD_RETURN;
-        typedef intptr_t      THREAD_TYPE;
-        #define WOLFSSH_THREAD
-    #else
-        typedef unsigned int  THREAD_RETURN;
-        typedef intptr_t      THREAD_TYPE;
-        #define WOLFSSH_THREAD __stdcall
-    #endif
-#endif
+// #include <pthread.h>
 
 /* socket includes */
 #include "lwip/netdb.h"

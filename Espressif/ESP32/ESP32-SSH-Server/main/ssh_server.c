@@ -23,8 +23,31 @@
 
 
 #include <esp_task_wdt.h>
-#include <wolfssl/wolfcrypt/logging.h>
 
+/* wolfSSL */
+#ifndef WOLFSSL_USER_SETTINGS
+    #error "WOLFSSL_USER_SETTINGS should have been defined in project cmake"
+#endif
+/* Important: make sure settings.h appears before any other wolfSSL headers */
+#include <wolfssl/wolfcrypt/settings.h>
+#include <wolfssl/wolfcrypt/port/Espressif/esp32-crypt.h>
+#include <wolfssl/wolfcrypt/types.h>
+#include <wolfssl/wolfcrypt/logging.h>
+#ifndef WOLFSSL_ESPIDF
+    #error "Problem with wolfSSL user_settings."
+    #error "Check [project]/components/wolfssl/include"
+#endif
+
+/* wolfSSL */
+#include <wolfssl/ssl.h>
+#include <wolfssl/wolfcrypt/ecc.h>
+#include <wolfssl/wolfcrypt/logging.h>
+#include <wolfssl/wolfcrypt/coding.h>
+#include <wolfssl/wolfcrypt/sha256.h>
+
+/* wolfSSH */
+#include <wolfssh/ssh.h>
+#include <wolfssh/test.h>
 
 /* note our actual buffer is used by RTOS threads, and eventually interrupts */
 static volatile byte sshStreamTransmitBufferArray[EXT_TX_BUF_MAX_SZ];
@@ -91,12 +114,6 @@ typedef struct PwMapList {
     PwMap* head;
 } PwMapList;
 
-enum {
-    WS_SELECT_FAIL,
-    WS_SELECT_TIMEOUT,
-    WS_SELECT_RECV_READY,
-    WS_SELECT_ERROR_READY
-};
 
 typedef struct {
     WOLFSSH* ssh;
@@ -112,19 +129,21 @@ typedef struct {
  */
 static byte find_char(const byte* str, const byte* buf, word32 bufSz)
 {
+    int ret = 0;
     const byte* cur;
-    while (bufSz) {
+    while (bufSz && (ret == 0)) {
         cur = str;
         while (*cur != '\0') {
-            if (*cur == *buf)
-                return *cur;
+            if (*cur == *buf) {
+                ret = *cur;
+            }
             cur++;
         }
         buf++;
         bufSz--;
     }
 
-    return 0;
+    return ret;
 }
 
 
@@ -151,56 +170,6 @@ static int dump_stats(thread_ctx_t* ctx)
 
     fprintf(stderr, "%s", stats);
     return wolfSSH_stream_send(ctx->ssh, (byte*)stats, statsSz);
-}
-
-static WC_INLINE int wSelect(int nfds,
-                             WFD_SET_TYPE* recvfds,
-                             WFD_SET_TYPE *writefds,
-                             WFD_SET_TYPE *errfds,
-                             struct timeval* timeout)
-{
-#ifdef WOLFSSL_NUCLEUS
-    int ret = NU_Select(nfds,
-        recvfds,
-        writefds,
-        errfds,
-        (UNSIGNED)timeout->tv_sec);
-    if (ret == NU_SUCCESS) {
-        return 1;
-    }
-    return 0;
-#else
-    return select(nfds, recvfds, writefds, errfds, timeout);
-#endif
-}
-
-/*
- * tcp_select; call wSelect & check for success or fail
- */
-static WC_INLINE int tcp_select(SOCKET_T socketfd, int to_sec)
-{
-    WFD_SET_TYPE recvfds, errfds;
-    int nfds = (int)socketfd + 1;
-    struct timeval timeout = { (to_sec > 0) ? to_sec : 0, 0 };
-    int result;
-
-    WFD_ZERO(&recvfds);
-    WFD_SET(socketfd, &recvfds);
-    WFD_ZERO(&errfds);
-    WFD_SET(socketfd, &errfds);
-
-    result = wSelect(nfds, &recvfds, NULL, &errfds, &timeout);
-
-    if (result == 0)
-        return WS_SELECT_TIMEOUT;
-    else if (result > 0) {
-        if (WFD_ISSET(socketfd, &recvfds))
-            return WS_SELECT_RECV_READY;
-        else if (WFD_ISSET(socketfd, &errfds))
-            return WS_SELECT_ERROR_READY;
-    }
-
-    return WS_SELECT_FAIL;
 }
 
 static int NonBlockSSH_accept(WOLFSSH* ssh)
@@ -641,7 +610,7 @@ static PwMap* PwMapNew(PwMapList* list,
 
     map = (PwMap*)malloc(sizeof(PwMap));
     if (map != NULL) {
-     /* wc_Sha256 sha[2] = {  }; */
+     //   wc_Sha256 sha[2] = {  };
         wc_Sha256 sha;
         byte flatSz[4];
         int fsz = 0;
@@ -894,64 +863,6 @@ static int wsUserAuth(byte authType,
 typedef THREAD_RETURN WOLFSSH_THREAD THREAD_FUNC(void*);
 
 
-static WC_INLINE void ThreadStart(THREAD_FUNC fun, void* args, THREAD_TYPE* thread) {
-#ifdef SINGLE_THREADED
-    (void)fun;
-    (void)args;
-    (void)thread;
-#elif defined(_POSIX_THREADS) && !defined(__MINGW32__)
-#ifdef WOLFSSL_VXWORKS
-    {
-        pthread_attr_t myattr;
-        pthread_attr_init(&myattr);
-        pthread_attr_setstacksize(&myattr, 0x10000);
-        pthread_create(thread, &myattr, fun, args);
-    }
-#else
-    pthread_create(thread, 0, fun, args);
-#endif
-    return;
-#elif defined(WOLFSSL_TIRTOS)
-    /* Initialize the defaults and set the parameters. */
-    Task_Params taskParams;
-    Task_Params_init(&taskParams);
-    taskParams.arg0 = (UArg)args;
-    taskParams.stackSize = 65535;
-    *thread = Task_create((Task_FuncPtr)fun, &taskParams, NULL);
-    if (*thread == NULL) {
-        printf("Failed to create new Task\n");
-    }
-    Task_yield();
-#else
-    * thread = (THREAD_TYPE)_beginthreadex(0, 0, fun, args, 0, 0);
-#endif
-}
-
-
-static WC_INLINE void ThreadJoin(THREAD_TYPE thread)
-{
-#ifdef SINGLE_THREADED
-    (void)thread;
-#elif defined(_POSIX_THREADS) && !defined(__MINGW32__)
-    pthread_join(thread, 0);
-#elif defined(WOLFSSL_TIRTOS)
-    while (1) {
-        if (Task_getMode(thread) == Task_Mode_TERMINATED) {
-            Task_sleep(5);
-            break;
-        }
-        Task_yield();
-    }
-#else
-    int res = WaitForSingleObject((HANDLE)thread, INFINITE);
-    assert(res == WAIT_OBJECT_0);
-    res = CloseHandle((HANDLE)thread);
-    assert(res);
-    (void)res; /* Suppress un-used variable warning */
-#endif
-}
-
-
 static WC_INLINE void ThreadDetach(THREAD_TYPE thread) {
 #ifdef SINGLE_THREADED
     (void)thread;
@@ -1015,27 +926,6 @@ static int my_IOSend(WOLFSSH* ssh, void* buff, word32 sz, void* ctx) {
     return ret;
 }
 */
-
-static WC_INLINE void tcp_set_nonblocking(SOCKET_T* sockfd)
-{
-    #ifdef USE_WINDOWS_API
-        unsigned long blocking = 1;
-        int ret = ioctlsocket(*sockfd, FIONBIO, &blocking);
-        if (ret == SOCKET_ERROR)
-            err_sys_with_errno("ioctlsocket failed");
-    #elif defined(WOLFSSL_MDK_ARM) || defined(WOLFSSL_KEIL_TCP_NET) \
-        || defined (WOLFSSL_TIRTOS)|| defined(WOLFSSL_VXWORKS) \
-        || defined(WOLFSSL_ZEPHYR)
-         /* non blocking not supported, for now */
-    #else
-        int flags = fcntl(*sockfd, F_GETFL, 0);
-        if (flags < 0)
-        ESP_LOGE(TAG,"fcntl get failed");
-            flags = fcntl(*sockfd, F_SETFL, flags | O_NONBLOCK);
-        if (flags < 0)
-            ESP_LOGE(TAG,"fcntl set failed");
-    #endif
-}
 
 void server_test(void *arg)
 {
