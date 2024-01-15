@@ -1,0 +1,1048 @@
+ets Jun  8 2016 00:22:57
+
+rst:0x3 (SW_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:7100
+ho 0 tail 12 room 4
+load:0x40078000,len:15584
+load:0x40080400,len:4
+load:0x40080404,len:3876
+entry 0x4008064c
+I (30) boot: ESP-IDF v5.1-231-ga7b62bbcaf-dirty 2nd stage bootloader
+I (30) boot: compile time Jan 15 2024 13:45:09
+I (32) boot: Multicore bootloader
+I (36) boot: chip revision: v1.0
+I (40) boot.esp32: SPI Speed      : 40MHz
+I (44) boot.esp32: SPI Mode       : DIO
+I (49) boot.esp32: SPI Flash Size : 2MB
+I (53) boot: Enabling RNG early entropy source...
+I (59) boot: Partition Table:
+I (62) boot: ## Label            Usage          Type ST Offset   Length
+I (70) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (77) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (85) boot:  2 factory          factory app      00 00 00010000 00177000
+I (92) boot: End of partition table
+I (96) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=2d74ch (186188) map
+I (172) esp_image: segment 1: paddr=0003d774 vaddr=3ffb0000 size=028a4h ( 10404) load
+I (176) esp_image: segment 2: paddr=00040020 vaddr=400d0020 size=b068ch (722572) map
+I (439) esp_image: segment 3: paddr=000f06b4 vaddr=3ffb28a4 size=00f24h (  3876) load
+I (440) esp_image: segment 4: paddr=000f15e0 vaddr=40080000 size=16078h ( 90232) load
+I (482) esp_image: segment 5: paddr=00107660 vaddr=50000000 size=00004h (     4) load
+I (493) boot: Loaded app from partition at offset 0x10000
+I (493) boot: Disabling RNG early entropy source...
+I (505) cpu_start: Multicore app
+I (505) cpu_start: Pro cpu up.
+I (505) cpu_start: Starting app cpu, entry point is 0x40081468
+I (493) cpu_start: App cpu up.
+I (523) cpu_start: Pro cpu start user code
+I (523) cpu_start: cpu freq: 240000000 Hz
+I (523) cpu_start: Application information:
+I (528) cpu_start: Project name:     ESP32-SSH-Server
+I (534) cpu_start: App version:      da55e63-dirty
+I (539) cpu_start: Compile time:     Jan 15 2024 13:46:04
+I (545) cpu_start: ELF file SHA256:  0d1e1bde367f941c...
+I (551) cpu_start: ESP-IDF:          v5.1-231-ga7b62bbcaf-dirty
+I (558) cpu_start: Min chip rev:     v0.0
+I (563) cpu_start: Max chip rev:     v3.99 
+I (567) cpu_start: Chip rev:         v1.0
+I (572) heap_init: Initializing. RAM available for dynamic allocation:
+I (579) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (586) heap_init: At 3FFB9E40 len 000261C0 (152 KiB): DRAM
+I (592) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (598) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (605) heap_init: At 40096078 len 00009F88 (39 KiB): IRAM
+I (612) spi_flash: detected chip: generic
+I (615) spi_flash: flash io: dio
+W (619) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Usin
+g the size in the binary image header.
+I (633) app_start: Starting scheduler on CPU0
+I (637) app_start: Starting scheduler on CPU1
+I (637) main_task: Started on CPU0
+I (647) main_task: Calling app_main()
+I (650) SSH Server main: ---------------- wolfSSL Benchmark Example -------------
+I (650) SSH Server main: --------------------------------------------------------
+I (655) SSH Server main: --------------------------------------------------------
+I (663) SSH Server main: ---------------------- BEGIN MAIN ----------------------
+I (671) SSH Server main: --------------------------------------------------------
+I (680) SSH Server main: --------------------------------------------------------
+I (688) SSH Server main: ESP_TASK_MAIN_STACK: 5500
+I (693) SSH Server main: ESP_TASK_MAIN_STACK: 6012
+I (699) SSH Server main: ESP_TASK_MAIN_STACK: 6012
+I (704) SSH Server main: TASK_EXTRA_STACK_SIZE: 512
+I (710) SSH Server main: CONFIG_ESP_MAIN_TASK_STACK_SIZE = 5500 bytes (1375 words)
+I (718) SSH Server main: Stack Start HWM: 4180 bytes
+I (724) SSH Server main: UART_RX_TASK_STACK_SIZE:   4096 bytes
+I (730) SSH Server main: UART_TX_TASK_STACK_SIZE:   4096 bytes
+I (737) SSH Server main: SERVER_SESSION_STACK_SIZE: 23552 bytes
+I (743) SSH Server main: SSH DEFAULT_WINDOW_SZ:     2000 bytes
+I (750) esp32_util: Extended Version and Platform Information.
+I (756) esp32_util: Chip revision: v1.0
+I (761) esp32_util: SSID and plain text WiFi password not displayed in startup logs.
+I (769) esp32_util:   Define SHOW_SSID_AND_PASSWORD to enable display.
+I (776) esp32_util: Using wolfSSL user_settings.h in C://workspace//wolfssh-examples-gojimmypi//Espr
+essif//ESP32//ESP32-SSH-Server//components//wolfssl//include//user_settings.h
+I (793) esp32_util: LIBWOLFSSL_VERSION_STRING = 5.6.6
+I (799) esp32_util: LIBWOLFSSL_VERSION_HEX = 5006006
+I (804) esp32_util: Stack HWM: 4180
+I (808) esp32_util: 
+I (811) esp32_util: Macro Name                 Defined   Not Defined
+I (818) esp32_util: ------------------------- --------- -------------
+I (825) esp32_util: NO_ESPIDF_DEFAULT........                 X
+I (832) esp32_util: HW_MATH_ENABLED..........     X
+I (838) esp32_util: WOLFSSL_SHA224...........                 X
+I (844) esp32_util: WOLFSSL_SHA384...........     X
+I (850) esp32_util: WOLFSSL_SHA512...........     X
+I (855) esp32_util: WOLFSSL_SHA3.............                 X
+I (862) esp32_util: HAVE_ED25519.............     X
+I (867) esp32_util: HAVE_AES_ECB.............                 X
+I (874) esp32_util: HAVE_AES_DIRECT..........                 X
+I (881) esp32_util: USE_FAST_MATH............     X
+I (886) esp32_util: WOLFSSL_SP_MATH_ALL......                 X
+I (893) esp32_util: SP_MATH..................                 X
+I (899) esp32_util: WOLFSSL_HW_METRICS.......                 X
+I (906) esp32_util: RSA_LOW_MEM..............                 X
+I (913) esp32_util: WC_NO_HARDEN.............                 X
+I (919) esp32_util: TFM_TIMING_RESISTANT.....     X
+I (925) esp32_util: ECC_TIMING_RESISTANT.....     X
+I (930) esp32_util: WC_NO_CACHE_RESISTANT....     X
+I (936) esp32_util: WC_AES_BITSLICED.........                 X
+I (942) esp32_util: WOLFSSL_AES_NO_UNROLL....                 X
+I (949) esp32_util: TFM_TIMING_RESISTANT.....     X
+I (955) esp32_util: ECC_TIMING_RESISTANT.....     X
+I (960) esp32_util: WC_RSA_BLINDING..........     X
+I (966) esp32_util: NO_WRITEV................     X
+I (971) esp32_util: FREERTOS.................     X
+I (977) esp32_util: NO_WOLFSSL_DIR...........     X
+I (982) esp32_util: WOLFSSL_NO_CURRDIR.......     X
+I (988) esp32_util: WOLFSSL_LWIP.............     X
+I (994) esp32_util: 
+I (996) esp32_util: Compiler Optimization: Default
+I (1002) esp32_util: 
+I (1005) esp32_util: LIBWOLFSSL_VERSION_GIT_ORIGIN = https://github.com/gojimmypi/wolfssl.git
+I (1014) esp32_util: LIBWOLFSSL_VERSION_GIT_BRANCH = ED25519_SHA2_fix
+I (1021) esp32_util: LIBWOLFSSL_VERSION_GIT_HASH = bbb08d4cf703417728a07da896587d328f260d25
+I (1030) esp32_util: LIBWOLFSSL_VERSION_GIT_SHORT_HASH = bbb08d4cf
+I (1037) esp32_util: LIBWOLFSSL_VERSION_GIT_HASH_DATE = 'Sun Jan 14 11:21:01 2024 -0800'
+I (1046) esp32_util: CONFIG_IDF_TARGET = esp32
+W (1051) esp32_util: Watchdog active; missing WOLFSSL_ESP_NO_WATCHDOG definition.
+I (1059) esp32_util: CONFIG_MAIN_TASK_STACK_SIZE: 5500
+I (1065) esp32_util: CONFIG_ESP_MAIN_TASK_STACK_SIZE: 5500
+I (1071) esp32_util: CONFIG_TIMER_TASK_STACK_SIZE: 3584
+I (1077) esp32_util: CONFIG_TIMER_TASK_STACK_DEPTH: 2048
+I (1083) esp32_util: Stack HWM: 3ffbc82f
+I (1088) esp32_util: CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ: 240 MHz
+I (1094) esp32_util: Xthal_have_ccount: 1
+I (1099) esp32_util: ESP32_CRYPT is enabled for ESP32.
+I (1105) esp32_util: SINGLE_THREADED
+I (1109) esp32_util: Boot count: 1
+I (1113) SSH Server main: Begin main init.
+I (1118) SSH Server main: wolfSSH debugging on.
+I (1123) SSH Server main: wolfSSL debugging on.
+I (1128) SSH Server main: Debug ON
+I (1132) time_helper: Setting the time. Startup time:
+I (1140) time_helper: The current date/time is: Mon Jan 15 15:44:56 2024
+I (1145) time_helper: Found git hash date, attempting to set system date.
+I (1153) time_helper: Time updated to 'Mon Jan 15 13:43:01 2024 -0800'
+I (1160) time_helper: The current date/time is: Mon Jan 15 12:43:01 2024
+W (1167) time_helper: WARNING: 3 NTP Servers defined, but CONFIG_LWIP_SNTP_MAX_SERVERS = 1
+I (1176) time_helper: sntp_setservername:
+I (1181) time_helper: pool.ntp.org
+I (1186) time_helper: sntp_init done.
+I (1190) time_helper: The current date/time is: Mon Jan 15 12:43:01 2024
+I (1197) time_helper: time helper existing with result = 0
+I (1203) uart_helper: Begin init_UART.
+I (1209) uart_helper: End init_UART.
+I (1212) SSH Server main: Setting up nvs flash for WiFi.
+I (1241) SSH Server main: Begin setup WiFi STA.
+I (1246) wifi:wifi driver task: 3ffc3968, prio:23, stack:6656, core=0
+I (1259) wifi:wifi firmware version: 6a2a12b
+I (1260) wifi:wifi certification version: v7.0
+I (1260) wifi:config NVS flash: enabled
+I (1260) wifi:config nano formating: disabled
+I (1265) wifi:Init data frame dynamic rx buffer num: 32
+I (1269) wifi:Init management frame dynamic rx buffer num: 32
+I (1275) wifi:Init management short buffer num: 32
+I (1279) wifi:Init dynamic tx buffer num: 32
+I (1283) wifi:Init static rx buffer size: 1600
+I (1288) wifi:Init static rx buffer num: 10
+I (1291) wifi:Init dynamic rx buffer num: 32
+I (1296) wifi_init: rx ba win: 6
+I (1299) wifi_init: tcpip mbox: 32
+I (1303) wifi_init: udp mbox: 6
+I (1307) wifi_init: tcp mbox: 6
+I (1311) wifi_init: tcp tx win: 5744
+I (1315) wifi_init: tcp rx win: 5744
+I (1319) wifi_init: tcp mss: 1440
+I (1323) wifi_init: WiFi IRAM OP enabled
+I (1328) wifi_init: WiFi RX IRAM OP enabled
+W (1335) wifi_connect: WARNING: CONFIG_EXAMPLE_WIFI_SSID is "myssid".
+W (1340) wifi_connect:   Do you have a WiFi AP called "myssid", 
+W (1347) wifi_connect:   or did you forget the ESP-IDF configuration?
+I (1354) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+I (1456) wifi:mode : sta (fc:f5:c4:0f:82:48)
+I (1457) wifi:enable tsf
+I (1459) wifi_connect: wifi_init_sta finished.
+I (1480) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1
+I (1481) wifi:state: init -> auth (b0)
+I (1489) wifi:state: auth -> assoc (0)
+I (1507) wifi:state: assoc -> run (10)
+W (1515) wifi:[ADDBA]rx delba, code:39, delete tid:0
+W (1516) wifi:[ADDBA]rx delba, code:39, delete tid:0
+W (1516) wifi:[ADDBA]rx delba, code:39, delete tid:5
+I (1528) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:25:8c:4a), tid:5, ssn:284, winSize:64
+I (1648) wifi:connected with badger, aid = 14, channel 1, BW20, bssid = 6e:82:17:25:8c:4a
+I (1649) wifi:security: WPA2-PSK, phy: bgn, rssi: -51
+I (1654) wifi:pm start, type: 1
+
+I (1730) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (2659) esp_netif_handlers: sta ip: 192.168.1.39, mask: 255.255.255.0, gw: 192.168.1.1
+I (2660) wifi_connect: Connected to AP
+I (2662) SSH Server main: End setup WiFi STA.
+I (2667) SSH Server main: inet_pton
+I (3173) time_helper: The current date/time is: Mon Jan 15 12:43:03 2024
+I (4173) time_helper: Waiting for NTP to sync time... (1/10)
+I (4174) time_helper: The current date/time is: Mon Jan 15 12:43:04 2024
+I (5176) time_helper: Waiting for NTP to sync time... (2/10)
+I (5177) time_helper: The current date/time is: Mon Jan 15 12:43:05 2024
+I (6179) time_helper: Waiting for NTP to sync time... (3/10)
+I (6180) time_helper: The current date/time is: Mon Jan 15 12:43:06 2024
+I (7182) time_helper: Waiting for NTP to sync time... (4/10)
+I (7183) time_helper: The current date/time is: Mon Jan 15 12:43:07 2024
+I (7421) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:25:8c:4a), tid:0, ssn:423, winSize:64
+I (7788) time_helper: Waiting for NTP to sync time... (5/10)
+I (7790) time_helper: The current date/time is: Mon Jan 15 15:45:03 2024
+I (7792) time_helper: Successfuly set time via NTP servers.
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_Init()
+I (7803) wolfssl: wolfSSL Entering wolfCrypt_Init
+2024-01-15 15:45:03 [DEBUG] Leaving wolfSSH_Init(), returning 0
+I (7815) SSH Server main: wolfSSH Server main loop heartbeat!
+I (7815) ssh_server: Debug ON v0.2c
+I (7826) ssh_server: socket creation successful
+I (7830) ssh_server: setsockopt re-use addr successful
+E (7836) ssh_server: 
+ERROR: failed to setsockopt port on socket.  >> IGNORED << 
+
+I (7845) ssh_server: socket bind successful.
+I (7850) ssh_server: socket listen successful
+
+I (7854) ssh_server: Found NO_RSA, setting useEcc = 1
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_Init()
+2024-01-15 15:45:03 [DEBUG] Leaving wolfSSH_Init(), returning 0
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_CTX_new()
+2024-01-15 15:45:03 [DEBUG] Entering CtxInit()
+2024-01-15 15:45:03 [DEBUG] Leaving wolfSSH_CTX_new(), ctx = 0x3ffd1f8c
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_CTX_SetBanner()
+2024-01-15 15:45:03 [INFO]   setting banner to: "wolfSSH Example Server
+"
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_CTX_UsePrivateKey_buffer()
+I (7905) wolfssl: wolfSSL Entering GetAlgoId
+I (7910) wolfssl: wolfSSL Entering GetObjectId
+2024-01-15 15:45:03 [DEBUG] Leaving wolfSSH_CTX_UsePrivateKey_buffer(), ret = 0
+I (7922) ssh_server: map->username = jill
+I (7927) ssh_server: SHA256 flatSz: 0x00000009; size = 4
+I (7933) ssh_server: SHA256 sample password: 'upthehill': size = 9 bytes
+I (7940) ssh_server: map->username = jack
+I (7945) ssh_server: SHA256 flatSz: 0x0000000a; size = 4
+I (7951) ssh_server: SHA256 sample password: 'fetchapail': size = 10 bytes
+I (7958) ssh_server: map->username = hansel
+I (7963) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (7969) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (7976) ssh_server: map->username = gretel
+I (7980) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (7986) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (7993) ssh_server: map->username = gojimmypi@DESKTOP
+I (7999) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (8005) ssh_server: SHA256 sample password: '': size = 104 bytes
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_new()
+2024-01-15 15:45:03 [DEBUG] Entering SshInit()
+2024-01-15 15:45:03 [DEBUG] Entering HandshakeInfoNew()
+2024-01-15 15:45:03 [DEBUG] Leaving wolfSSH_new(), ssh = 0x3ffd2224
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_SetHighwaterCtx()
+2024-01-15 15:45:03 [DEBUG] Entering wolfSSH_SetHighwater()
+2024-01-15 15:45:06 [DEBUG] Entering wolfSSH_set_fd()
+I (11393) ssh_server: server_worker started.
+I (11393) ssh_server: Start NonBlockSSH_accept
+2024-01-15 15:45:06 [DEBUG] Entering wolfSSH_accept()
+2024-01-15 15:45:06 [DEBUG] SSH-2.0-wolfSSHv1.4.15
+
+2024-01-15 15:45:06 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:45:06 [DEBUG] Embed Send trying to send 24
+2024-01-15 15:45:06 [DEBUG] Embed Send sent 24
+2024-01-15 15:45:06 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:45:06 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:06 [DEBUG]   buf->bufferSz = 24
+2024-01-15 15:45:06 [DEBUG]   buf->idx = 24
+2024-01-15 15:45:06 [DEBUG]   buf->length = 24
+2024-01-15 15:45:06 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:45:06 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:45:06 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:06 [DEBUG] accept state: SERVER_VERSION_SENT
+2024-01-15 15:45:06 [DEBUG] Receive: recvd = 255
+2024-01-15 15:45:06 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:06 [DEBUG]   buf->bufferSz = 255
+2024-01-15 15:45:06 [DEBUG]   buf->idx = 28
+2024-01-15 15:45:06 [DEBUG]   buf->length = 255
+2024-01-15 15:45:06 [DEBUG] SB: usedSz = 227, forcedFree = 0
+2024-01-15 15:45:06 [DEBUG] accept state: CLIENT_VERSION_DONE
+2024-01-15 15:45:06 [DEBUG] Entering SendKexInit()
+2024-01-15 15:45:06 [DEBUG] Entering BuildNameList()
+2024-01-15 15:45:06 [DEBUG] Entering BuildNameList()
+2024-01-15 15:45:06 [DEBUG]     Adding name : ecdh-sha2-nistp521
+2024-01-15 15:45:06 [DEBUG]     Adding name : ecdh-sha2-nistp384
+2024-01-15 15:45:06 [DEBUG] Entering BuildNameList()
+2024-01-15 15:45:06 [DEBUG] Entering BuildNameList()
+2024-01-15 15:45:06 [DEBUG]     Adding name : unknown
+2024-01-15 15:45:06 [DEBUG] BP: paddingSz = 7
+2024-01-15 15:45:06 [DEBUG] CreateMac none
+2024-01-15 15:45:06 [DEBUG] Encrypt none
+2024-01-15 15:45:06 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:45:06 [DEBUG] Embed Send trying to send 400
+2024-01-15 15:45:06 [DEBUG] Embed Send sent 400
+2024-01-15 15:45:06 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:45:06 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:06 [DEBUG]   buf->bufferSz = 409
+2024-01-15 15:45:06 [DEBUG]   buf->idx = 400
+2024-01-15 15:45:07 [DEBUG]   buf->length = 400
+2024-01-15 15:45:07 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:45:07 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:45:07 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG] Leaving SendKexInit(), ret = 0
+2024-01-15 15:45:07 [DEBUG] accept state: SERVER_KEXINIT_SENT
+2024-01-15 15:45:07 [DEBUG] PR1: size = 8
+2024-01-15 15:45:07 [INFO] GID: have enough already, return early
+2024-01-15 15:45:07 [DEBUG] Decrypt none
+2024-01-15 15:45:07 [DEBUG] PR2: size = 1496
+2024-01-15 15:45:07 [INFO] GID: readjust size
+2024-01-15 15:45:07 [DEBUG] Receive: recvd = 1269
+2024-01-15 15:45:07 [DEBUG] Decrypt none
+2024-01-15 15:45:07 [DEBUG] VerifyMac none
+2024-01-15 15:45:07 [DEBUG] VM: inSz = 1496
+2024-01-15 15:45:07 [DEBUG] VM: seq = 0
+2024-01-15 15:45:07 [DEBUG] VM: keyLen = 0
+2024-01-15 15:45:07 [DEBUG] DoPacket sequence number: 0
+2024-01-15 15:45:07 [DEBUG] Decoding MSGID_KEXINIT
+2024-01-15 15:45:07 [DEBUG] Entering DoKexInit()
+2024-01-15 15:45:07 [DEBUG] DKI: KEX Algorithms
+2024-01-15 15:45:07 [DEBUG] Entering GetNameList()
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = ecdh-sha2-nistp384
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = ecdh-sha2-nistp521
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = ext-info-c
+2024-01-15 15:45:07 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:45:07 [DEBUG] DKI: Server Host Key Algorithms
+2024-01-15 15:45:07 [DEBUG] Entering GetNameList()
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = ecdsa-sha2-nistp384
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = ecdsa-sha2-nistp521
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:45:07 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:45:07 [DEBUG] Unable to negotiate Server Host Key Algo
+2024-01-15 15:45:07 [DEBUG] PR3: peerMacSz = 0
+2024-01-15 15:45:07 [DEBUG] PR4: Shrinking input buffer
+2024-01-15 15:45:07 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG]   buf->bufferSz = 1496
+2024-01-15 15:45:07 [DEBUG]   buf->idx = 10
+2024-01-15 15:45:07 [DEBUG]   buf->length = 1496
+2024-01-15 15:45:07 [DEBUG] SB: usedSz = 1486, forcedFree = 1
+2024-01-15 15:45:07 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:45:07 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG] PR5: txCount = 400, rxCount = 1496
+2024-01-15 15:45:07 [DEBUG] accept error: SERVER_KEXINIT_SENT, -1051
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_get_error()
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_get_fd()
+I (11904) ssh_server: Exit NonBlockSSH_accept
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_stream_exit(), status = 0
+2024-01-15 15:45:07 [DEBUG] Leaving wolfSSH_stream_exit()
+I (11921) ssh_server: Close sockfd socket
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_free()
+2024-01-15 15:45:07 [DEBUG] Entering sshResourceFree()
+2024-01-15 15:45:07 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:45:07 [DEBUG]   buf->idx = 0
+2024-01-15 15:45:07 [DEBUG]   buf->length = 0
+2024-01-15 15:45:07 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:45:07 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:45:07 [DEBUG]   buf->idx = 0
+2024-01-15 15:45:07 [DEBUG]   buf->length = 0
+2024-01-15 15:45:07 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:45:07 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:45:07 [DEBUG]   buf->idx = 0
+2024-01-15 15:45:07 [DEBUG]   buf->length = 0
+2024-01-15 15:45:07 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:45:07 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:45:07 [DEBUG] Entering HandshakeInfoFree()
+I (12021) ssh_server: server_worker completed.
+I (12038) ssh_server: all servers exited.
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_CTX_free()
+2024-01-15 15:45:07 [DEBUG] Entering CtxResourceFree()
+2024-01-15 15:45:07 [DEBUG] Entering wolfSSH_Cleanup()
+2024-01-15 15:45:07 [DEBUG] Leaving wolfSSH_Cleanup(), returning 0
+I (12054) ssh_server: server test done!
+I (12059) ssh_server: Close sockfd socket
+I (67820) SSH Server main: wolfSSH Server main loop heartbeat!
+I (72065) ssh_server: Debug ON v0.2c
+I (72066) ssh_server: socket creation successful
+I (72067) ssh_server: setsockopt re-use addr successful
+E (72071) ssh_server: 
+ERROR: failed to setsockopt port on socket.  >> IGNORED << 
+
+I (72079) ssh_server: socket bind successful.
+I (72084) ssh_server: socket listen successful
+
+I (72088) ssh_server: Found NO_RSA, setting useEcc = 1
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_Init()
+2024-01-15 15:46:07 [DEBUG] Leaving wolfSSH_Init(), returning 0
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_CTX_new()
+2024-01-15 15:46:07 [DEBUG] Entering CtxInit()
+2024-01-15 15:46:07 [DEBUG] Leaving wolfSSH_CTX_new(), ctx = 0x3ffd1e50
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_CTX_SetBanner()
+2024-01-15 15:46:07 [INFO]   setting banner to: "wolfSSH Example Server
+"
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_CTX_UsePrivateKey_buffer()
+I (72140) wolfssl: wolfSSL Entering GetAlgoId
+I (72144) wolfssl: wolfSSL Entering GetObjectId
+2024-01-15 15:46:07 [DEBUG] Leaving wolfSSH_CTX_UsePrivateKey_buffer(), ret = 0
+I (72156) ssh_server: map->username = jill
+I (72161) ssh_server: SHA256 flatSz: 0x00000009; size = 4
+I (72167) ssh_server: SHA256 sample password: 'upthehill': size = 9 bytes
+I (72175) ssh_server: map->username = jack
+I (72179) ssh_server: SHA256 flatSz: 0x0000000a; size = 4
+I (72185) ssh_server: SHA256 sample password: 'fetchapail': size = 10 bytes
+I (72194) ssh_server: map->username = hansel
+I (72198) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (72204) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (72211) ssh_server: map->username = gretel
+I (72216) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (72222) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (72229) ssh_server: map->username = gojimmypi@DESKTOP
+I (72234) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (72240) ssh_server: SHA256 sample password: '': size = 104 bytes
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_new()
+2024-01-15 15:46:07 [DEBUG] Entering SshInit()
+2024-01-15 15:46:07 [DEBUG] Entering HandshakeInfoNew()
+2024-01-15 15:46:07 [DEBUG] Leaving wolfSSH_new(), ssh = 0x3ffd21e4
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_SetHighwaterCtx()
+2024-01-15 15:46:07 [DEBUG] Entering wolfSSH_SetHighwater()
+2024-01-15 15:46:30 [DEBUG] Entering wolfSSH_set_fd()
+I (95474) ssh_server: server_worker started.
+I (95474) ssh_server: Start NonBlockSSH_accept
+2024-01-15 15:46:30 [DEBUG] Entering wolfSSH_accept()
+2024-01-15 15:46:30 [DEBUG] SSH-2.0-wolfSSHv1.4.15
+
+2024-01-15 15:46:30 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:46:30 [DEBUG] Embed Send trying to send 24
+2024-01-15 15:46:30 [DEBUG] Embed Send sent 24
+2024-01-15 15:46:30 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:46:30 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:30 [DEBUG]   buf->bufferSz = 24
+2024-01-15 15:46:30 [DEBUG]   buf->idx = 24
+2024-01-15 15:46:30 [DEBUG]   buf->length = 24
+2024-01-15 15:46:30 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:46:30 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:46:30 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:30 [DEBUG] accept state: SERVER_VERSION_SENT
+2024-01-15 15:46:30 [DEBUG] Receive: recvd = 28
+2024-01-15 15:46:30 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:30 [DEBUG]   buf->bufferSz = 255
+2024-01-15 15:46:30 [DEBUG]   buf->idx = 28
+2024-01-15 15:46:30 [DEBUG]   buf->length = 28
+2024-01-15 15:46:30 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:46:30 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:46:30 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] accept state: CLIENT_VERSION_DONE
+2024-01-15 15:46:31 [DEBUG] Entering SendKexInit()
+2024-01-15 15:46:31 [DEBUG] Entering BuildNameList()
+2024-01-15 15:46:31 [DEBUG] Entering BuildNameList()
+2024-01-15 15:46:31 [DEBUG]     Adding name : ecdh-sha2-nistp521
+2024-01-15 15:46:31 [DEBUG]     Adding name : ecdh-sha2-nistp384
+2024-01-15 15:46:31 [DEBUG] Entering BuildNameList()
+2024-01-15 15:46:31 [DEBUG] Entering BuildNameList()
+2024-01-15 15:46:31 [DEBUG]     Adding name : unknown
+2024-01-15 15:46:31 [DEBUG] BP: paddingSz = 7
+2024-01-15 15:46:31 [DEBUG] CreateMac none
+2024-01-15 15:46:31 [DEBUG] Encrypt none
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:46:31 [DEBUG] Embed Send trying to send 400
+2024-01-15 15:46:31 [DEBUG] Embed Send sent 400
+2024-01-15 15:46:31 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:46:31 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG]   buf->bufferSz = 409
+2024-01-15 15:46:31 [DEBUG]   buf->idx = 400
+2024-01-15 15:46:31 [DEBUG]   buf->length = 400
+2024-01-15 15:46:31 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:46:31 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:46:31 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] Leaving SendKexInit(), ret = 0
+2024-01-15 15:46:31 [DEBUG] accept state: SERVER_KEXINIT_SENT
+2024-01-15 15:46:31 [DEBUG] PR1: size = 8
+2024-01-15 15:46:31 [INFO] GID: readjust size
+2024-01-15 15:46:31 [DEBUG] Receive: recvd = 8
+2024-01-15 15:46:31 [DEBUG] Decrypt none
+2024-01-15 15:46:31 [DEBUG] PR2: size = 1496
+2024-01-15 15:46:31 [INFO] GID: readjust size
+2024-01-15 15:46:31 [DEBUG] Receive: recvd = 1488
+2024-01-15 15:46:31 [DEBUG] Decrypt none
+2024-01-15 15:46:31 [DEBUG] VerifyMac none
+2024-01-15 15:46:31 [DEBUG] VM: inSz = 1496
+2024-01-15 15:46:31 [DEBUG] VM: seq = 0
+2024-01-15 15:46:31 [DEBUG] VM: keyLen = 0
+2024-01-15 15:46:31 [DEBUG] DoPacket sequence number: 0
+2024-01-15 15:46:31 [DEBUG] Decoding MSGID_KEXINIT
+2024-01-15 15:46:31 [DEBUG] Entering DoKexInit()
+2024-01-15 15:46:31 [DEBUG] DKI: KEX Algorithms
+2024-01-15 15:46:31 [DEBUG] Entering GetNameList()
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = ecdh-sha2-nistp384
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = ecdh-sha2-nistp521
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = ext-info-c
+2024-01-15 15:46:31 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:46:31 [DEBUG] DKI: Server Host Key Algorithms
+2024-01-15 15:46:31 [DEBUG] Entering GetNameList()
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = ecdsa-sha2-nistp384
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = ecdsa-sha2-nistp521
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:46:31 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:46:31 [DEBUG] Unable to negotiate Server Host Key Algo
+2024-01-15 15:46:31 [DEBUG] PR3: peerMacSz = 0
+2024-01-15 15:46:31 [DEBUG] PR4: Shrinking input buffer
+2024-01-15 15:46:31 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG]   buf->bufferSz = 1496
+2024-01-15 15:46:31 [DEBUG]   buf->idx = 10
+2024-01-15 15:46:31 [DEBUG]   buf->length = 1496
+2024-01-15 15:46:31 [DEBUG] SB: usedSz = 1486, forcedFree = 1
+2024-01-15 15:46:31 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:46:31 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] PR5: txCount = 400, rxCount = 1496
+2024-01-15 15:46:31 [DEBUG] accept error: SERVER_KEXINIT_SENT, -1051
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_get_error()
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_get_fd()
+I (95997) ssh_server: Exit NonBlockSSH_accept
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_stream_exit(), status = 0
+2024-01-15 15:46:31 [DEBUG] Leaving wolfSSH_stream_exit()
+I (96013) ssh_server: Close sockfd socket
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_free()
+2024-01-15 15:46:31 [DEBUG] Entering sshResourceFree()
+2024-01-15 15:46:31 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:46:31 [DEBUG]   buf->idx = 0
+2024-01-15 15:46:31 [DEBUG]   buf->length = 0
+2024-01-15 15:46:31 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:46:31 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:46:31 [DEBUG]   buf->idx = 0
+2024-01-15 15:46:31 [DEBUG]   buf->length = 0
+2024-01-15 15:46:31 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:46:31 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:46:31 [DEBUG]   buf->idx = 0
+2024-01-15 15:46:31 [DEBUG]   buf->length = 0
+2024-01-15 15:46:31 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:46:31 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:46:31 [DEBUG] Entering HandshakeInfoFree()
+I (96115) ssh_server: server_worker completed.
+I (96130) ssh_server: all servers exited.
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_CTX_free()
+2024-01-15 15:46:31 [DEBUG] Entering CtxResourceFree()
+2024-01-15 15:46:31 [DEBUG] Entering wolfSSH_Cleanup()
+2024-01-15 15:46:31 [DEBUG] Leaving wolfSSH_Cleanup(), returning 0
+I (96145) ssh_server: server test done!
+I (96149) ssh_server: Close sockfd socket
+ets Jun  8 2016 00:22:57
+
+rst:0x3 (SW_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)
+configsip: 0, SPIWP:0xee
+clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
+mode:DIO, clock div:2
+load:0x3fff0030,len:7100
+ho 0 tail 12 room 4
+load:0x40078000,len:15584
+load:0x40080400,len:4
+load:0x40080404,len:3876
+entry 0x4008064c
+I (30) boot: ESP-IDF v5.1-231-ga7b62bbcaf-dirty 2nd stage bootloader
+I (30) boot: compile time Jan 15 2024 13:45:09
+I (32) boot: Multicore bootloader
+I (36) boot: chip revision: v1.0
+I (40) boot.esp32: SPI Speed      : 40MHz
+I (44) boot.esp32: SPI Mode       : DIO
+I (49) boot.esp32: SPI Flash Size : 2MB
+I (54) boot: Enabling RNG early entropy source...
+I (59) boot: Partition Table:
+I (62) boot: ## Label            Usage          Type ST Offset   Length
+I (70) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (77) boot:  1 phy_init         RF data          01 01 0000f000 00001000
+I (85) boot:  2 factory          factory app      00 00 00010000 00177000
+I (92) boot: End of partition table
+I (96) esp_image: segment 0: paddr=00010020 vaddr=3f400020 size=2d74ch (186188) map
+I (172) esp_image: segment 1: paddr=0003d774 vaddr=3ffb0000 size=028a4h ( 10404) load
+I (176) esp_image: segment 2: paddr=00040020 vaddr=400d0020 size=b068ch (722572) map
+I (439) esp_image: segment 3: paddr=000f06b4 vaddr=3ffb28a4 size=00f24h (  3876) load
+I (440) esp_image: segment 4: paddr=000f15e0 vaddr=40080000 size=16078h ( 90232) load
+I (482) esp_image: segment 5: paddr=00107660 vaddr=50000000 size=00004h (     4) load
+I (493) boot: Loaded app from partition at offset 0x10000
+I (493) boot: Disabling RNG early entropy source...
+I (505) cpu_start: Multicore app
+I (505) cpu_start: Pro cpu up.
+I (505) cpu_start: Starting app cpu, entry point is 0x40081468
+I (493) cpu_start: App cpu up.
+I (523) cpu_start: Pro cpu start user code
+I (523) cpu_start: cpu freq: 240000000 Hz
+I (523) cpu_start: Application information:
+I (528) cpu_start: Project name:     ESP32-SSH-Server
+I (534) cpu_start: App version:      da55e63-dirty
+I (539) cpu_start: Compile time:     Jan 15 2024 13:46:04
+I (545) cpu_start: ELF file SHA256:  0d1e1bde367f941c...
+I (551) cpu_start: ESP-IDF:          v5.1-231-ga7b62bbcaf-dirty
+I (558) cpu_start: Min chip rev:     v0.0
+I (563) cpu_start: Max chip rev:     v3.99 
+I (567) cpu_start: Chip rev:         v1.0
+I (572) heap_init: Initializing. RAM available for dynamic allocation:
+I (580) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
+I (586) heap_init: At 3FFB9E40 len 000261C0 (152 KiB): DRAM
+I (592) heap_init: At 3FFE0440 len 00003AE0 (14 KiB): D/IRAM
+I (598) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
+I (605) heap_init: At 40096078 len 00009F88 (39 KiB): IRAM
+I (612) spi_flash: detected chip: generic
+I (615) spi_flash: flash io: dio
+W (619) spi_flash: Detected size(4096k) larger than the size in the binary image header(2048k). Usin
+g the size in the binary image header.
+I (634) app_start: Starting scheduler on CPU0
+I (638) app_start: Starting scheduler on CPU1
+I (638) main_task: Started on CPU0
+I (648) main_task: Calling app_main()
+I (651) SSH Server main: ---------------- wolfSSL Benchmark Example -------------
+I (659) SSH Server main: --------------------------------------------------------
+I (667) SSH Server main: --------------------------------------------------------
+I (675) SSH Server main: ---------------------- BEGIN MAIN ----------------------
+I (684) SSH Server main: --------------------------------------------------------
+I (692) SSH Server main: --------------------------------------------------------
+I (700) SSH Server main: ESP_TASK_MAIN_STACK: 5500
+I (705) SSH Server main: ESP_TASK_MAIN_STACK: 6012
+I (711) SSH Server main: ESP_TASK_MAIN_STACK: 6012
+I (716) SSH Server main: TASK_EXTRA_STACK_SIZE: 512
+I (722) SSH Server main: CONFIG_ESP_MAIN_TASK_STACK_SIZE = 5500 bytes (1375 words)
+I (730) SSH Server main: Stack Start HWM: 4180 bytes
+I (736) SSH Server main: UART_RX_TASK_STACK_SIZE:   4096 bytes
+I (742) SSH Server main: UART_TX_TASK_STACK_SIZE:   4096 bytes
+I (749) SSH Server main: SERVER_SESSION_STACK_SIZE: 23552 bytes
+I (755) SSH Server main: SSH DEFAULT_WINDOW_SZ:     2000 bytes
+I (762) esp32_util: Extended Version and Platform Information.
+I (768) esp32_util: Chip revision: v1.0
+I (773) esp32_util: SSID and plain text WiFi password not displayed in startup logs.
+I (781) esp32_util:   Define SHOW_SSID_AND_PASSWORD to enable display.
+I (788) esp32_util: Using wolfSSL user_settings.h in C://workspace//wolfssh-examples-gojimmypi//Espr
+essif//ESP32//ESP32-SSH-Server//components//wolfssl//include//user_settings.h
+I (805) esp32_util: LIBWOLFSSL_VERSION_STRING = 5.6.6
+I (811) esp32_util: LIBWOLFSSL_VERSION_HEX = 5006006
+I (816) esp32_util: Stack HWM: 4180
+I (821) esp32_util: 
+I (823) esp32_util: Macro Name                 Defined   Not Defined
+I (830) esp32_util: ------------------------- --------- -------------
+I (838) esp32_util: NO_ESPIDF_DEFAULT........                 X
+I (844) esp32_util: HW_MATH_ENABLED..........     X
+I (850) esp32_util: WOLFSSL_SHA224...........                 X
+I (856) esp32_util: WOLFSSL_SHA384...........     X
+I (862) esp32_util: WOLFSSL_SHA512...........     X
+I (867) esp32_util: WOLFSSL_SHA3.............                 X
+I (874) esp32_util: HAVE_ED25519.............     X
+I (880) esp32_util: HAVE_AES_ECB.............                 X
+I (886) esp32_util: HAVE_AES_DIRECT..........                 X
+I (893) esp32_util: USE_FAST_MATH............     X
+I (898) esp32_util: WOLFSSL_SP_MATH_ALL......                 X
+I (905) esp32_util: SP_MATH..................                 X
+I (911) esp32_util: WOLFSSL_HW_METRICS.......                 X
+I (918) esp32_util: RSA_LOW_MEM..............                 X
+I (925) esp32_util: WC_NO_HARDEN.............                 X
+I (931) esp32_util: TFM_TIMING_RESISTANT.....     X
+I (937) esp32_util: ECC_TIMING_RESISTANT.....     X
+I (942) esp32_util: WC_NO_CACHE_RESISTANT....     X
+I (948) esp32_util: WC_AES_BITSLICED.........                 X
+I (955) esp32_util: WOLFSSL_AES_NO_UNROLL....                 X
+I (961) esp32_util: TFM_TIMING_RESISTANT.....     X
+I (967) esp32_util: ECC_TIMING_RESISTANT.....     X
+I (972) esp32_util: WC_RSA_BLINDING..........     X
+I (978) esp32_util: NO_WRITEV................     X
+I (983) esp32_util: FREERTOS.................     X
+I (989) esp32_util: NO_WOLFSSL_DIR...........     X
+I (994) esp32_util: WOLFSSL_NO_CURRDIR.......     X
+I (1000) esp32_util: WOLFSSL_LWIP.............     X
+I (1006) esp32_util: 
+I (1009) esp32_util: Compiler Optimization: Default
+I (1014) esp32_util: 
+I (1017) esp32_util: LIBWOLFSSL_VERSION_GIT_ORIGIN = https://github.com/gojimmypi/wolfssl.git
+I (1026) esp32_util: LIBWOLFSSL_VERSION_GIT_BRANCH = ED25519_SHA2_fix
+I (1033) esp32_util: LIBWOLFSSL_VERSION_GIT_HASH = bbb08d4cf703417728a07da896587d328f260d25
+I (1042) esp32_util: LIBWOLFSSL_VERSION_GIT_SHORT_HASH = bbb08d4cf
+I (1049) esp32_util: LIBWOLFSSL_VERSION_GIT_HASH_DATE = 'Sun Jan 14 11:21:01 2024 -0800'
+I (1058) esp32_util: CONFIG_IDF_TARGET = esp32
+W (1063) esp32_util: Watchdog active; missing WOLFSSL_ESP_NO_WATCHDOG definition.
+I (1071) esp32_util: CONFIG_MAIN_TASK_STACK_SIZE: 5500
+I (1077) esp32_util: CONFIG_ESP_MAIN_TASK_STACK_SIZE: 5500
+I (1083) esp32_util: CONFIG_TIMER_TASK_STACK_SIZE: 3584
+I (1089) esp32_util: CONFIG_TIMER_TASK_STACK_DEPTH: 2048
+I (1095) esp32_util: Stack HWM: 3ffbc82f
+I (1100) esp32_util: CONFIG_ESP32_DEFAULT_CPU_FREQ_MHZ: 240 MHz
+I (1106) esp32_util: Xthal_have_ccount: 1
+I (1111) esp32_util: ESP32_CRYPT is enabled for ESP32.
+I (1117) esp32_util: SINGLE_THREADED
+I (1121) esp32_util: Boot count: 1
+I (1125) SSH Server main: Begin main init.
+I (1130) SSH Server main: wolfSSH debugging on.
+I (1135) SSH Server main: wolfSSL debugging on.
+I (1140) SSH Server main: Debug ON
+I (1145) time_helper: Setting the time. Startup time:
+I (1152) time_helper: The current date/time is: Mon Jan 15 15:46:50 2024
+I (1158) time_helper: Found git hash date, attempting to set system date.
+I (1166) time_helper: Time updated to 'Mon Jan 15 13:43:01 2024 -0800'
+I (1173) time_helper: The current date/time is: Mon Jan 15 12:43:01 2024
+W (1180) time_helper: WARNING: 3 NTP Servers defined, but CONFIG_LWIP_SNTP_MAX_SERVERS = 1
+I (1189) time_helper: sntp_setservername:
+I (1193) time_helper: pool.ntp.org
+I (1198) time_helper: sntp_init done.
+I (1202) time_helper: The current date/time is: Mon Jan 15 12:43:01 2024
+I (1209) time_helper: time helper existing with result = 0
+I (1215) uart_helper: Begin init_UART.
+I (1221) uart_helper: End init_UART.
+I (1224) SSH Server main: Setting up nvs flash for WiFi.
+I (1254) SSH Server main: Begin setup WiFi STA.
+I (1259) wifi:wifi driver task: 3ffc3968, prio:23, stack:6656, core=0
+I (1272) wifi:wifi firmware version: 6a2a12b
+I (1273) wifi:wifi certification version: v7.0
+I (1273) wifi:config NVS flash: enabled
+I (1273) wifi:config nano formating: disabled
+I (1278) wifi:Init data frame dynamic rx buffer num: 32
+I (1282) wifi:Init management frame dynamic rx buffer num: 32
+I (1288) wifi:Init management short buffer num: 32
+I (1292) wifi:Init dynamic tx buffer num: 32
+I (1296) wifi:Init static rx buffer size: 1600
+I (1301) wifi:Init static rx buffer num: 10
+I (1304) wifi:Init dynamic rx buffer num: 32
+I (1309) wifi_init: rx ba win: 6
+I (1312) wifi_init: tcpip mbox: 32
+I (1316) wifi_init: udp mbox: 6
+I (1320) wifi_init: tcp mbox: 6
+I (1324) wifi_init: tcp tx win: 5744
+I (1328) wifi_init: tcp rx win: 5744
+I (1332) wifi_init: tcp mss: 1440
+I (1336) wifi_init: WiFi IRAM OP enabled
+I (1341) wifi_init: WiFi RX IRAM OP enabled
+W (1348) wifi_connect: WARNING: CONFIG_EXAMPLE_WIFI_SSID is "myssid".
+W (1353) wifi_connect:   Do you have a WiFi AP called "myssid", 
+W (1360) wifi_connect:   or did you forget the ESP-IDF configuration?
+I (1367) phy_init: phy_version 4670,719f9f6,Feb 18 2021,17:07:07
+I (1469) wifi:mode : sta (fc:f5:c4:0f:82:48)
+I (1470) wifi:enable tsf
+I (1472) wifi_connect: wifi_init_sta finished.
+I (1493) wifi:new:<1,0>, old:<1,0>, ap:<255,255>, sta:<1,0>, prof:1
+I (1494) wifi:state: init -> auth (b0)
+I (1517) wifi:state: auth -> assoc (0)
+I (1534) wifi:state: assoc -> run (10)
+W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:0
+W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:0
+W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:5
+I (1553) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:25:8c:4a), tid:5, ssn:289, winSize:64
+I (1653) wifi:connected with badger, aid = 14, channel 1, BW20, bssid = 6e:82:17:25:8c:4a
+I (1654) wifi:security: WPA2-PSK, phy: bgn, rssi: -50
+I (1659) wifi:pm start, type: 1
+
+I (1719) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (2663) esp_netif_handlers: sta ip: 192.168.1.39, mask: 255.255.255.0, gw: 192.168.1.1
+I (2664) wifi_connect: Connected to AP
+I (2666) SSH Server main: End setup WiFi STA.
+I (2671) SSH Server main: inet_pton
+I (3177) time_helper: The current date/time is: Mon Jan 15 12:43:03 2024
+I (4177) time_helper: Waiting for NTP to sync time... (1/10)
+I (4178) time_helper: The current date/time is: Mon Jan 15 12:43:04 2024
+I (4215) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:25:8c:4a), tid:0, ssn:446, winSize:64
+I (4294) time_helper: Waiting for NTP to sync time... (2/10)
+I (4296) time_helper: The current date/time is: Mon Jan 15 15:46:53 2024
+I (4297) time_helper: Successfuly set time via NTP servers.
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_Init()
+I (4309) wolfssl: wolfSSL Entering wolfCrypt_Init
+2024-01-15 15:46:53 [DEBUG] Leaving wolfSSH_Init(), returning 0
+I (4320) SSH Server main: wolfSSH Server main loop heartbeat!
+I (4321) ssh_server: Debug ON v0.2c
+I (4332) ssh_server: socket creation successful
+I (4336) ssh_server: setsockopt re-use addr successful
+E (4341) ssh_server: 
+ERROR: failed to setsockopt port on socket.  >> IGNORED << 
+
+I (4352) ssh_server: socket bind successful.
+I (4356) ssh_server: socket listen successful
+
+I (4360) ssh_server: Found NO_RSA, setting useEcc = 1
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_Init()
+2024-01-15 15:46:53 [DEBUG] Leaving wolfSSH_Init(), returning 0
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_CTX_new()
+2024-01-15 15:46:53 [DEBUG] Entering CtxInit()
+2024-01-15 15:46:53 [DEBUG] Leaving wolfSSH_CTX_new(), ctx = 0x3ffd1ed4
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_CTX_SetBanner()
+2024-01-15 15:46:53 [INFO]   setting banner to: "wolfSSH Example Server
+"
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_CTX_UsePrivateKey_buffer()
+I (4411) wolfssl: wolfSSL Entering GetAlgoId
+I (4416) wolfssl: wolfSSL Entering GetObjectId
+2024-01-15 15:46:53 [DEBUG] Leaving wolfSSH_CTX_UsePrivateKey_buffer(), ret = 0
+I (4427) ssh_server: map->username = jill
+I (4432) ssh_server: SHA256 flatSz: 0x00000009; size = 4
+I (4438) ssh_server: SHA256 sample password: 'upthehill': size = 9 bytes
+I (4446) ssh_server: map->username = jack
+I (4450) ssh_server: SHA256 flatSz: 0x0000000a; size = 4
+I (4456) ssh_server: SHA256 sample password: 'fetchapail': size = 10 bytes
+I (4464) ssh_server: map->username = hansel
+I (4468) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (4474) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (4482) ssh_server: map->username = gretel
+I (4486) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (4492) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (4500) ssh_server: map->username = gojimmypi@DESKTOP
+I (4505) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (4511) ssh_server: SHA256 sample password: '': size = 104 bytes
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_new()
+2024-01-15 15:46:53 [DEBUG] Entering SshInit()
+2024-01-15 15:46:53 [DEBUG] Entering HandshakeInfoNew()
+2024-01-15 15:46:53 [DEBUG] Leaving wolfSSH_new(), ssh = 0x3ffd21f8
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_SetHighwaterCtx()
+2024-01-15 15:46:53 [DEBUG] Entering wolfSSH_SetHighwater()
+2024-01-15 15:47:01 [DEBUG] Entering wolfSSH_set_fd()
+I (12925) ssh_server: server_worker started.
+I (12927) ssh_server: Start NonBlockSSH_accept
+2024-01-15 15:47:01 [DEBUG] Entering wolfSSH_accept()
+2024-01-15 15:47:01 [DEBUG] SSH-2.0-wolfSSHv1.4.15
+
+2024-01-15 15:47:01 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:47:01 [DEBUG] Embed Send trying to send 24
+2024-01-15 15:47:01 [DEBUG] Embed Send sent 24
+2024-01-15 15:47:01 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:47:01 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:01 [DEBUG]   buf->bufferSz = 24
+2024-01-15 15:47:01 [DEBUG]   buf->idx = 24
+2024-01-15 15:47:01 [DEBUG]   buf->length = 24
+2024-01-15 15:47:01 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:47:01 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:47:01 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:01 [DEBUG] accept state: SERVER_VERSION_SENT
+2024-01-15 15:47:01 [DEBUG] Receive: recvd = 28
+2024-01-15 15:47:01 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:01 [DEBUG]   buf->bufferSz = 255
+2024-01-15 15:47:01 [DEBUG]   buf->idx = 28
+2024-01-15 15:47:01 [DEBUG]   buf->length = 28
+2024-01-15 15:47:01 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:47:01 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:47:01 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:01 [DEBUG] accept state: CLIENT_VERSION_DONE
+2024-01-15 15:47:01 [DEBUG] Entering SendKexInit()
+2024-01-15 15:47:01 [DEBUG] Entering BuildNameList()
+2024-01-15 15:47:01 [DEBUG] Entering BuildNameList()
+2024-01-15 15:47:01 [DEBUG]     Adding name : ecdh-sha2-nistp521
+2024-01-15 15:47:01 [DEBUG]     Adding name : ecdh-sha2-nistp384
+2024-01-15 15:47:01 [DEBUG] Entering BuildNameList()
+2024-01-15 15:47:01 [DEBUG] Entering BuildNameList()
+2024-01-15 15:47:01 [DEBUG]     Adding name : unknown
+2024-01-15 15:47:01 [DEBUG] BP: paddingSz = 7
+2024-01-15 15:47:01 [DEBUG] CreateMac none
+2024-01-15 15:47:01 [DEBUG] Encrypt none
+2024-01-15 15:47:01 [DEBUG] Entering wolfSSH_SendPacket()
+2024-01-15 15:47:01 [DEBUG] Embed Send trying to send 400
+2024-01-15 15:47:01 [DEBUG] Embed Send sent 400
+2024-01-15 15:47:01 [DEBUG] SB: Shrinking output buffer
+2024-01-15 15:47:01 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:01 [DEBUG]   buf->bufferSz = 409
+2024-01-15 15:47:01 [DEBUG]   buf->idx = 400
+2024-01-15 15:47:01 [DEBUG]   buf->length = 400
+2024-01-15 15:47:01 [DEBUG] SB: usedSz = 0, forcedFree = 0
+2024-01-15 15:47:02 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:47:02 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG] Leaving SendKexInit(), ret = 0
+2024-01-15 15:47:02 [DEBUG] accept state: SERVER_KEXINIT_SENT
+2024-01-15 15:47:02 [DEBUG] PR1: size = 8
+2024-01-15 15:47:02 [INFO] GID: readjust size
+2024-01-15 15:47:02 [DEBUG] Receive: recvd = 8
+2024-01-15 15:47:02 [DEBUG] Decrypt none
+2024-01-15 15:47:02 [DEBUG] PR2: size = 1496
+2024-01-15 15:47:02 [INFO] GID: readjust size
+2024-01-15 15:47:02 [DEBUG] Receive: recvd = 1488
+2024-01-15 15:47:02 [DEBUG] Decrypt none
+2024-01-15 15:47:02 [DEBUG] VerifyMac none
+2024-01-15 15:47:02 [DEBUG] VM: inSz = 1496
+2024-01-15 15:47:02 [DEBUG] VM: seq = 0
+2024-01-15 15:47:02 [DEBUG] VM: keyLen = 0
+2024-01-15 15:47:02 [DEBUG] DoPacket sequence number: 0
+2024-01-15 15:47:02 [DEBUG] Decoding MSGID_KEXINIT
+2024-01-15 15:47:02 [DEBUG] Entering DoKexInit()
+2024-01-15 15:47:02 [DEBUG] DKI: KEX Algorithms
+2024-01-15 15:47:02 [DEBUG] Entering GetNameList()
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = ecdh-sha2-nistp384
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = ecdh-sha2-nistp521
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = ext-info-c
+2024-01-15 15:47:02 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:47:02 [DEBUG] DKI: Server Host Key Algorithms
+2024-01-15 15:47:02 [DEBUG] Entering GetNameList()
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = ecdsa-sha2-nistp384
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = ecdsa-sha2-nistp521
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] GNL: name ID = unknown
+2024-01-15 15:47:02 [DEBUG] Leaving GetNameList(), ret = 0
+2024-01-15 15:47:02 [DEBUG] Unable to negotiate Server Host Key Algo
+2024-01-15 15:47:02 [DEBUG] PR3: peerMacSz = 0
+2024-01-15 15:47:02 [DEBUG] PR4: Shrinking input buffer
+2024-01-15 15:47:02 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG]   buf->bufferSz = 1496
+2024-01-15 15:47:02 [DEBUG]   buf->idx = 10
+2024-01-15 15:47:02 [DEBUG]   buf->length = 1496
+2024-01-15 15:47:02 [DEBUG] SB: usedSz = 1486, forcedFree = 1
+2024-01-15 15:47:02 [DEBUG] SB: releasing dynamic buffer
+2024-01-15 15:47:02 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG] PR5: txCount = 400, rxCount = 1496
+2024-01-15 15:47:02 [DEBUG] accept error: SERVER_KEXINIT_SENT, -1051
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_get_error()
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_get_fd()
+I (13448) ssh_server: Exit NonBlockSSH_accept
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_stream_exit(), status = 0
+2024-01-15 15:47:02 [DEBUG] Leaving wolfSSH_stream_exit()
+I (13465) ssh_server: Close sockfd socket
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_free()
+2024-01-15 15:47:02 [DEBUG] Entering sshResourceFree()
+2024-01-15 15:47:02 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:47:02 [DEBUG]   buf->idx = 0
+2024-01-15 15:47:02 [DEBUG]   buf->length = 0
+2024-01-15 15:47:02 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:47:02 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:47:02 [DEBUG]   buf->idx = 0
+2024-01-15 15:47:02 [DEBUG]   buf->length = 0
+2024-01-15 15:47:02 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:47:02 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG] Entering ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG]   buf->bufferSz = 16
+2024-01-15 15:47:02 [DEBUG]   buf->idx = 0
+2024-01-15 15:47:02 [DEBUG]   buf->length = 0
+2024-01-15 15:47:02 [DEBUG] SB: usedSz = 0, forcedFree = 1
+2024-01-15 15:47:02 [DEBUG] Leaving ShrinkBuffer()
+2024-01-15 15:47:02 [DEBUG] Entering HandshakeInfoFree()
+I (13566) ssh_server: server_worker completed.
+I (13582) ssh_server: all servers exited.
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_CTX_free()
+2024-01-15 15:47:02 [DEBUG] Entering CtxResourceFree()
+2024-01-15 15:47:02 [DEBUG] Entering wolfSSH_Cleanup()
+2024-01-15 15:47:02 [DEBUG] Leaving wolfSSH_Cleanup(), returning 0
+I (13598) ssh_server: server test done!
+I (13603) ssh_server: Close sockfd socket
+I (64326) SSH Server main: wolfSSH Server main loop heartbeat!
+I (73611) ssh_server: Debug ON v0.2c
+I (73612) ssh_server: socket creation successful
+I (73613) ssh_server: setsockopt re-use addr successful
+E (73617) ssh_server: 
+ERROR: failed to setsockopt port on socket.  >> IGNORED << 
+
+I (73625) ssh_server: socket bind successful.
+I (73629) ssh_server: socket listen successful
+
+I (73634) ssh_server: Found NO_RSA, setting useEcc = 1
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_Init()
+2024-01-15 15:48:02 [DEBUG] Leaving wolfSSH_Init(), returning 0
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_CTX_new()
+2024-01-15 15:48:02 [DEBUG] Entering CtxInit()
+2024-01-15 15:48:02 [DEBUG] Leaving wolfSSH_CTX_new(), ctx = 0x3ffd1ed4
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_CTX_SetBanner()
+2024-01-15 15:48:02 [INFO]   setting banner to: "wolfSSH Example Server
+"
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_CTX_UsePrivateKey_buffer()
+I (73685) wolfssl: wolfSSL Entering GetAlgoId
+I (73690) wolfssl: wolfSSL Entering GetObjectId
+2024-01-15 15:48:02 [DEBUG] Leaving wolfSSH_CTX_UsePrivateKey_buffer(), ret = 0
+I (73702) ssh_server: map->username = jill
+I (73707) ssh_server: SHA256 flatSz: 0x00000009; size = 4
+I (73713) ssh_server: SHA256 sample password: 'upthehill': size = 9 bytes
+I (73721) ssh_server: map->username = jack
+I (73725) ssh_server: SHA256 flatSz: 0x0000000a; size = 4
+I (73731) ssh_server: SHA256 sample password: 'fetchapail': size = 10 bytes
+I (73739) ssh_server: map->username = hansel
+I (73744) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (73750) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (73757) ssh_server: map->username = gretel
+I (73762) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (73768) ssh_server: SHA256 sample password: '': size = 104 bytes
+I (73775) ssh_server: map->username = gojimmypi@DESKTOP
+I (73781) ssh_server: SHA256 flatSz: 0x00000068; size = 4
+I (73787) ssh_server: SHA256 sample password: '': size = 104 bytes
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_new()
+2024-01-15 15:48:02 [DEBUG] Entering SshInit()
+2024-01-15 15:48:02 [DEBUG] Entering HandshakeInfoNew()
+2024-01-15 15:48:02 [DEBUG] Leaving wolfSSH_new(), ssh = 0x3ffd264c
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_SetHighwaterCtx()
+2024-01-15 15:48:02 [DEBUG] Entering wolfSSH_SetHighwater()
+I (124326) SSH Server main: wolfSSH Server main loop heartbeat!
+I (184326) SSH Server main: wolfSSH Server main loop heartbeat!

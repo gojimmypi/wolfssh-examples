@@ -68,7 +68,7 @@
      *
      * Currently faling with SINGLE_THREADED,
      *    even on S3 with SERVER_SESSION_STACK_SIZE = 153KB */
-    #define SERVER_SESSION_STACK_SIZE (153 * 1024)
+    #define SERVER_SESSION_STACK_SIZE (23 * 1024)
 
     /* SSH Server will use NOT pthreads task without WOLFSSH_TEST_THREADING */
     #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT
