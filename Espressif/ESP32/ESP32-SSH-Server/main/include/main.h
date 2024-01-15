@@ -48,6 +48,7 @@
 
 #ifdef WOLFSSH_TEST_THREADING
     #define SERVER_SESSION_STACK_SIZE (4 * 1024)
+
     /* SSH Server will use pthreads task */
     #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT
         #if (CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT < 20096)
@@ -58,9 +59,23 @@
                "when WOLFSSH_TEST_THREADING is enabled "
     #endif
 #else
-    /* 20K is known to work for demo; TODO determine more exact minimum.
+    /* 20K is known to work for demo w/ ECC; TODO determine more exact minimum.
      * 15K observed to fail with default settings */
-    #define SERVER_SESSION_STACK_SIZE (25 * 1024)
+    #define SERVER_SESSION_STACK_SIZE (23 * 1024)
+
+    /* SSH Server will use NOT pthreads task without WOLFSSH_TEST_THREADING */
+    #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT
+        #if (CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT > 4096)
+            #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT too large"
+        #endif
+
+        /* The smallest confirmed stack size is 23KB */
+        #if (SERVER_SESSION_STACK_SIZE < 23 * 1024)
+            #error "SERVER_SESSION_STACK_SIZE too small"
+        #endif
+    #else
+        #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT needs to be defined "
+    #endif
 #endif
 
 #endif /* _MAIN_H_ */
