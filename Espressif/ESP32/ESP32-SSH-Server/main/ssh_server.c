@@ -1401,12 +1401,17 @@ void server_test(void *arg)
 
         ESP_LOGI(TAG,"server_worker started.");
 #ifndef SINGLE_THREADED
+    #ifdef WOLFSSH_TEST_THREADING
         ThreadStart(server_worker, threadCtx, &thread);
 
         if (multipleConnections)
             ThreadDetach(thread);
         else
             ThreadJoin(thread);
+    #else
+        /* see "wolfssh/test.h" check user_settings.h */
+        #error "WOLFSSH_TEST_THREADING must be enabled unless SINGLE_THREADED"
+    #endif
 #else
         server_worker(threadCtx);
 #endif /* SINGLE_THREADED */

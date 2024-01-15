@@ -80,13 +80,18 @@
 #endif /* ESP_ENABLE_WOLFSSH */
 
 /* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
-/* TODO: depth mismatch when disabling SINGLE_THREADED ?
- * (but putty cannot connect: server host key invalid when defined) */
-/* #define SINGLE_THREADED */
+/* TODO: previously saw depth mismatch when disabling SINGLE_THREADED ?
+ * (but putty cannot connect: server host key invalid when defined)
+ *  fails for both `WOLFSSL_NONBLOCK 0` or `WOLFSSL_NONBLOCK 1` */
+#define SINGLE_THREADED
 
 /* Need to increase pthread stack size when using WOLFSSH_TEST_THREADING */
 /* Minimum defined size should be 20096 */
-#define WOLFSSH_TEST_THREADING
+// #define WOLFSSH_TEST_THREADING
+
+#if defined(WOLFSSH_TEST_THREADING) && defined(SINGLE_THREADED)
+    #error "Cannot enable both WOLFSSH_TEST_THREADING and SINGLE_THREADED"
+#endif
 
 /*
  * choose ONE of these Espressif chips to define:

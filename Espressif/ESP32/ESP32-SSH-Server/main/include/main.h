@@ -58,6 +58,10 @@
         #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT needs to be defined " \
                "when WOLFSSH_TEST_THREADING is enabled "
     #endif
+
+    #if defined(SINGLE_THREADED)
+        #error "Cannot enable both WOLFSSH_TEST_THREADING and SINGLE_THREADED"
+    #endif
 #else
     /* 20K is known to work for demo w/ ECC; TODO determine more exact minimum.
      * 15K observed to fail with default settings */
