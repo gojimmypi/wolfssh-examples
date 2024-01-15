@@ -112,32 +112,12 @@
 
 #undef  SO_REUSEPORT
 
-/* WOLFSSL_NONBLOCK is a value assigned to threadCtx->nonBlock
- * and should be a value 1 or 0
- */
-#define WOLFSSL_NONBLOCK 1
-
 /* set SSH_SERVER_ECHO to a value of 1 to echo UART
  * this is optional and typically not desired as the
  * UART target will usually echo its own characters.
  * Valid values are 0 and 1.
  */
 #define SSH_SERVER_ECHO 0
-
-
-/* TODO will we ever need WOLFSSL_NUCLEUS here? probably not. */
-#ifdef WOLFSSL_NUCLEUS
-    #define WFD_SET_TYPE FD_SET
-    #define WFD_SET NU_FD_Set
-    #define WFD_ZERO NU_FD_Init
-    #define WFD_ISSET NU_FD_Check
-#else
-    #define WFD_SET_TYPE fd_set
-    #define WFD_SET FD_SET
-    #define WFD_ZERO FD_ZERO
-    #define WFD_ISSET FD_ISSET
-#endif
-
 
 /**
  ******************************************************************************
@@ -158,10 +138,6 @@
     #define EXAMPLE_BUFFER_SZ 4096
 #endif
 #define SCRATCH_BUFFER_SZ 1200
-
-
-
-
 
 #ifdef  WOLFSSH_SERVER_IS_AP
     #ifdef WOLFSSH_SERVER_IS_STA
