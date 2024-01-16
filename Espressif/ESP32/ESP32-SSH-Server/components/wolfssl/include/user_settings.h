@@ -346,11 +346,11 @@
 /*
  * optionally turn off individual SHA
  */
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
-          #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
     /*  #define NO_WOLFSSL_ESP32_CRYPT_AES     */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */
