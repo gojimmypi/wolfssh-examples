@@ -156,6 +156,10 @@
 #define MY_USE_ECC 1
 #define MY_USE_RSA 0
 
+/* if DEMO_SERVER_384 is not defined (ecdsa-sha2-nistp384),
+ * then SHA256 is default  */
+#define DEMO_SERVER_384
+
 /* We can use either or both ECC and RSA, but must use at least one. */
 #if MY_USE_ECC || MY_USE_RSA
     #if MY_USE_ECC
@@ -168,7 +172,17 @@
         #define HAVE_ECC384
         #define CURVE25519_SMALL
         */
+
+        #ifdef DEMO_SERVER_384
+            /* we'll connect with ecdsa-sha2-nistp384 */
+            #define WOLFSSH_NO_ECDH_SHA2_NISTP256
+            #define WOLFSSH_NO_ECDSA_SHA2_NISTP256
+            #define WOLFSSL_SHA384
+            #define HAVE_ECC384
+        #else
+        #endif
     #else
+        /* RSA is not implemented for SSH demo at this time */
         #define WOLFSSH_NO_ECC
         /* WOLFSSH_NO_ECDSA is typically defined automatically,
          * here for clarity: */
@@ -317,11 +331,7 @@
         #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
         #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
         #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
-#define WOLFSSH_NO_ECDH_SHA2_NISTP256
-#define WOLFSSH_NO_ECDSA_SHA2_NISTP256
-#define WOLFSSL_SHA384
-#define HAVE_ECC384
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
     /*  #define NO_WOLFSSL_ESP32_CRYPT_AES     */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */

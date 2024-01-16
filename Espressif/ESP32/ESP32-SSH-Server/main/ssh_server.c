@@ -17,6 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 #include "ssh_server_config.h"
 #include "ssh_server.h"
 #include "tx_rx_buffer.h"
@@ -130,6 +131,7 @@ typedef struct {
 static byte find_char(const byte* str, const byte* buf, word32 bufSz)
 {
     int ret = 0;
+    ESP_LOGW(TAG, "Updated ret code, needs tested"); /* TODO */
     const byte* cur;
     while (bufSz && (ret == 0)) {
         cur = str;
@@ -575,8 +577,14 @@ static int load_key(byte isEcc, byte* buf, word32 bufSz)
         if ((word32)sizeof_ecc_key_der_256 > bufSz) {
             return 0;
         }
+    #ifdef DEMO_SERVER_384
+        WMEMCPY(buf, ecc_key_der_384, sizeof_ecc_key_der_384);
+        sz = sizeof_ecc_key_der_384;
+    #else
         WMEMCPY(buf, ecc_key_der_256, sizeof_ecc_key_der_256);
         sz = sizeof_ecc_key_der_256;
+    #endif
+
     }
     else {
         if ((word32)sizeof_rsa_key_der_2048 > bufSz) {
