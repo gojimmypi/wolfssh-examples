@@ -1,4 +1,4 @@
-/* user_settings.h
+/* user_settings.h (this is a special file specifically for ESP SSH to UART)
  *
  * Copyright (C) 2006-2023 wolfSSL Inc.
  *
@@ -43,6 +43,7 @@
 */
 #define ESP_ENABLE_WOLFSSH
 /* Optionally enable some wolfSSH settings */
+
 #ifdef ESP_ENABLE_WOLFSSH
     /* The default SSH Windows size is massive for an embedded target. Limit it: */
     #define DEFAULT_WINDOW_SZ 2000
@@ -144,29 +145,29 @@
 /* when you want to use SHA224 */
 /* #define WOLFSSL_SHA224      */
 
-
 /* when you want to use SHA384 */
 /* #define WOLFSSL_SHA384 */
 
 /* #define WOLFSSL_SHA3 */
 
-#define WOLFSSL_SHA512
-#define HAVE_ECC521
-
 #define MY_USE_ECC 1
 #define MY_USE_RSA 0
 
-/* if DEMO_SERVER_384 is not defined (ecdsa-sha2-nistp384),
- * then SHA256 is default  */
-#define DEMO_SERVER_384
+/* Define DEMO_SERVER_384 to use ecdsa-sha2-nistp384
+ * if DEMO_SERVER_384 is not defined then ecdsa-sha2-nistp256 is default. */
+/* #define DEMO_SERVER_384 */
 
 /* We can use either or both ECC and RSA, but must use at least one. */
+/* RSA not yet implemented for SSH to UART demo */
 #if MY_USE_ECC || MY_USE_RSA
     #if MY_USE_ECC
         /* ---- ECDSA / ECC ---- */
         #define HAVE_ECC
         #define HAVE_CURVE25519
         #define HAVE_ED25519
+        /* ED25519 requires SHA512 */
+        #undef  WOLFSSL_SHA512
+        #define WOLFSSL_SHA512
 
         /*
         #define HAVE_ECC384
@@ -174,15 +175,32 @@
         */
 
         #ifdef DEMO_SERVER_384
-            /* we'll connect with ecdsa-sha2-nistp384 */
+            /* we'll connect with ecdsa-sha2-nistp384  */
+            /* confirmed working with both HW / SW ESP32 wolfcrypt */
+
+            /* First, we need to force off the [ECDH/ECDSA]'NISTP256 items */
             #define WOLFSSH_NO_ECDH_SHA2_NISTP256
             #define WOLFSSH_NO_ECDSA_SHA2_NISTP256
+            /* SHA256 still needed */
+
             #define WOLFSSL_SHA384
             #define HAVE_ECC384
+
+            /* TODO confirm these are needed: */
+            #define WOLFSSL_SHA512
+            #define HAVE_ECC521
+
         #else
+            /* default ecdsa-sha2-nistp256 needs no special settings */
+
+            /* TODO: SHA256 HW enabled causes error:
+             *   "signature from server's host key is invalid
+             *
+             * Software SHA256 works.
+             */
         #endif
     #else
-        /* RSA is not implemented for SSH demo at this time */
+        /* Warning: only ECC implemented for SSH UART demo at this time */
         #define WOLFSSH_NO_ECC
         /* WOLFSSH_NO_ECDSA is typically defined automatically,
          * here for clarity: */
@@ -190,6 +208,8 @@
     #endif
 
     #if MY_USE_RSA
+        /* Warning: RSA not implemented for SSH UART demo at this time */
+
         /* ---- RSA ----- */
         /* #define RSA_LOW_MEM */
 
@@ -327,11 +347,11 @@
 /*
  * optionally turn off individual SHA
  */
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
+//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
+//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
+          #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
+//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
     /*  #define NO_WOLFSSL_ESP32_CRYPT_AES     */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */
