@@ -113,7 +113,6 @@
 /* #define NO_OLD_TLS */
 
 #define BENCH_EMBEDDED
-#define USE_CERT_BUFFERS_2048
 
 #define NO_OLD_TLS
 
@@ -300,8 +299,9 @@
                                        "TLS13-SM4-CCM-SM3:"
     */
 
+    /* WOLFSSL_BASE16 required for WOLFSSL_SM2 */
     #undef  WOLFSSL_BASE16
-    #define WOLFSSL_BASE16 /* required for WOLFSSL_SM2 */
+    #define WOLFSSL_BASE16
 
     #undef  WOLFSSL_SM4_ECB
     #define WOLFSSL_SM4_ECB
@@ -325,7 +325,6 @@
     #define HAVE_AESGCM
 #else
     /* default settings */
-    #define USE_CERT_BUFFERS_2048
 #endif
 
 /* esp32-wroom-32se specific definition */
@@ -538,7 +537,6 @@
 /* #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MULMOD                */
 
 #define WOLFSSL_PUBLIC_MP /* used by benchmark */
-#define USE_CERT_BUFFERS_2048
 
 /* when turning on ECC508 / ECC608 support
 #define WOLFSSL_ESPWROOM32SE
@@ -589,4 +587,6 @@
  *  #define HAVE_AES_ECB
  *  #define HAVE_AES_DIRECT
  */
+
+/* Custom stack check (experimental) */
 #define WOLFSSL_STACK_CHECK
