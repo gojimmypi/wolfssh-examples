@@ -126,14 +126,13 @@ typedef struct {
 
 /* find a byte character [str] of length [bufSz] within [buf];
  * returns byte position if found, otherwise zero
- * TODO what if bufSz > 255?
  */
 static byte find_char(const byte* str, const byte* buf, word32 bufSz)
 {
     int ret = 0;
     ESP_LOGW(TAG, "Updated ret code, needs tested"); /* TODO */
     const byte* cur;
-    while (bufSz && (ret == 0)) {
+    while (bufSz && (ret == 0) && (ret < 255)) {
         cur = str;
         while (*cur != '\0') {
             if (*cur == *buf) {
@@ -143,6 +142,9 @@ static byte find_char(const byte* str, const byte* buf, word32 bufSz)
         }
         buf++;
         bufSz--;
+    }
+    if (ret == 255) {
+        ESP_LOGE(TAG, "find_char not found in 254 chars");
     }
 
     return ret;
