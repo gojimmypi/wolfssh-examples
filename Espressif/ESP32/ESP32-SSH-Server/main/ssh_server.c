@@ -621,7 +621,7 @@ static PwMap* PwMapNew(PwMapList* list,
     map = (PwMap*)malloc(sizeof(PwMap));
     if (map != NULL) {
      //   wc_Sha256 sha[2] = {  };
-        wc_Sha256 sha;
+        wc_Sha256 sha = { };
         byte flatSz[4];
         int fsz = 0;
 
