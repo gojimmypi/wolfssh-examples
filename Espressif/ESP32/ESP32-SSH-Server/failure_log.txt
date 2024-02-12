@@ -192,8 +192,8 @@ I (1557) wifi:state: assoc -> run (10)
 W (1561) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1562) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1562) wifi:[ADDBA]rx delba, code:39, delete tid:5
-I (1573) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:25:8c:4a), tid:5, ssn:39, winSize:64
-I (1669) wifi:connected with badger, aid = 14, channel 1, BW20, bssid = 6e:82:17:25:8c:4a
+I (1573) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:22:6c:4b), tid:5, ssn:39, winSize:64
+I (1669) wifi:connected with wc_ap, aid = 14, channel 1, BW20, bssid = 6e:82:17:22:6c:4b
 I (1670) wifi:security: WPA2-PSK, phy: bgn, rssi: -53
 I (1676) wifi:pm start, type: 1
 
@@ -207,7 +207,7 @@ I (4197) time_helper: Waiting for NTP to sync time... (1/10)
 I (4198) time_helper: The current date/time is: Sat Jan 13 22:32:34 2024
 I (5200) time_helper: Waiting for NTP to sync time... (2/10)
 I (5201) time_helper: The current date/time is: Sat Jan 13 22:32:36 2024
-I (6162) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:25:8c:4a), tid:0, ssn:67, winSize:64
+I (6162) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:22:6c:4b), tid:0, ssn:67, winSize:64
 I (6203) time_helper: Waiting for NTP to sync time... (3/10)
 I (6204) time_helper: The current date/time is: Sat Jan 13 22:32:37 2024
 I (6303) time_helper: Waiting for NTP to sync time... (4/10)

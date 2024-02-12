@@ -1,6 +1,6 @@
 /* time_helper.c
  *
- * Copyright (C) 2014-2024 wolfSSL Inc.
+ * Copyright (C) 2006-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -262,8 +262,9 @@ int set_time(void)
 
 #ifdef LIBWOLFSSL_VERSION_GIT_HASH_DATE
     /* initialy set a default approximate time from recent git commit */
-    ESP_LOGI(TAG, "Found git hash date, attempting to set system date.");
-    set_time_from_string(LIBWOLFSSL_VERSION_GIT_HASH_DATE);
+    ESP_LOGI(TAG, "Found git hash date, attempting to set system date: %s",
+                   LIBWOLFSSL_VERSION_GIT_HASH_DATE);
+    set_time_from_string(LIBWOLFSSL_VERSION_GIT_HASH_DATE"\0");
     esp_show_current_datetime();
 
     ret = -4;
@@ -277,6 +278,7 @@ int set_time(void)
 #ifdef CONFIG_SNTP_TIME_SYNC_METHOD_SMOOTH
     config.smooth_sync = true;
 #endif
+    return ret;
 
     if (NTP_SERVER_COUNT) {
         /* next, let's setup NTP time servers

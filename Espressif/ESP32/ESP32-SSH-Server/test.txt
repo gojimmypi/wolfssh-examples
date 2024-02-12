@@ -191,8 +191,8 @@ I (1507) wifi:state: assoc -> run (10)
 W (1515) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1516) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1516) wifi:[ADDBA]rx delba, code:39, delete tid:5
-I (1528) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:25:8c:4a), tid:5, ssn:284, winSize:64
-I (1648) wifi:connected with badger, aid = 14, channel 1, BW20, bssid = 6e:82:17:25:8c:4a
+I (1528) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:22:6c:4b), tid:5, ssn:284, winSize:64
+I (1648) wifi:connected with wc_ap, aid = 14, channel 1, BW20, bssid = 6e:82:17:22:6c:4b
 I (1649) wifi:security: WPA2-PSK, phy: bgn, rssi: -51
 I (1654) wifi:pm start, type: 1
 
@@ -210,7 +210,7 @@ I (6179) time_helper: Waiting for NTP to sync time... (3/10)
 I (6180) time_helper: The current date/time is: Mon Jan 15 12:43:06 2024
 I (7182) time_helper: Waiting for NTP to sync time... (4/10)
 I (7183) time_helper: The current date/time is: Mon Jan 15 12:43:07 2024
-I (7421) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:25:8c:4a), tid:0, ssn:423, winSize:64
+I (7421) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:22:6c:4b), tid:0, ssn:423, winSize:64
 I (7788) time_helper: Waiting for NTP to sync time... (5/10)
 I (7790) time_helper: The current date/time is: Mon Jan 15 15:45:03 2024
 I (7792) time_helper: Successfuly set time via NTP servers.
@@ -789,8 +789,8 @@ I (1534) wifi:state: assoc -> run (10)
 W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:0
 W (1543) wifi:[ADDBA]rx delba, code:39, delete tid:5
-I (1553) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:25:8c:4a), tid:5, ssn:289, winSize:64
-I (1653) wifi:connected with badger, aid = 14, channel 1, BW20, bssid = 6e:82:17:25:8c:4a
+I (1553) wifi:<ba-add>idx:0 (ifx:0, 6e:82:17:22:6c:4b), tid:5, ssn:289, winSize:64
+I (1653) wifi:connected with wc_ap, aid = 14, channel 1, BW20, bssid = 6e:82:17:22:6c:4b
 I (1654) wifi:security: WPA2-PSK, phy: bgn, rssi: -50
 I (1659) wifi:pm start, type: 1
 
@@ -802,7 +802,7 @@ I (2671) SSH Server main: inet_pton
 I (3177) time_helper: The current date/time is: Mon Jan 15 12:43:03 2024
 I (4177) time_helper: Waiting for NTP to sync time... (1/10)
 I (4178) time_helper: The current date/time is: Mon Jan 15 12:43:04 2024
-I (4215) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:25:8c:4a), tid:0, ssn:446, winSize:64
+I (4215) wifi:<ba-add>idx:1 (ifx:0, 6e:82:17:22:6c:4b), tid:0, ssn:446, winSize:64
 I (4294) time_helper: Waiting for NTP to sync time... (2/10)
 I (4296) time_helper: The current date/time is: Mon Jan 15 15:46:53 2024
 I (4297) time_helper: Successfuly set time via NTP servers.
