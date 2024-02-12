@@ -1,55 +1,4 @@
-# Object files
-*.o
-*.ko
-*.lo
-
-# Libraries
-*.lib
-*.a
-*.la
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-
-# autoconf misc
-config.h*
-configure~
-config.status
-configure
-*.log
-*.gz
-*.zip
-*.bak
-*.dummy
-*.xcworkspace
-*.deps
-.dirstamp
-*.libs
-**/build-aux/
-**/build-test/
-**/build/
-
-# vim
-*.swp
-*.swo
-tags
-diff
-.vimrc
-
-# scan-build
-client.plist
-
-# misc
-.DS_Store
-
+﻿
 # Visual Studio Code Workspace Files
 *.vscode
 *.userprefs
@@ -62,46 +11,22 @@ UpgradeLog.htm
 *.VC.db
 *.filters
 
-# VS debris
-*.sdf
-*.v11.suo
-*.vcxproj.filters
-*.vcxproj.user
-*.opensdf
-*.pdb
-.vs
-Debug
-Release
-DLL Debug
-DLL Release
 
-# Eclipse
-.cproject
-.project
-.settings
+# Espressif sdk config default should be saved in sdkconfig.defaults
+# we won't track the actual working sdkconfig files
+/Espressif/**/sdkconfig
+/Espressif/**/sdkconfig.old
 
+# VisualGDB
+**/.visualgdb
 
 # auto-created CMake backups
 **/CMakeLists.txt.old
 
-# VisualGDB
-**/.visualgdb
-**/*.vgdbproj.*.user
+# CMake  build directory
+/out
+/out_temp
 
-
-# Espressif sdk config defaults should be saved in `sdkconfig.defaults`
-# we won't track the actual working `sdkconfig` files
-/Espressif/**/out/
-/Espressif/**/sdkconfig
-/Espressif/**/sdkconfig.old
-/Espressif/**/CMakeLists.txt.old
-
-# Espressif managed components to exclude:
-/Espressif/**/managed_components/**
-
-# Espressif managed component lock files to exclude.
-# "In general, it's ok to have it under version control, however, it ties
-# the solution to the exact version of ESP-IDF and will be ignored if an
-# example is built against another IDF version or for a different target.
-# So it's better to git ignore it for the examples."
-/Espressif/**/dependencies.lock
+# Visual Studio
+**/.vs
+**/build

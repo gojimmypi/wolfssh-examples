@@ -1,27 +1,29 @@
 #  [wolfSSH Project]/CMakeLists.txt
 #
-#  Copyright (C) 2006-2023 WOLFSSL Inc.
+#  Copyright (C) 2014-2024 wolfSSL Inc.
 #
-#  This file is part of WOLFSSH.
+#  This file is part of wolfSSH.
 #
-#  WOLFSSH is free software; you can redistribute it and/or modify
+#  wolfSSH is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2 of the License, or
+#  the Free Software Foundation; either version 3 of the License, or
 #  (at your option) any later version.
 #
-#  WOLFSSH is distributed in the hope that it will be useful,
+#  wolfSSH is distributed in the hope that it will be useful,
 #  but WITHOUT ANY WARRANTY; without even the implied warranty of
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
 #  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
+#  along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# The following lines of boilerplate have to be in your project's CMakeLists
-# in this exact order for cmake to work correctly
 cmake_minimum_required(VERSION 3.5)
+
+
+# Optionally set location of your wolfssl and wolfssh repository source:
+# set(WOLFSSL_ROOT "C:/workspace/wolfssl")
+# set(WOLFSSH_ROOT "C:/workspace/wolfssh")
 
 #standard build
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS")
@@ -124,10 +126,6 @@ endif()
 if( EXISTS "${CMAKE_HOME_DIRECTORY}/components/wolfssl/include/user_settings.h" )
     message("user_settings.h found in ${CMAKE_HOME_DIRECTORY}/components/wolfssl/ ")
 
-    message( "" )
-    message("WARNING: wolfSSL and wolfSSH user_settings.h DO NOT MATCH in local project.")
-    message( "" )
-
     if( EXISTS "${CMAKE_HOME_DIRECTORY}/components/wolfssh/include/user_settings.h" )
         message("user_settings.h found in ${CMAKE_HOME_DIRECTORY}/components/wolfssh/ ")
 
@@ -140,17 +138,19 @@ if( EXISTS "${CMAKE_HOME_DIRECTORY}/components/wolfssl/include/user_settings.h" 
             message("WARNING: wolfSSL and wolfSSH user_settings.h DO NOT MATCH in local project.")
             message( "" )
         #   file(COPY   "${CMAKE_HOME_DIRECTORY}/components/wolfssl/include/user_settings.h" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/wolfssh/include" )
-            message( "" )
+        #   message( "" )
         #    message("WARNING: copied user_settings.h from wolfssl to wolfssh.")
-            message( "" )
+        #   message( "" )
         else()
             message("Error while comparing wolfSSL and wolfSSH user_settings.h files in local project.")
         endif()
     else()
         message( "" )
+    # Although wolSSH in general may need user_settings for both components, we don't want that for Espressif.
+    # For reference:
     #    file(COPY   "${CMAKE_HOME_DIRECTORY}/components/wolfssl/include/user_settings.h" DESTINATION "${CMAKE_HOME_DIRECTORY}/components/wolfssh/include/user_settings.h" )
-        message("WARNING: wolfSSH user_settings.h not found in local project, copied from wolfssl.")
-        message( "" )
+    #    message("WARNING: wolfSSH user_settings.h not found in local project, copied from wolfssl.")
+    #   message( "" )
     endif()
 
 endif()

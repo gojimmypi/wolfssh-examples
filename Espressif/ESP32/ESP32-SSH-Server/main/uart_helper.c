@@ -1,6 +1,6 @@
 /* uart_helper.c
  *
- * Copyright (C) 2014-2022 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -16,7 +16,6 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
- *
  */
 
 /* This is a specialized UART helper for the SSH to UART example*/
@@ -79,7 +78,7 @@ void init_UART(void)
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
     #if !defined(CONFIG_IDF_TARGET_ESP8266)
-        .source_clk = UART_SCLK_APB,
+        .source_clk = UART_SCLK_DEFAULT,
     #endif
     };
 
@@ -126,7 +125,6 @@ void uart_tx_task(void *arg) {
      * when we receive chars from ssh, we'll send them out the UART
     */
     static const char *TX_TASK_TAG = "TX_TASK";
-    vTaskDelay(1000000000); /* TODO */
     esp_log_level_set(TX_TASK_TAG, ESP_LOG_INFO);
 
     /* this RTOS task will never exit */

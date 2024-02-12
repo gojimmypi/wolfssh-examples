@@ -1,6 +1,6 @@
 /* ssh_server_config.h
  *
- * Copyright (C) 2014-2022 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -44,7 +44,7 @@
 /* EdgeRouter-X is 57600, others are typically 115200
  * This is the UART baud rate to use in SSH server, NOT the monitor baud rate!
  **/
-#define BAUD_RATE (57600)
+#define BAUD_RATE (115200)
 
 
 /* SSH is usually on port 22, but for our example it lives at port 22222 */

@@ -1,22 +1,21 @@
 /* user_settings.h (this is a special file specifically for ESP SSH to UART)
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
- * This file is part of wolfSSL.
+ * This file is part of wolfSSH.
  *
- * wolfSSL is free software; you can redistribute it and/or modify
+ * wolfSSH is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * wolfSSL is distributed in the hope that it will be useful,
+ * wolfSSH is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
+ * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "sdkconfig.h" /* essential to chip set detection */
@@ -28,6 +27,8 @@
 #undef WOLFSSL_ESP8266
 
 #define WOLFSSL_ESPIDF
+
+#define DEBUG_WOLFSSH
 
 /* The Espressif sdkconfig will have chipset info.
 **
@@ -51,8 +52,7 @@
     #define WOLFSSH_TERM
 
     #undef  DEBUG_WOLFSSH
-    /* Optionally turn on wolfSSH debugging messages */
-    /* #define DEBUG_WOLFSSH */
+    #define DEBUG_WOLFSSH
 
     #undef  WOLFSSL_KEY_GEN
     #define WOLFSSL_KEY_GEN
@@ -78,6 +78,10 @@
     */
     #define WOLFSSL_NONBLOCK 1
 
+    #ifndef WOLFSSL_FULL_WOLFSSH_SUPPORT
+        /* wolfSSL 5.6.6 SHA256 HW not supported with wolfSSH */
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+    #endif
 #endif /* ESP_ENABLE_WOLFSSH */
 
 /* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
@@ -190,17 +194,13 @@
             #define HAVE_ECC521
 
         #else
-            /* default ecdsa-sha2-nistp256 needs no special settings. */
+            /* default ecdsa-sha2-nistp256 needs no special settings */
 
-            /* TODO: SHA256 HW enabled causes wolfSSH project error:
+            /* TODO: SHA256 HW enabled causes error:
              *   "signature from server's host key is invalid
              *
              * Software SHA256 works.
              */
-            #ifndef WOLFSSL_FULL_WOLFSSH_SUPPORT
-                /* wolfSSL 5.6.6 SHA256 HW not supported with wolfSSH */
-                #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
-            #endif
         #endif
     #else
         /* Warning: only ECC implemented for SSH UART demo at this time */
@@ -246,9 +246,7 @@
 /* #define WOLFSSL_AES_COUNTER */
 
 /* debug options */
-/* optionally turn on debugging to see wolfSSL connection steps, etc: */
 /* #define DEBUG_WOLFSSL */
-
 /* #define WOLFSSL_ESP32_CRYPT_DEBUG */
 /* #define WOLFSSL_ATECC508A_DEBUG          */
 
@@ -274,6 +272,7 @@
 /***** Use Integer Heap Math *****/
 /* #undef USE_FAST_MATH          */
 /* #define USE_INTEGER_HEAP_MATH */
+
 
 #define WOLFSSL_SMALL_STACK
 

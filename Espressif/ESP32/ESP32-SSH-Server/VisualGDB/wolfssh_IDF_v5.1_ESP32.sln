@@ -5,9 +5,9 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "wolfssh_IDF_v5.1_ESP32", "wolfssh_IDF_v5.1_ESP32.vgdbproj", "{EADCC9AB-72B3-4B51-A838-593E5D80DDF7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{535B5BED-7874-4A4F-91C1-C0B232B38476}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BA08548-4144-4B0C-91CF-E3D3247A9A74}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp32-crypt.h = ..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp32-crypt.h
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Global
@@ -31,6 +31,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {ECF6FB77-96FC-46CC-98EE-5FB22B95B9F4}
+		SolutionGuid = {17B51EFD-8966-40AF-A82A-DEBF257AE0DC}
 	EndGlobalSection
 EndGlobal

@@ -1,6 +1,6 @@
 /* ssh_server.c
  *
- * Copyright (C) 2014-2022 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -130,7 +130,6 @@ typedef struct {
 static byte find_char(const byte* str, const byte* buf, word32 bufSz)
 {
     int ret = 0;
-    ESP_LOGW(TAG, "Updated ret code, needs tested"); /* TODO */
     const byte* cur;
     while (bufSz && (ret == 0) && (ret < 255)) {
         cur = str;
@@ -620,7 +619,6 @@ static PwMap* PwMapNew(PwMapList* list,
 
     map = (PwMap*)malloc(sizeof(PwMap));
     if (map != NULL) {
-     //   wc_Sha256 sha[2] = {  };
         wc_Sha256 sha = { };
         byte flatSz[4];
         int fsz = 0;
