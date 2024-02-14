@@ -141,11 +141,15 @@
 #define HAVE_AESGCM
 
 #define WOLFSSL_RIPEMD
+
 /* when you want to use SHA224 */
 /* #define WOLFSSL_SHA224      */
 
 /* when you want to use SHA384 */
 /* #define WOLFSSL_SHA384 */
+
+/* when you want to use SHA512 */
+#define WOLFSSL_SHA512
 
 /* #define WOLFSSL_SHA3 */
 
@@ -199,7 +203,7 @@
              */
             #ifndef WOLFSSL_FULL_WOLFSSH_SUPPORT
                 /* wolfSSL 5.6.6 SHA256 HW not supported with wolfSSH */
-                #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+    //            #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
             #endif
         #endif
     #else
@@ -231,6 +235,8 @@
     #error "Either RSA or ECC must be enabled"
 #endif
 
+/* Optional OPENSSL compatibility */
+/* #define OPENSSL_EXTRA */
 
 /* when you want to use pkcs7 */
 /* #define HAVE_PKCS7 */
@@ -259,7 +265,7 @@
 /* #define XTIME time */
 
 /* adjust wait-timeout count if you see timeout in RSA HW acceleration */
-#define ESP_RSA_TIMEOUT_CNT    0x249F00
+#define ESP_RSA_TIMEOUT_CNT    0x349F00
 
 
 /* USE_FAST_MATH is default */
@@ -279,6 +285,7 @@
 
 /* The ESP32 has some detailed statup information available:*/
 #define HAVE_VERSION_EXTENDED_INFO
+/* #define HAVE_WC_INTROSPECTION */
 
 /* optional SM4 Ciphers. See https://github.com/wolfSSL/wolfsm */
 /*
@@ -348,11 +355,25 @@
     /* wolfSSL HW Acceleration supported on ESP32. Uncomment to disable: */
     /*  #define NO_ESP32_CRYPT                 */
     /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH    */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_AES     */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MULMOD  */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_EXPTMOD */
+/*
+ * optionally turn off individual SHA
+ */
+
+#define WOLFSSL_DEBUG_MUTEX
+#define  ESP_MONITOR_HW_TASK_LOCK
+#define  WOLFSSL_ESP32_HW_LOCK_DEBUG
+//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
+
+//      #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
+        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
+      #define NO_WOLFSSL_ESP32_CRYPT_AES
+      #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI
+     #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL
+     #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MULMOD
+    #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_EXPTMOD
 
     /*  These are defined automatically in esp32-crypt.h, here for clarity:  */
     /* no SHA224 HW on ESP32  */

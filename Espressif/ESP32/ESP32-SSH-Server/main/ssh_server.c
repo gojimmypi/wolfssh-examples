@@ -23,6 +23,7 @@
 #include "tx_rx_buffer.h"
 
 
+int force_sw = 0;
 #include <esp_task_wdt.h>
 
 /* wolfSSL */
@@ -34,6 +35,10 @@
 #include <wolfssl/wolfcrypt/port/Espressif/esp32-crypt.h>
 #include <wolfssl/wolfcrypt/types.h>
 #include <wolfssl/wolfcrypt/logging.h>
+
+// TODO remove
+#include <wolfssl/wolfcrypt/random.h>
+
 #ifndef WOLFSSL_ESPIDF
     #error "Problem with wolfSSL user_settings."
     #error "Check [project]/components/wolfssl/include"
@@ -639,18 +644,19 @@ static PwMap* PwMapNew(PwMapList* list,
         ESP_LOGI(TAG, "SHA256 flatSz: 0x%02x%02x%02x%02x; size = %d",
                       flatSz[0], flatSz[1], flatSz[2], flatSz[3], fsz);
         ESP_LOGI(TAG, "SHA256 sample password: '%s': size = %d bytes", p, pSz);
-    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)  &&!defined(NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256)
         ESP_LOGW(TAG, "PwMapNew sha256 final ctx->lockDepth = %d",
                        (&sha.ctx)->lockDepth);
         ESP_LOGW(TAG, "calling wc_Sha256Update(1) ctx->lockDepth = %d",
                        (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Update((wc_Sha256*)&sha, flatSz, fsz);
-    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH) &&!defined(NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256)
         ESP_LOGW(TAG, "calling wc_Sha256Update(2) ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Update((wc_Sha256*)&sha, p, pSz);
-    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH)
+    #if defined(SSH_SERVER_DEBUG_LOCKDEPTH) &&!defined(NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256)
+
         ESP_LOGW(TAG, "calling wc_Sha256Final ctx->lockDepth = %d", (&sha.ctx)->lockDepth);
     #endif
         wc_Sha256Final((wc_Sha256*)&sha, (byte*)map->p);
@@ -1406,8 +1412,8 @@ void server_test(void *arg)
         threadCtx->fd = clientFd;
         threadCtx->id = threadCount++;
         threadCtx->nonBlock = WOLFSSL_NONBLOCK;
-
-        ESP_LOGI(TAG,"server_worker started.");
+        force_sw = 0;
+        ESP_LOGI(TAG,"server_worker started. force_sw = %d", force_sw);
 #ifndef SINGLE_THREADED
     #ifdef WOLFSSH_TEST_THREADING
         ThreadStart(server_worker, threadCtx, &thread);
