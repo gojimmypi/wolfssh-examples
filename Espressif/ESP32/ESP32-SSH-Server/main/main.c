@@ -353,14 +353,14 @@ void app_main(void)
                 tskIDLE_PRIORITY, NULL);
 
 
-    for (;;) {
-        /* we're not actually doing anything here, other than a heartbeat message */
-        ESP_LOGI(TAG,"wolfSSH Server main loop heartbeat!");
-
-        taskYIELD();
-        vTaskDelay(DelayTicks ? DelayTicks : 1); /* Minimum delay = 1 tick */
-    }
+//    for (;;) {
+//        /* we're not actually doing anything here, other than a heartbeat message */
+//        ESP_LOGI(TAG,"wolfSSH Server main loop heartbeat!");
+//
+//        taskYIELD();
+//        vTaskDelay(DelayTicks ? DelayTicks : 1); /* Minimum delay = 1 tick */
+//    }
 
     /* TODO this is unreachable with RTOS threads, do we ever want to shut down? */
-    wolfSSH_Cleanup();
+    // wolfSSH_Cleanup();
 } /* app_main */

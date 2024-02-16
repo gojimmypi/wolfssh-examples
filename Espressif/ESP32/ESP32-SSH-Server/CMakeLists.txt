@@ -22,8 +22,8 @@ cmake_minimum_required(VERSION 3.5)
 
 
 # Optionally set location of your wolfssl and wolfssh repository source:
-# set(WOLFSSL_ROOT "C:/workspace/wolfssl")
-# set(WOLFSSH_ROOT "C:/workspace/wolfssh")
+set(WOLFSSL_ROOT "C:/workspace/wolfssl-gojimmypi")
+set(WOLFSSH_ROOT "C:/workspace/wolfssh-gojimmypi")
 
 #standard build
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS")
@@ -35,7 +35,7 @@ cmake_minimum_required(VERSION 3.5)
 # full debugging; NO_RSA needed to RNG. See https://github.com/wolfSSL/wolfssh/pull/417
 
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS -DWOLFSSH_NO_RSA -DNO_RSA -DWOLFSSH_SHELL -DDEBUG_WOLFSSL")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS -DWOLFSSH_SHELL -DDEBUG_WOLFSSL")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS -DWOLFSSH_SHELL")
 
 # hardware encryption
 # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS -DWOLFSSH_NO_RSA -DNO_RSA -DWOLFSSH_SHELL  -DDEBUG_WOLFSSL -DWOLFSSL_ESP32WROOM32_CRYPT -DWOLFSSL_ESP32WROOM32_CRYPT_RSA_PRI -DWOLFSSL_ESP32WROOM32_CRYPT_DEBUG -DNO_WOLFSSL_ESP32WROOM32_CRYPT_HASH")

@@ -19,15 +19,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
  */
 
+/* NOTICE
+ *
+ * This is a wolfSSL user settings file for Espressif ESP32-[n] and ESP8266.
+ *
+ * This file should *NOT* be explicitly included in any source files.
+ *
+ * Please instead include this settings.h file which will reference this file:
+ *
+ *            #include <wolfssl/wolfcrypt/settings.h>
+ *
+ * Thank you for using wolfSSL.
+ *
+ */
 #include "sdkconfig.h" /* essential to chip set detection */
 
 #undef WOLFSSL_ESPIDF
-#undef WOLFSSL_ESP32
 #undef WOLFSSL_ESPWROOM32SE
 #undef WOLFSSL_ESP32
 #undef WOLFSSL_ESP8266
 
 #define WOLFSSL_ESPIDF
+// #define NO_SHA
+#define DEBUG_WOLFSSL
+#define DEBUG_WOLFSSH
+
+#define WOLFSSL_ESP32_HW_LOCK_DEBUG
+// #define WOLFSSL_DEBUG_MUTEX
 
 /* The Espressif sdkconfig will have chipset info.
 **
@@ -50,7 +68,6 @@
     #undef  WOLFSSH_TERM
     #define WOLFSSH_TERM
 
-    #undef  DEBUG_WOLFSSH
     /* Optionally turn on wolfSSH debugging messages */
     /* #define DEBUG_WOLFSSH */
 
@@ -81,10 +98,8 @@
 #endif /* ESP_ENABLE_WOLFSSH */
 
 /* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
-/* TODO: previously saw depth mismatch when disabling SINGLE_THREADED ?
- * (but putty cannot connect: server host key invalid when defined)
- *  fails for both `WOLFSSL_NONBLOCK 0` or `WOLFSSL_NONBLOCK 1` */
 /* #define SINGLE_THREADED */
+// #define SINGLE_THREADED
 
 /* Need to increase pthread stack size when using WOLFSSH_TEST_THREADING */
 /* Minimum defined size should be 20096, but not in SINGLE_THREADED */
@@ -145,11 +160,11 @@
 /* when you want to use SHA224 */
 /* #define WOLFSSL_SHA224      */
 
-/* when you want to use SHA384 */
+/* when you want to use SHA384, which is disabled by default */
 /* #define WOLFSSL_SHA384 */
 
-/* when you want to use SHA512 */
-#define WOLFSSL_SHA512
+/* when you want to use SHA512. which is disabled by default */
+/* #define WOLFSSL_SHA512 */
 
 /* #define WOLFSSL_SHA3 */
 
@@ -192,19 +207,8 @@
             /* TODO confirm these are needed: */
             #define WOLFSSL_SHA512
             #define HAVE_ECC521
-
         #else
             /* default ecdsa-sha2-nistp256 needs no special settings. */
-
-            /* TODO: SHA256 HW enabled causes wolfSSH project error:
-             *   "signature from server's host key is invalid
-             *
-             * Software SHA256 works.
-             */
-            #ifndef WOLFSSL_FULL_WOLFSSH_SUPPORT
-                /* wolfSSL 5.6.6 SHA256 HW not supported with wolfSSH */
-    //            #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
-            #endif
         #endif
     #else
         /* Warning: only ECC implemented for SSH UART demo at this time */
@@ -353,27 +357,21 @@
 ** Uncomment these lines to force SW instead of HW acceleration */
 #if defined(CONFIG_IDF_TARGET_ESP32) || defined(WOLFSSL_ESPWROOM32SE)
     /* wolfSSL HW Acceleration supported on ESP32. Uncomment to disable: */
-    /*  #define NO_ESP32_CRYPT                 */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH    */
-/*
- * optionally turn off individual SHA
- */
+    /*  #define NO_ESP32_CRYPT                         */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH            */
 
-#define WOLFSSL_DEBUG_MUTEX
-#define  ESP_MONITOR_HW_TASK_LOCK
-#define  WOLFSSL_ESP32_HW_LOCK_DEBUG
-//        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224
+    /*****   Optionally turn off individual SHA:   *****/
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA        */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA224     */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256     */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384     */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512     */
 
-//      #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
-
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA384
-        #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA512
-      #define NO_WOLFSSL_ESP32_CRYPT_AES
-      #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI
-     #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL
-     #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MULMOD
-    #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_EXPTMOD
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_AES             */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI         */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MP_MUL  */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_MULMOD  */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_RSA_PRI_EXPTMOD */
 
     /*  These are defined automatically in esp32-crypt.h, here for clarity:  */
     /* no SHA224 HW on ESP32  */

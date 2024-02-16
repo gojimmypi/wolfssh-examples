@@ -1360,7 +1360,7 @@ void server_test(void *arg)
         socklen_t     clientAddrSz = sizeof(clientAddr);
 #ifndef SINGLE_THREADED
         THREAD_TYPE   thread;
-        ESP_LOGI(TAG,"Found SINGLE_THREADED defined");
+        ESP_LOGI(TAG,"Did not find SINGLE_THREADED defined");
 #endif
         WOLFSSH*      ssh;
 
@@ -1383,7 +1383,7 @@ void server_test(void *arg)
 
         ssh = wolfSSH_new(ctx);
         if (ssh == NULL) {
-            ESP_LOGE(TAG,"Couldn't allocate SSH data.\n");
+            ESP_LOGE(TAG,"Failed to create ssh object during wolfSSH_new.\n");
             exit(EXIT_FAILURE);
         }
         wolfSSH_SetUserAuthCtx(ssh, &pwMapList);
