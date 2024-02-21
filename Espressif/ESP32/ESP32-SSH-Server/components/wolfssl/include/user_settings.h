@@ -41,10 +41,10 @@
 
 #define WOLFSSL_ESPIDF
 // #define NO_SHA
-#define DEBUG_WOLFSSL
-#define DEBUG_WOLFSSH
+// #define DEBUG_WOLFSSL
+// #define DEBUG_WOLFSSH
 
-#define WOLFSSL_ESP32_HW_LOCK_DEBUG
+// #define WOLFSSL_ESP32_HW_LOCK_DEBUG
 // #define WOLFSSL_DEBUG_MUTEX
 
 /* The Espressif sdkconfig will have chipset info.
@@ -99,11 +99,11 @@
 
 /* when you want to use SINGLE THREAD. Note Default ESP-IDF is FreeRTOS */
 /* #define SINGLE_THREADED */
-// #define SINGLE_THREADED
+#define SINGLE_THREADED
 
 /* Need to increase pthread stack size when using WOLFSSH_TEST_THREADING */
 /* Minimum defined size should be 20096, but not in SINGLE_THREADED */
-#define WOLFSSH_TEST_THREADING
+// #define WOLFSSH_TEST_THREADING
 
 #if defined(WOLFSSH_TEST_THREADING) && defined(SINGLE_THREADED)
     #error "Cannot enable both WOLFSSH_TEST_THREADING and SINGLE_THREADED"

@@ -18,20 +18,12 @@
  * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ssh_server_config.h"
-#include "ssh_server.h"
-#include "tx_rx_buffer.h"
-
-
-int force_sw = 0;
-#include <esp_task_wdt.h>
-
 /* wolfSSL */
+/* Important: make sure settings.h appears before any other wolfSSL headers */
+#include <wolfssl/wolfcrypt/settings.h>
 #ifndef WOLFSSL_USER_SETTINGS
     #error "WOLFSSL_USER_SETTINGS should have been defined in project cmake"
 #endif
-/* Important: make sure settings.h appears before any other wolfSSL headers */
-#include <wolfssl/wolfcrypt/settings.h>
 #include <wolfssl/wolfcrypt/port/Espressif/esp32-crypt.h>
 #include <wolfssl/wolfcrypt/types.h>
 #include <wolfssl/wolfcrypt/logging.h>
@@ -54,6 +46,15 @@ int force_sw = 0;
 /* wolfSSH */
 #include <wolfssh/ssh.h>
 #include <wolfssh/test.h>
+
+/* Espressif */
+#include <esp_log.h>
+
+
+#include "ssh_server_config.h"
+#include "ssh_server.h"
+#include "tx_rx_buffer.h"
+
 
 /* note our actual buffer is used by RTOS threads, and eventually interrupts */
 static volatile byte sshStreamTransmitBufferArray[EXT_TX_BUF_MAX_SZ];
@@ -128,6 +129,7 @@ typedef struct {
     char nonBlock;
 } thread_ctx_t;
 
+extern int my_ip_address[4];
 
 /* find a byte character [str] of length [bufSz] within [buf];
  * returns byte position if found, otherwise zero
@@ -1412,8 +1414,7 @@ void server_test(void *arg)
         threadCtx->fd = clientFd;
         threadCtx->id = threadCount++;
         threadCtx->nonBlock = WOLFSSL_NONBLOCK;
-        force_sw = 0;
-        ESP_LOGI(TAG,"server_worker started. force_sw = %d", force_sw);
+
 #ifndef SINGLE_THREADED
     #ifdef WOLFSSH_TEST_THREADING
         ThreadStart(server_worker, threadCtx, &thread);

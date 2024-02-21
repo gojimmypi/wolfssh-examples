@@ -91,6 +91,8 @@ int wifi_init_sta(void);
 
 int wifi_show_ip(void);
 
+int wifi_show_listening_ip(int port);
+
 bool wifi_ready(void);
 
 #endif /* _WIFI_CONNECT_H_ */

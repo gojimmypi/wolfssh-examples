@@ -84,6 +84,8 @@ static const char *TAG = "wifi_connect";
  */
 static volatile bool WiFiEthernetReady = 0;
 
+esp_netif_ip_info_t my_ip;
+
 #if ESP_IDF_VERSION_MAJOR < 4
     #if defined(CONFIG_IDF_TARGET_ESP8266)
         /* TODO */
@@ -186,6 +188,8 @@ static void event_handler(void* arg,
     }
     else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         event = (ip_event_got_ip_t*) event_data;
+        my_ip = event->ip_info;
+
         wifi_show_ip();
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
@@ -302,9 +306,29 @@ int wifi_init_sta(void)
 
 int wifi_show_ip(void)
 {
-    /* TODO Causes panic:
-     * ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip)); */
-    return ESP_OK;
+    int ret;
+    if (event == NULL) {
+        ret = ESP_FAIL;
+    }
+    else {
+        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        ret = ESP_OK;
+    }
+    return ret;
+}
+
+int wifi_show_listening_ip(int port)
+{
+    int ret;
+    if (event == NULL) {
+        ret = ESP_FAIL;
+    }
+    else {
+        ESP_LOGI(TAG, "Listening on port %d address: " IPSTR,
+                       port , IP2STR(&my_ip.ip));
+        ret = ESP_OK;
+    }
+    return ret;
 }
 #endif
 

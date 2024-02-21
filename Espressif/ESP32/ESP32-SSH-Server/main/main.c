@@ -277,7 +277,7 @@ void app_main(void)
     /* main stack size: 4048 */
     int stack_start = 0;
 
-    ESP_LOGI(TAG, "---------------- wolfSSL Benchmark Example -------------");
+    ESP_LOGI(TAG, "------------------ wolfSSH UART Example ----------------");
     ESP_LOGI(TAG, "--------------------------------------------------------");
     ESP_LOGI(TAG, "--------------------------------------------------------");
     ESP_LOGI(TAG, "---------------------- BEGIN MAIN ----------------------");
