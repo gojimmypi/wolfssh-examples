@@ -175,8 +175,6 @@ void InitSemaphore()
  * buffer to SEND (typically out to the SSH client)
  */
 void uart_rx_task(void *arg) {
-    vTaskDelay(1000000000); /* TODO */
-
     InitSemaphore();
 
     /* TODO do we really want malloc? probably not.
@@ -190,6 +188,7 @@ void uart_rx_task(void *arg) {
     static const char *RX_TASK_TAG = "RX_TASK";
     esp_log_level_set(RX_TASK_TAG, ESP_LOG_INFO);
 
+    ESP_LOGW(TAG, "-- Start RX_TASK");
 
     /* TODO this should be interrupt driven, rather than polling */
     while (1) {
