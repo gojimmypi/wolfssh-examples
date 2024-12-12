@@ -1,3 +1,4 @@
+#  [wolfSSL Project]/components/wolfssl/CMakeLists.txt
 #
 #  Copyright (C) 2014-2024 wolfSSL Inc.
 #
@@ -26,7 +27,7 @@
 message(STATUS "Begin wolfssl ${CONFIG_CUSTOM_SETTING_WOLFSSL_ROOT}")
 cmake_minimum_required(VERSION 3.16)
 
-set(VERBOSE_COMPONENT_MESSAGES 1)
+set(VERBOSE_COMPONENT_MESSAGES 0)
 
 
 # function: IS_ESP_IDF_COMPONENT
@@ -176,6 +177,36 @@ else()
     string(REPLACE "\\" "/" THIS_IDF_PATH "$ENV{IDF_PATH}")
 endif()
 
+# Attention!
+#
+# When editing component CMake files, consider the following :
+#
+# NO Managed Components: Normal stand-alone app, "as cloned" from github.
+#   There's no notion of staging names (e.g. mywolfssh) regardless of environment settings.
+#   All of the component source is locall. See settings such s WOLFSSL_ROOT=[your path]
+#
+# Partially Managed Components. This one is tricky. When publishing a component with examples,
+#    those examples will have a chicken-and-egg problem: the required component is not yet published.
+#    Adding to the complexity is the notion of staging components, that are purposely prefixed with
+#    "my" (e.g. mywolfssh) to distinguish from production, live components (e.g. wolfssh)
+#
+#    Partially Managed Component Examples are typically only encountered by the component publisher
+#    and only at publish time, such as when performing the pre-publish build check.
+#
+#    A partially managed component may also be manually created, when adding a managed component to
+#    and existing project. For example:
+#
+#       idf.py add-dependency "wolfssl/wolfssh^1.4.15-stable"
+#
+# Fully Managed Components. This is the typical example as created from the Component Registry:
+#    For example:
+#
+#       idf.py create-project-from-example "wolfssl/wolfssh^1.4.15-stable:wolfssh_server"
+#
+# In all cases, keep in mind that components other than wolfssl will depend on the wolfssl component.
+#
+message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
+
 # ENVIRONMENT_VAR_TO_MACRO
 # Check environment variable name EVARPARAM as [name]
 # If defined, and has a value of EVARVALUE as [value],
@@ -304,20 +335,7 @@ function(FIND_WOLFSSL_DIRECTORY OUTPUT_FOUND_WOLFSSL_DIRECTORY)
         endif()
 
         # Maintain CURRENT_SEARCH_DIR, but check various suffixes with CURRENT_SEARCH_DIR_ALT
-        if( THIS_USER )
-            # Check for "wolfssl-[username]" subdirectory as we recurse up the directory tree
-            set(CURRENT_SEARCH_DIR_ALT ${CURRENT_SEARCH_DIR}/wolfssl-${THIS_USER})
-            message(STATUS "Looking in ${CURRENT_SEARCH_DIR_ALT}")
-
-            IS_WOLFSSL_SOURCE("${CURRENT_SEARCH_DIR_ALT}" FOUND_WOLFSSL )
-            if ( FOUND_WOLFSSL )
-                message(STATUS "Found wolfssl in user-suffix CURRENT_SEARCH_DIR_ALT = ${CURRENT_SEARCH_DIR_ALT}")
-                set(CURRENT_SEARCH_DIR "${CURRENT_SEARCH_DIR_ALT}")
-                set(${OUTPUT_FOUND_WOLFSSL_DIRECTORY} ${CURRENT_SEARCH_DIR} PARENT_SCOPE)
-                return()
-            endif()
-        endif()
-
+        # First, check if there's a "wolfssl-master"
         if ( FOUND_WOLFSSL )
             # if we already found the source, skip attempt of "wolfssl-master"
         else()
@@ -327,6 +345,20 @@ function(FIND_WOLFSSL_DIRECTORY OUTPUT_FOUND_WOLFSSL_DIRECTORY)
             IS_WOLFSSL_SOURCE("${CURRENT_SEARCH_DIR_ALT}" FOUND_WOLFSSL )
             if ( FOUND_WOLFSSL )
                 message(STATUS "Found wolfssl in master-suffix CURRENT_SEARCH_DIR_ALT = ${CURRENT_SEARCH_DIR_ALT}")
+                set(CURRENT_SEARCH_DIR "${CURRENT_SEARCH_DIR_ALT}")
+                set(${OUTPUT_FOUND_WOLFSSL_DIRECTORY} ${CURRENT_SEARCH_DIR} PARENT_SCOPE)
+                return()
+            endif()
+        endif()
+
+        if( THIS_USER )
+            # Check for "wolfssl-[username]" subdirectory as we recurse up the directory tree
+            set(CURRENT_SEARCH_DIR_ALT ${CURRENT_SEARCH_DIR}/wolfssl-${THIS_USER})
+            message(STATUS "Looking in ${CURRENT_SEARCH_DIR_ALT}")
+
+            IS_WOLFSSL_SOURCE("${CURRENT_SEARCH_DIR_ALT}" FOUND_WOLFSSL )
+            if ( FOUND_WOLFSSL )
+                message(STATUS "Found wolfssl in user-suffix CURRENT_SEARCH_DIR_ALT = ${CURRENT_SEARCH_DIR_ALT}")
                 set(CURRENT_SEARCH_DIR "${CURRENT_SEARCH_DIR_ALT}")
                 set(${OUTPUT_FOUND_WOLFSSL_DIRECTORY} ${CURRENT_SEARCH_DIR} PARENT_SCOPE)
                 return()
@@ -391,13 +423,13 @@ if (0)
     get_cmake_property(_variableNames VARIABLES)
     list (SORT _variableNames)
     message(STATUS "")
-    message(STATUS "ALL VARIABLES BEGIN")
+    message(STATUS "ALL VARIABLES BEGIN (wolfssl)")
     message(STATUS "")
     foreach (_variableName ${_variableNames})
         message(STATUS "${_variableName}=${${_variableName}}")
     endforeach()
     message(STATUS "")
-    message(STATUS "ALL VARIABLES END")
+    message(STATUS "ALL VARIABLES END (wolfssl)")
     message(STATUS "")
 endif()
 
@@ -549,10 +581,10 @@ else()
         message(STATUS "Please use wolfSSL in either local project or Espressif components, but not both.")
 
         # Optional: if you change the above FATAL_ERROR to STATUS you can warn at runtime with this macro definition:
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_MULTI_INSTALL_WARNING")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSH_MULTI_INSTALL_WARNING")
 
     else()
-        if( EXISTS "$ENV{IDF_PATH}/components/wolfssl/" )
+        if( EXISTS "$ENV{IDF_PATH}/components/wolfssh/" )
             #
             # wolfSSL found in ESP-IDF components and is assumed to be already configured in user_settings.h via setup.
             #
@@ -657,7 +689,7 @@ else()
 	if(WOLFSSL_ROOT)
 	    string(REPLACE "\\" "/" WOLFSSL_ROOT ${WOLFSSL_ROOT})
 	endif()
-	
+
     if(IS_DIRECTORY "${RTOS_IDF_PATH}")
         message(STATUS "Found current RTOS path: ${RTOS_IDF_PATH}")
     else()

@@ -1,21 +1,20 @@
 #
-# Copyright (C) 2006-2024 wolfSSL Inc.
+#  Copyright (C) 2014-2024 wolfSSL Inc.
 #
-# This file is part of wolfSSL.
+#  This file is part of wolfSSH.
 #
-# wolfSSL is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
+#  wolfSSH is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
 #
-# wolfSSL is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
+#  wolfSSH is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
 #
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
+#  You should have received a copy of the GNU General Public License
+#  along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 #
@@ -59,7 +58,7 @@ CFLAGS +=-DWOLFSSL_USER_SETTINGS
 # [workspace]\wolfssh-examples\Espressif\ESP32\ESP32-SSH-Server\components\wolfssl
 #
 #                6  5  4  3  2  1
-WOLFSSL_ROOT := ../../../../../../wolfssl-gojimmypi/
+WOLFSSL_ROOT := ../../../../../../wolfssl
 
 
 # NOTE: The wolfSSL include directory (e.g. user_settings.h) is
@@ -70,7 +69,6 @@ COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSL_ROOT)/.
 COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSL_ROOT)/wolfssl
 COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSL_ROOT)/wolfssl/wolfcrypt
 COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSL_ROOT)/wolfssl/wolfcrypt/port/Espressif
-COMPONENT_ADD_INCLUDEDIRS += $(WOLFSSL_ROOT)wolfssl/wolfcrypt/port/Espressif
 # COMPONENT_ADD_INCLUDEDIRS += $ENV(IDF_PATH)/components/freertos/include/freertos
 # COMPONENT_ADD_INCLUDEDIRS += "$ENV(IDF_PATH)/soc/esp32s3/include/soc"
 

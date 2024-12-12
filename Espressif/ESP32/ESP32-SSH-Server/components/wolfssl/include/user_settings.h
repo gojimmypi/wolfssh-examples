@@ -1,22 +1,22 @@
 /* user_settings.h (this is a special file specifically for ESP SSH to UART)
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
  *
- * This file is part of wolfSSL.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
- * wolfSSL is free software; you can redistribute it and/or modify
+ * This file is part of wolfSSH.
+ *
+ * wolfSSH is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
+ * the Free Software Foundation; either version 3 of the License, or
  * (at your option) any later version.
  *
- * wolfSSL is distributed in the hope that it will be useful,
+ * wolfSSH is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1335, USA
+ * along with wolfSSH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 /* NOTICE
@@ -209,6 +209,16 @@
             #define HAVE_ECC521
         #else
             /* default ecdsa-sha2-nistp256 needs no special settings. */
+            #ifndef WOLFSSL_FULL_WOLFSSH_SUPPORT
+                #include <version.h>
+                #ifdef LIBWOLFSSL_VERSION_HEX
+                    #if LIBWOLFSSL_VERSION_HEX < 0x05007000
+                        /* wolfSSL 5.6.6 SHA256 HW not supported with wolfSSH
+                         * prior to 5.7.0, so disable it: */
+                       #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA256
+                    #endif
+                #endif
+            #endif
         #endif
     #else
         /* Warning: only ECC implemented for SSH UART demo at this time */
@@ -357,8 +367,8 @@
 ** Uncomment these lines to force SW instead of HW acceleration */
 #if defined(CONFIG_IDF_TARGET_ESP32) || defined(WOLFSSL_ESPWROOM32SE)
     /* wolfSSL HW Acceleration supported on ESP32. Uncomment to disable: */
-    /*  #define NO_ESP32_CRYPT                         */
-    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH            */
+    /*  #define NO_ESP32_CRYPT                 */
+    /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH    */
 
     /*****   Optionally turn off individual SHA:   *****/
     /*  #define NO_WOLFSSL_ESP32_CRYPT_HASH_SHA        */

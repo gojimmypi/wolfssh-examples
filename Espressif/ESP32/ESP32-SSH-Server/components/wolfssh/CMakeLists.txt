@@ -26,7 +26,7 @@
 cmake_minimum_required(VERSION 3.16)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSH_USER_SETTINGS")
 
-set(VERBOSE_COMPONENT_MESSAGES 1)
+set(VERBOSE_COMPONENT_MESSAGES 0)
 
 # The scope of this CMAKE_C_FLAGS is just this component:
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWOLFSSL_USER_SETTINGS")
@@ -104,6 +104,12 @@ else()
     set(THIS_USER "$ENV{USER}")
 endif()
 message(STATUS "THIS_USER = ${THIS_USER}")
+
+if( "$ENV{IDF_PATH}" STREQUAL "" )
+    message(FATAL_ERROR "IDF_PATH Environment variable not set!")
+else()
+    string(REPLACE "\\" "/" THIS_IDF_PATH "$ENV{IDF_PATH}")
+endif()
 
 # Attention!
 #
@@ -543,13 +549,13 @@ else()
         get_cmake_property(_variableNames VARIABLES)
         list (SORT _variableNames)
         message(STATUS "")
-        message(STATUS "ALL VARIABLES BEGIN")
+        message(STATUS "ALL VARIABLES BEGIN (wolfssh)")
         message(STATUS "")
         foreach (_variableName ${_variableNames})
             message(STATUS "${_variableName}=${${_variableName}}")
         endforeach()
         message(STATUS "")
-        message(STATUS "ALL VARIABLES END")
+        message(STATUS "ALL VARIABLES END (wolfssh)")
         message(STATUS "")
     endif()
 

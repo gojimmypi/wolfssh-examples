@@ -19,51 +19,125 @@ as well as the [wolfcrypt port to Espressif](https://github.com/wolfSSL/wolfssl/
 
 [wolfSSL ESP32 Hardware Acceleration Support](https://www.wolfssl.com/wolfssl-esp32-hardware-acceleration-support/)
 
-## wolfSSH Client
+## Getting Started
 
-The [wolfSSH Example Client](https://github.com/wolfSSL/wolfssh/tree/master/examples/client) requires
-[wolfSSL](https://github.com/wolfSSL/wolfssl). If you don't have and don't want wolfSSL actually _installed_
-you can create a `wolfssl_bin` directory in the root of the wolfSSH directory. 
+If you are new to wolfSSL on the Espressif ESP32, [this video](https://www.youtube.com/watch?v=CzwA3ZBZBZ8)
+can help to get started:
 
-```
-MY_WOLFSSH_PATH=/mnt/c/workspace/wolfssh-gojimmypi/wolfssl_install
-./configure --prefix=$MY_WOLFSSH_PATH --enable-ssh
-```
+[![Video Preview](https://img.youtube.com/vi/CzwA3ZBZBZ8/0.jpg)](https://www.youtube.com/watch?v=CzwA3ZBZBZ8)
 
-The result would look like this:
+See also the [core wolfSSL examples for Espressif](https://github.com/wolfSSL/wolfssl/tree/master/IDE/Espressif).
 
-```text
-[wolfssh repo root]
-|---bin
-|---include
-|   \---wolfssl
-|       |---openssl
-|       \---wolfcrypt
-|---lib
-|   \---pkgconfig
-\---share
-    \---doc
-        \---wolfssl
-            \---example
-```
-
-Once the wolfSSL binaries are available (ensure wolfssl was built with `--enable-all`, or at least `--enable-ssh`: 
+Here are the steps for a typical build:
 
 ```bash
-./autogen.sh
-./configure --with-wolfssl=$MY_WOLFSSH_PATH
-make
-make check
+# Fetch source
+git clone https://github.com/wolfSSL/wolfssh-examples.git
+cd wolfssh-examples
+
+# Setup environment
+export WRK_IDF_PATH=/mnt/c/SysGCC/esp32/esp-idf/v5.2
+. $WRK_IDF_PATH/export.sh
+
+# Change directory to the example
+cd Espressif/ESP32/ESP32-SSH-Server
+
+# List possible targets
+idf.py 
+
+# Configure a target, in this case the basic ESP32
+idf.py set-target esp32
+
+# Set locations for wolfSSL and wolfSSH
+# This is only needed if there are not clones in parallel level depths, for example:
+#   /mnt/c/workspace/wolfssh-examples
+#   /mnt/c/workspace/wolfssl
+#   /mnt/c/workspace/wolfssh
+# cmake will also search for "-master" and "-$USER" suffix names.
+#
+# Here, we assume wolfssh-examples was cloned to someplace else, such as /mnt/c/test/wolfssh-examples
+#
+export WOLFSSL_ROOT=/mnt/c/workspace/wolfssl-master
+export WOLFSSH_ROOT=/mnt/c/workspace/wolfssh-master
+
+# Set WiFi SSID and password:
+idf.py menuconfig
+
+# Program the device and observe output.
+idf.py -p /dev/ttyS82 -b 115200 build flash monitor -b 115200
 ```
 
-Connect to the ESP32 SSH server with the wolfSSH client example:
+## Requirements
+
+The [wolfSSL library](https://github.com/wolfssl/wolfssl) is needed for this wolfSSH example. Installation
+can be either as a local repository or by using the [wolfSSL Managed Component](https://components.espressif.com/components/wolfssl/wolfssl).
+
+Beware of the [user_settings.h](https://github.com/wolfSSL/wolfssh-examples/tree/main/Espressif/ESP32/ESP32-SSH-Server/components/wolfssl/include).
+There should be exactly one copy, located in the `./components/wolfssl/include` directory. Any other source of wolfSSL
+may not have the proper wolfSSH settings.
+
+The Espressif development environment is needed: [ESP-IDF Version 4.x](https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32/index.html)
+or [ESP-IDF Version 5.x](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/).
+
+Any ESP32 with available UART pins other than USB / Console. The default is 
+`U2TXD` = `TXD_PIN` = `GPIO_NUM_17` 
+and 
+`U2RXD` = `RXD_PIN` = `GPIO_NUM_16`
+defined in the [main/ssh_server_config.h](./main/ssh_server_config.h) file.
+
+Although there's no notion of a "speed" setting in SSH, our UART bridge needs to have one set.
+The `BAUD_RATE` for the target board is defined in [main/ssh_server_config.h](./main/ssh_server_config.h) 
+and is typically:  `#define BAUD_RATE (57600)`. 
+Serial port console monitoring port is typically 74800 baud, 8N1.
+
+For more details on the UARTs and the ESP32 in general, refer to the 
+[ESP32 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf)
+
+## Private Config
+
+It is usually best to not publish private SSID names and passwords to GitHub. 
+As such the project [CMakeLists.txt](./CMakeLists.txt) looks for one of these files, in this order:
 
 ```
-./examples/client/client -u jack -h 192.168.1.39 -p 22222
+# VisualGDB default
+/c/workspace/my_private_config.h
+
+# Windows 
+/workspace/my_private_config.h
+
+# WSL
+/mnt/c/workspace/my_private_config.h
+
+# Linux
+~/my_private_config.h
 ```
+
+If no `my_private_config.h` file is found, default values are used. Use the `ESP-IDF menuconfig` to
+set example values.
+
+## VisualGDB Quick Start
+
+See the project files in the [VisualGBD directory](./VisualGDB). Simply open the project file and
+build. The default JTAG debugger is the [Open Source Tigard]https://github.com/tigard-tools/tigard?tab=readme-ov-file#tigard), 
+but other JTAG devices are expected to also work.
+
 ## Linux Quick Start
 
-This project does not yet work with ESP-IDF Version 5.x.
+This updated example version now supports setting `WOLFSSL_ROOT` and `WOLFSSH_ROOT` as either environment
+variables or in the project `CMakeLists.txt` like this:
+
+```cmake
+set(WOLFSSL_ROOT "C:/workspace/wolfssl")
+set(WOLFSSH_ROOT "C:/workspace/wolfssh")
+```
+
+
+## Linux Quick Start - Installation of local files
+
+This method, although operational, *is no longer recommended*. See above for using the in-place
+wolfSSL and wolfSSH source that can be used without copying to the local project.
+
+If you still want to have a local copy of wolfSSL _in_ you project, follow these steps:
 
 ```
 #!/bin/bash
@@ -107,53 +181,10 @@ idf.py -p /dev/ttyUSB0 flash
 config files needed:
 
 ```
-components/wolfssh/include/user_settings.h
 components/wolfssl/include/user_settings.h
-components/wolfssl/wolfssl/options.h
 ```
 
-
-## Requirements
-
-[ESP-IDF Version 4.x](https://docs.espressif.com/projects/esp-idf/en/v4.4.1/esp32/index.html)
-
-Any ESP32 with available UART pins other than USB / Console. The default is 
-`U2TXD` = `TXD_PIN` = `GPIO_NUM_17` 
-and 
-`U2RXD` = `RXD_PIN` = `GPIO_NUM_16`
-defined in the [main/ssh_server_config.h](./main/ssh_server_config.h) file.
-
-Although there's no notion of a "speed" setting in SSH, our UART bridge needs to have one set.
-The `BAUD_RATE` for the target board is defined in [main/ssh_server_config.h](./main/ssh_server_config.h) 
-and is typically:  `#define BAUD_RATE (57600)`. 
-Serial port console monitoring port is typically 74800 baud, 8N1.
-
-For more details on the UARTs and the ESP32 in general, refer to the 
-[ESP32 Technical Reference Manual](https://www.espressif.com/sites/default/files/documentation/esp32_technical_reference_manual_en.pdf)
-
-
-
-## Private Config
-
-It is usually best to not publish private SSID names and passwords to GitHub. 
-As such the project [CMakeLists.txt](./CMakeLists.txt) looks for one of these files, in this order:
-
-```
-# VisualGDB default
-/c/workspace/my_private_config.h
-
-# Windows 
-/workspace/my_private_config.h
-
-# WSL
-/mnt/c/workspace/my_private_config.h
-
-# Linux
-~/my_private_config.h
-```
-
-If no `my_private_config.h` file is found, default values are used. See [my_config.h](./main/my_config.h)
-
+Ensure there are no other `user_settings.h` files in any other project directories.
 
 ## Building
 
@@ -188,14 +219,17 @@ Note the `IDF_PATH` may alrteady be set if calling from the installed shortcut
 (typically in `C:\Users\%USERNAME%\.espressif\idf_cmd_init.bat`)
 
 ```batch
+SET WRK_IDF_PATH=C:\SysGCC\esp32\esp-idf\v5.2
 SET IDF_PATH=C:\Users\%username%\Desktop\esp-idf
 SET WORKSPACE=C:\workspace
 ```
 WSL
 
 ```bash
-export IDF_PATH=/mnt/c/Users/$USER/Desktop/esp-idf
+export WRK_IDF_PATH=/mnt/c/Users/$USER/Desktop/esp-idf/v5.2
+export WRK_IDF_PATH=/mnt/c/SysGCC/esp32/esp-idf/v5.2
 export WORKSPACE=/mnt/c/workspace
+. $WRK_IDF_PATH/export.sh
 ```
 
 Linux
@@ -624,6 +658,28 @@ Only one connection is allowed at the time. There may be a delay when an existin
 
 
 ## Troubleshooting
+
+Here are some common error messages and possible solutions:
+
+### Configuring incomplete, errors occurred! System.Exception: CMake exited with code 1 
+
+This is a common error when changing target boards. Note the _does not match currently selected IDF_TARGET_ to the right:
+
+```
+-- Configuring incomplete, errors occurred!
+CMake Error at C:/SysGCC/esp32-13.2/esp-idf/v5.2/tools/cmake/targets.cmake:108 (message):
+   Target 'esp32c3' in sdkconfig 'C:/workspace/wolfssh-examples-gojimmypi-pr/Espressif/ESP32/ESP32-SSH-Server/sdkconfig' does not match currently selected IDF_TARGET 'esp32'. To change the target, clear the build directory and sdkconfig file, and build the project again.
+Call Stack (most recent call first):
+  C:/SysGCC/esp32-13.2/esp-idf/v5.2/tools/cmake/project.cmake:24 (__target_init)
+  CMakeLists.txt:194 (include)
+
+
+System.Exception: CMake exited with code 1
+   at s24.e(c a, Object b)
+```
+
+Often the best way to resolve this is to completely remove the `build` directory.
+
 
 ### termios.error: (5, 'Input/output error')
 

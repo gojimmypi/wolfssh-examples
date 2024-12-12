@@ -56,8 +56,7 @@
     #warning "This project is configured using local, stale wolfSSL code. See Makefile."
 #endif
 
-
-/* see ssh_server_config.h for optional use of physical ethernet: USE_ENC28J60 */
+/* See ssh_server_config.h for optional physical ethernet: USE_ENC28J60 */
 #ifdef USE_ENC28J60
     #include <enc28j60_helper.h>
 #endif
@@ -265,8 +264,10 @@ int init(void)
 
 /**
  * @brief Checks the netif description if it contains specified prefix.
- * All netifs created withing common connect component are prefixed with the module TAG,
- * so it returns true if the specified netif is owned by this module
+ * All netifs created withing common connect component are prefixed with
+ * the module TAG, so it returns true if the specified netif is owned
+ * by this module
+
 TODO
 
 static bool is_our_netif(const char *prefix, esp_netif_t *netif) {
@@ -355,15 +356,16 @@ void app_main(void)
                 SERVER_SESSION_STACK_SIZE, NULL,
                 tskIDLE_PRIORITY, NULL);
 
+#ifndef NO_EXAMPLE_HEARTBEAT
+    for (;;) {
+        /* we're not actually doing anything here, other than a heartbeat message */
+        ESP_LOGI(TAG,"wolfSSH Server main loop heartbeat!");
 
-//    for (;;) {
-//        /* we're not actually doing anything here, other than a heartbeat message */
-//        ESP_LOGI(TAG,"wolfSSH Server main loop heartbeat!");
-//
-//        taskYIELD();
-//        vTaskDelay(DelayTicks ? DelayTicks : 1); /* Minimum delay = 1 tick */
-//    }
+        taskYIELD();
+        vTaskDelay(DelayTicks ? DelayTicks : 1); /* Minimum delay = 1 tick */
+    }
+#endif
 
     /* TODO this is unreachable with RTOS threads, do we ever want to shut down? */
-    wolfSSH_Cleanup();
+    /* wolfSSH_Cleanup(); */
 } /* app_main */
