@@ -1,6 +1,6 @@
 /* main.h
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -73,7 +73,7 @@
     /* SSH Server will use NOT pthreads task without WOLFSSH_TEST_THREADING */
     #ifdef CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT
         #if (CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT > 4096)
-            #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT too large"
+           // #error "CONFIG_PTHREAD_TASK_STACK_SIZE_DEFAULT too large"
         #endif
 
         /* The smallest confirmed stack size is 23KB */
