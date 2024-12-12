@@ -1,6 +1,6 @@
 /* ssh_server.c
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -50,7 +50,7 @@
 /* Espressif */
 #include <esp_log.h>
 
-
+/* Project */
 #include "ssh_server_config.h"
 #include "ssh_server.h"
 #include "tx_rx_buffer.h"
@@ -338,6 +338,7 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
                         ESP_LOGI(TAG,"Received %d bytes from client.", rxSz);
                     }
 
+
                     /* turn debugging back on */
                     #ifdef DEBUG_WOLFSSH
                         ESP_LOGV(TAG, "wolfSSH debugging on.");
@@ -395,7 +396,7 @@ static THREAD_RETURN WOLFSSH_THREAD server_worker(void* vArgs)
 
                 /*
                  * if we received any data from the SSH client, we'll store it in the
-                 * External REceived Buffer for later sending to the UART
+                 * External Received Buffer for later sending to the UART
                  *
                  * Reminder negative values for WS_WANT_READ || WS_WANT_WRITE
                  */
@@ -1415,6 +1416,7 @@ void server_test(void *arg)
         threadCtx->id = threadCount++;
         threadCtx->nonBlock = WOLFSSL_NONBLOCK;
 
+        ESP_LOGI(TAG,"server_worker started.");
 #ifndef SINGLE_THREADED
     #ifdef WOLFSSH_TEST_THREADING
         ThreadStart(server_worker, threadCtx, &thread);
