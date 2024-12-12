@@ -3,18 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "wolfssh_IDF_v5.1_ESP32", "wolfssh_IDF_v5.1_ESP32.vgdbproj", "{EADCC9AB-72B3-4B51-A838-593E5D80DDF7}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7BA08548-4144-4B0C-91CF-E3D3247A9A74}"
-	ProjectSection(SolutionItems) = preProject
-		..\README.md = ..\README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wolfssl", "wolfssl", "{66284F60-A447-412A-ACA2-AE4B81DF2254}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp-sdk-lib.h = ..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp-sdk-lib.h
-		..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp32-crypt.h = ..\..\..\..\..\wolfssl-gojimmypi\wolfssl\wolfcrypt\port\Espressif\esp32-crypt.h
-	EndProjectSection
+Project("{803FD0C6-D64E-4E16-9DC3-1DAEC859A3D2}") = "wolfssh_IDF_v5.1_ESP32-C6", "wolfssh_IDF_v5.1_ESP32-C6.vgdbproj", "{EADCC9AB-72B3-4B51-A838-593E5D80DDF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +25,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{66284F60-A447-412A-ACA2-AE4B81DF2254} = {7BA08548-4144-4B0C-91CF-E3D3247A9A74}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {17B51EFD-8966-40AF-A82A-DEBF257AE0DC}
+		SolutionGuid = {0E02F838-B7EE-44DF-89B7-4BE5C89EA1EC}
 	EndGlobalSection
 EndGlobal
