@@ -1,6 +1,6 @@
 /* time_helper.c
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -278,7 +278,6 @@ int set_time(void)
 #ifdef CONFIG_SNTP_TIME_SYNC_METHOD_SMOOTH
     config.smooth_sync = true;
 #endif
-    return ret;
 
     if (NTP_SERVER_COUNT) {
         /* next, let's setup NTP time servers
