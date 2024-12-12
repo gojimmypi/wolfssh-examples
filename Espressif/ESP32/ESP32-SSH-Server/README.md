@@ -177,13 +177,6 @@ Note for wired ethernet, the ENC28J60 component make not be available in some ve
 
 This section is only needed for users not using VisualGDB. Otherwise, see the [VisualGDB Tutorials](https://visualgdb.com/w/tutorials/tag/esp32/).
 
-This project does not yet work with ESP-IDF Version 5.x.
-
-Install Version 4.4 of [ESP32 ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/release-v4.4/esp32/get-started/index.html). 
-
-*NOTE:* This project has NOT yet been migrated to Version 5.0 ofthe ESP-IDF. 
-See the [Migration Guide](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/migration-guides/build-system.html)
-
 To use a dual Windows/Linux (WSL) option, consider a shared directory such as `C:\ESP32\esp\`
 which would be `/mnt/c/ESP32/esp/` in WSL.
 
