@@ -1,6 +1,6 @@
 /* main.c
  *
- * Copyright (C) 2006-2024 wolfSSL Inc.
+ * Copyright (C) 2014-2024 wolfSSL Inc.
  *
  * This file is part of wolfSSH.
  *
@@ -185,7 +185,10 @@ int init(void)
      * Some lwIP APIs, including SNTP functions, are not thread safe. */
     ret = set_time(); /* need to setup NTP before WiFi */
 
-#ifndef DISABLE_SSH_UART
+
+#ifdef DISABLE_SSH_UART
+    setvbuf(stdout, NULL, _IONBF, 0);
+#else
     /* Our "External" device will be the UART, connected to the SSH server */
     init_UART();
 #endif
@@ -362,5 +365,5 @@ void app_main(void)
 //    }
 
     /* TODO this is unreachable with RTOS threads, do we ever want to shut down? */
-    // wolfSSH_Cleanup();
+    wolfSSH_Cleanup();
 } /* app_main */
